@@ -523,6 +523,7 @@ V89_HOUSES = [
     "http://www.marciopinho.lel.br",            # Marcio Pinho - Leiloeiro Público
     "http://www.coisaantigaleiloes.com.br",     # Coisa Antiga Leilões
     "http://www.solmarelualeiloes.com.br",      # Sol Mar e Lua Leilões
+    "http://www.jfleiloeira.com.br",            # JF Leiloeira
 ]
 
 
