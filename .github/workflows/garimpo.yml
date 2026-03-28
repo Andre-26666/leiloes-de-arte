@@ -59,3 +59,10 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python build_visual_index.py --threads 4
         continue-on-error: true
+
+      - name: Pré-calcula Garimpo Visual
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python garimpo_visual_precompute.py --threads 6
+        continue-on-error: true

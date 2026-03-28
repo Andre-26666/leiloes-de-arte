@@ -1304,6 +1304,16 @@ def _load_visual_index() -> dict:
         return json.load(f)
 
 
+@st.cache_data(ttl=300)
+def _load_garimpo_resultados() -> dict:
+    """Carrega resultados pré-calculados do Garimpo Visual (garimpo_resultados)."""
+    if not _USE_SUPABASE:
+        return {}
+    rows = _sb_fetch_all("garimpo_resultados",
+                         select="url_detalhe,foto_url,artista,titulo,tecnica,dimensoes,lance_base,casa,data_leilao,similares,atualizado")
+    return {r["url_detalhe"]: r for r in rows if r.get("url_detalhe")}
+
+
 def _eh_desconhecido(artista: str) -> bool:
     art = str(artista).strip()
     return not art or bool(_RE_DESCONHECIDO.search(art))
@@ -1357,8 +1367,7 @@ def render_garimpo(df_leiloes):
             "Execute `python build_visual_index.py` para começar."
         )
         st.code("python build_visual_index.py --max 2000 --threads 10", language="bash")
-        st.caption(f"Indexa as 2.000 obras com maior lance do histórico (~5 min). "
-                   f"Pode rodar em background enquanto usa a plataforma.")
+        st.caption("Indexa as 2.000 obras com maior lance do histórico (~5 min).")
         return
 
     st.caption(f"Índice visual: **{len(idx):,}** obras históricas com artista identificado")
@@ -1395,6 +1404,9 @@ def render_garimpo(df_leiloes):
                             unsafe_allow_html=True,
                         )
 
+    # ── Carrega resultados pré-calculados ───────────────────────────────────
+    resultados_pre = _load_garimpo_resultados()
+
     # Filtra lotes desconhecidos com foto
     desconhecidos = df_leiloes[
         df_leiloes["artista"].apply(_eh_desconhecido) &
@@ -1403,37 +1415,55 @@ def render_garimpo(df_leiloes):
 
     total_desc = len(df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)])
 
-    st.markdown(
-        f"**{total_desc}** lotes com artista não identificado — "
-        f"**{len(desconhecidos)}** com foto disponível para análise"
+    # Conta quantos têm resultados pré-calculados com similares
+    com_similares = sum(
+        1 for _, r in desconhecidos.iterrows()
+        if r.get("url_detalhe") in resultados_pre
+        and resultados_pre[r["url_detalhe"]].get("similares")
     )
+
+    col_s1, col_s2, col_s3 = st.columns(3)
+    col_s1.metric("Artista não identificado", total_desc)
+    col_s2.metric("Com foto disponível", len(desconhecidos))
+    col_s3.metric("Com similares encontrados", com_similares)
 
     if desconhecidos.empty:
         st.info("Nenhum lote com artista desconhecido e foto disponível.")
         return
 
-    # Ordena por lance_base desc (oportunidades de maior valor primeiro)
+    # Ordena por lance_base desc
     desconhecidos = desconhecidos.sort_values("lance_base", ascending=False)
 
-    # Limite de análise (pesado: cada lote faz 1 req HTTP)
-    max_analisar = st.slider("Analisar top N lotes (por valor base)", 5, min(50, len(desconhecidos)), 10, key="garimpo_n")
-    desconhecidos = desconhecidos.head(max_analisar)
-
-    st.markdown("---")
+    # Filtro: mostrar só com similares ou todos
+    mostrar_todos = st.checkbox("Mostrar também lotes sem similar encontrado", value=False, key="garimpo_mostrar_todos")
 
     _mh = load_media_hist()
+    mostrados = 0
 
     for _, lote in desconhecidos.iterrows():
+        url     = lote.get("url_detalhe", "")
         foto    = lote.get("foto_url", "")
         titulo  = lote.get("titulo", "") or "Sem título"
         tecnica = lote.get("tecnica", "") or ""
         dims    = lote.get("dimensoes", "") or ""
         base    = lote.get("lance_base", 0)
         casa    = lote.get("casa", "")
-        data    = lote.get("data_leilao", "")
-        url     = lote.get("url_detalhe", "")
 
-        with st.expander(f"🔍  {titulo[:60]}  —  base {fmt_brl(base)}  ·  {casa}", expanded=False):
+        pre = resultados_pre.get(url)
+        similares = (pre.get("similares") or []) if pre else None
+
+        # Pula sem similar se não quiser ver todos
+        if similares is not None and not similares and not mostrar_todos:
+            continue
+
+        # Limita exibição a 50
+        if mostrados >= 50:
+            st.caption("Mostrando primeiros 50 resultados. Filtre por casa ou aguarde próximo garimpo.")
+            break
+        mostrados += 1
+
+        badge = "🟢" if similares else ("🔄" if similares is None else "⚪")
+        with st.expander(f"{badge}  {titulo[:60]}  —  base {fmt_brl(base)}  ·  {casa}", expanded=False):
             col_img, col_res = st.columns([1, 2])
 
             with col_img:
@@ -1444,12 +1474,16 @@ def render_garimpo(df_leiloes):
                     st.markdown(f"[Ver lote ↗]({url})")
 
             with col_res:
-                with st.spinner("Buscando similares no histórico..."):
-                    similares = _buscar_similares(foto, top_n=5, max_dist=20)
+                if similares is None:
+                    # Não pré-calculado — calcula na hora
+                    with st.spinner("Buscando similares no histórico..."):
+                        similares = _buscar_similares(foto, top_n=5, max_dist=20)
 
                 if not similares:
                     st.info("Nenhuma obra similar encontrada no índice visual.")
                 else:
+                    if pre and pre.get("atualizado"):
+                        st.caption(f"Atualizado: {pre['atualizado'][:10]}")
                     st.markdown("**Obras visualmente similares:**")
                     for s in similares:
                         art_norm = _norm_art(s["artista"])
