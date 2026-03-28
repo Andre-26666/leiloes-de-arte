@@ -1,0 +1,391 @@
+============================================================
+Catálogo das Artes — Coletor de Pinturas
+Início: 21/03/2026 19:03:02
+============================================================
+DB atual: 1840 obras
+  Pág     1 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     2 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     3 | + 0 novos | Total novo: 0 | Detalhes: 0
+  3 páginas consecutivas sem novos — parando.
+
+Novos: 0 | Total: 1840
+Salvo em: C:\Users\andre\LEILÕES DE ARTE\cda_db.json
+Fim: 21/03/2026 19:03:30
+============================================================
+Catálogo das Artes — Coletor de Pinturas
+Início: 21/03/2026 19:07:03
+============================================================
+DB atual: 2352 obras
+  Pág     1 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     2 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     3 | + 0 novos | Total novo: 0 | Detalhes: 0
+  3 páginas consecutivas sem novos — parando.
+
+Novos: 0 | Total: 2352
+Salvo em: C:\Users\andre\LEILÕES DE ARTE\cda_db.json
+Fim: 21/03/2026 19:07:30
+============================================================
+Catálogo das Artes — Coletor de Pinturas
+Início: 21/03/2026 19:08:23
+============================================================
+DB atual: 2512 obras
+  Pág     1 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     2 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     3 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     4 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     5 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     6 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     7 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     8 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     9 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    10 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    11 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    12 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    13 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    14 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    15 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    16 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    17 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    18 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    19 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    20 | + 0 novos | Total novo: 0 | Detalhes: 0
+  20 páginas consecutivas sem novos — parando.
+  [OK] Varredura completa marcada — próximas execuções serão incrementais.
+
+Novos: 0 | Total: 2513
+Salvo em: C:\Users\andre\LEILÕES DE ARTE\cda_db.json
+Fim: 21/03/2026 19:11:46
+============================================================
+Catálogo das Artes — Coletor de Pinturas
+Início: 21/03/2026 19:14:25
+============================================================
+DB atual: 3248 obras
+  Pág     1 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     2 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     3 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     4 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     5 | + 0 novos | Total novo: 0 | Detalhes: 0
+============================================================
+Catálogo das Artes — Coletor de Pinturas
+Início: 21/03/2026 19:24:39
+============================================================
+DB atual: 3344 obras
+  Modo: varredura completa | Início: pág 1
+  Pág     1 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     2 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     3 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     4 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     5 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     6 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     7 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     8 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág     9 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    10 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    11 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    12 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    13 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    14 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    15 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    16 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    17 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    18 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    19 | + 0 novos | Total novo: 0 | Detalhes: 0
+  Pág    20 | + 0 novos | Total novo: 0 | Detalhes: 0
+  20 páginas consecutivas sem novos — parando.
+
+Novos: 0 | Total: 3345
+Salvo em: C:\Users\andre\LEILÕES DE ARTE\cda_db.json
+Fim: 21/03/2026 19:27:05
+0
+  Pág   214 | +16 novos | Total novo: 80 | Detalhes: 0
+  Pág   215 | +16 novos | Total novo: 96 | Detalhes: 0
+  Pág   216 | +16 novos | Total novo: 112 | Detalhes: 0
+  Pág   217 | +16 novos | Total novo: 128 | Detalhes: 0
+  Pág   218 | +16 novos | Total novo: 144 | Detalhes: 0
+  Pág   219 | +16 novos | Total novo: 160 | Detalhes: 0
+  Pág   220 | +16 novos | Total novo: 176 | Detalhes: 0
+  Pág   221 | +16 novos | Total novo: 192 | Detalhes: 0
+  Pág   222 | +16 novos | Total novo: 208 | Detalhes: 0
+  Pág   223 | +16 novos | Total novo: 224 | Detalhes: 0
+  Pág   224 | +16 novos | Total novo: 240 | Detalhes: 0
+  Pág   225 | +16 novos | Total novo: 256 | Detalhes: 0
+  Pág   226 | +16 novos | Total novo: 272 | Detalhes: 0
+  Pág   227 | +16 novos | Total novo: 288 | Detalhes: 0
+  Pág   228 | +16 novos | Total novo: 304 | Detalhes: 0
+  Pág   229 | +16 novos | Total novo: 320 | Detalhes: 0
+  Pág   230 | +16 novos | Total novo: 336 | Detalhes: 0
+  Pág   231 | +16 novos | Total novo: 352 | Detalhes: 0
+  Pág   232 | +16 novos | Total novo: 368 | Detalhes: 0
+  Pág   233 | +16 novos | Total novo: 384 | Detalhes: 0
+  Pág   234 | +16 novos | Total novo: 400 | Detalhes: 0
+  Pág   235 | +16 novos | Total novo: 416 | Detalhes: 0
+  Pág   236 | +16 novos | Total novo: 432 | Detalhes: 0
+  Pág   237 | +16 novos | Total novo: 448 | Detalhes: 0
+  Pág   238 | +16 novos | Total novo: 464 | Detalhes: 0
+  Pág   239 | +16 novos | Total novo: 480 | Detalhes: 0
+  Pág   240 | +16 novos | Total novo: 496 | Detalhes: 0
+  Pág   241 | +16 novos | Total novo: 512 | Detalhes: 0
+  Pág   242 | +16 novos | Total novo: 528 | Detalhes: 0
+  Pág   243 | +16 novos | Total novo: 544 | Detalhes: 0
+  Pág   244 | +16 novos | Total novo: 560 | Detalhes: 0
+  Pág   245 | +16 novos | Total novo: 576 | Detalhes: 0
+  Pág   246 | +16 novos | Total novo: 592 | Detalhes: 0
+  Pág   247 | +16 novos | Total novo: 608 | Detalhes: 0
+  Pág   248 | +16 novos | Total novo: 624 | Detalhes: 0
+  Pág   249 | +16 novos | Total novo: 640 | Detalhes: 0
+  Pág   250 | +16 novos | Total novo: 656 | Detalhes: 0
+  Pág   251 | +16 novos | Total novo: 672 | Detalhes: 0
+  Pág   252 | +16 novos | Total novo: 688 | Detalhes: 0
+  Pág   253 | +16 novos | Total novo: 704 | Detalhes: 0
+  Pág   254 | +16 novos | Total novo: 720 | Detalhes: 0
+  Pág   255 | +16 novos | Total novo: 736 | Detalhes: 0
+  Pág   256 | +16 novos | Total novo: 752 | Detalhes: 0
+  Pág   257 | +16 novos | Total novo: 768 | Detalhes: 0
+  Pág   258 | +16 novos | Total novo: 784 | Detalhes: 0
+  Pág   259 | +16 novos | Total novo: 800 | Detalhes: 0
+  Pág   260 | +16 novos | Total novo: 816 | Detalhes: 0
+  Pág   261 | +16 novos | Total novo: 832 | Detalhes: 0
+  Pág   262 | +16 novos | Total novo: 848 | Detalhes: 0
+  Pág   263 | +16 novos | Total novo: 864 | Detalhes: 0
+  Pág   264 | +16 novos | Total novo: 880 | Detalhes: 0
+  Pág   265 | +16 novos | Total novo: 896 | Detalhes: 0
+  Pág   266 | +16 novos | Total novo: 912 | Detalhes: 0
+  Pág   267 | +16 novos | Total novo: 928 | Detalhes: 0
+  Pág   268 | +16 novos | Total novo: 944 | Detalhes: 0
+  Pág   269 | +16 novos | Total novo: 960 | Detalhes: 0
+  Pág   270 | +16 novos | Total novo: 976 | Detalhes: 0
+  Pág   271 | +16 novos | Total novo: 992 | Detalhes: 0
+  Pág   272 | +16 novos | Total novo: 1008 | Detalhes: 0
+  Pág   273 | +16 novos | Total novo: 1024 | Detalhes: 0
+  Pág   274 | +16 novos | Total novo: 1040 | Detalhes: 0
+  Pág   275 | +16 novos | Total novo: 1056 | Detalhes: 0
+  Pág   276 | +16 novos | Total novo: 1072 | Detalhes: 0
+  Pág   277 | +16 novos | Total novo: 1088 | Detalhes: 0
+  Pág   278 | +16 novos | Total novo: 1104 | Detalhes: 0
+  Pág   279 | +16 novos | Total novo: 1120 | Detalhes: 0
+  Pág   280 | +16 novos | Total novo: 1136 | Detalhes: 0
+  Pág   281 | +16 novos | Total novo: 1152 | Detalhes: 0
+  Pág   282 | +16 novos | Total novo: 1168 | Detalhes: 0
+  Pág   283 | +16 novos | Total novo: 1184 | Detalhes: 0
+  Pág   284 | +16 novos | Total novo: 1200 | Detalhes: 0
+  Pág   285 | +16 novos | Total novo: 1216 | Detalhes: 0
+  Pág   286 | +16 novos | Total novo: 1232 | Detalhes: 0
+  Pág   287 | +16 novos | Total novo: 1248 | Detalhes: 0
+  Pág   288 | +16 novos | Total novo: 1264 | Detalhes: 0
+  Pág   289 | +16 novos | Total novo: 1280 | Detalhes: 0
+  Pág   290 | +16 novos | Total novo: 1296 | Detalhes: 0
+  Pág   291 | +16 novos | Total novo: 1312 | Detalhes: 0
+  Pág   292 | +16 novos | Total novo: 1328 | Detalhes: 0
+  Pág   293 | +16 novos | Total novo: 1344 | Detalhes: 0
+  Pág   294 | +16 novos | Total novo: 1360 | Detalhes: 0
+  Pág   295 | +16 novos | Total novo: 1376 | Detalhes: 0
+  Pág   296 | +16 novos | Total novo: 1392 | Detalhes: 0
+  Pág   297 | +16 novos | Total novo: 1408 | Detalhes: 0
+  Pág   298 | +16 novos | Total novo: 1424 | Detalhes: 0
+  Pág   299 | +16 novos | Total novo: 1440 | Detalhes: 0
+  Pág   300 | +16 novos | Total novo: 1456 | Detalhes: 0
+  Pág   301 | +16 novos | Total novo: 1472 | Detalhes: 0
+  Pág   302 | +16 novos | Total novo: 1488 | Detalhes: 0
+  Pág   303 | +16 novos | Total novo: 1504 | Detalhes: 0
+  Pág   304 | +16 novos | Total novo: 1520 | Detalhes: 0
+  Pág   305 | +16 novos | Total novo: 1536 | Detalhes: 0
+  Pág   306 | +16 novos | Total novo: 1552 | Detalhes: 0
+  Pág   307 | +16 novos | Total novo: 1568 | Detalhes: 0
+  Pág   308 | +16 novos | Total novo: 1584 | Detalhes: 0
+  Pág   309 | +16 novos | Total novo: 1600 | Detalhes: 0
+  Pág   310 | +16 novos | Total novo: 1616 | Detalhes: 0
+  Pág   311 | +16 novos | Total novo: 1632 | Detalhes: 0
+  Pág   312 | +16 novos | Total novo: 1648 | Detalhes: 0
+  Pág   313 | +16 novos | Total novo: 1664 | Detalhes: 0
+  Pág   314 | +16 novos | Total novo: 1680 | Detalhes: 0
+  Pág   315 | +16 novos | Total novo: 1696 | Detalhes: 0
+  Pág   316 | +16 novos | Total novo: 1712 | Detalhes: 0
+  Pág   317 | +16 novos | Total novo: 1728 | Detalhes: 0
+  Pág   318 | +16 novos | Total novo: 1744 | Detalhes: 0
+  Pág   319 | +16 novos | Total novo: 1760 | Detalhes: 0
+  Pág   320 | +16 novos | Total novo: 1776 | Detalhes: 0
+  Pág   321 | +16 novos | Total novo: 1792 | Detalhes: 0
+  Pág   322 | +16 novos | Total novo: 1808 | Detalhes: 0
+  Pág   323 | +16 novos | Total novo: 1824 | Detalhes: 0
+  Pág   324 | +16 novos | Total novo: 1840 | Detalhes: 0
+  Pág   325 | +16 novos | Total novo: 1856 | Detalhes: 0
+  Pág   326 | +16 novos | Total novo: 1872 | Detalhes: 0
+  Pág   327 | +16 novos | Total novo: 1888 | Detalhes: 0
+  Pág   328 | +16 novos | Total novo: 1904 | Detalhes: 0
+  Pág   329 | +16 novos | Total novo: 1920 | Detalhes: 0
+  Pág   330 | +16 novos | Total novo: 1936 | Detalhes: 0
+  Pág   331 | +16 novos | Total novo: 1952 | Detalhes: 0
+  Pág   332 | +16 novos | Total novo: 1968 | Detalhes: 0
+  Pág   333 | +16 novos | Total novo: 1984 | Detalhes: 0
+  Pág   334 | +16 novos | Total novo: 2000 | Detalhes: 0
+  Pág   335 | +16 novos | Total novo: 2016 | Detalhes: 0
+  Pág   336 | +16 novos | Total novo: 2032 | Detalhes: 0
+  Pág   337 | +16 novos | Total novo: 2048 | Detalhes: 0
+  Pág   338 | +16 novos | Total novo: 2064 | Detalhes: 0
+  Pág   339 | +16 novos | Total novo: 2080 | Detalhes: 0
+  Pág   340 | +16 novos | Total novo: 2096 | Detalhes: 0
+  Pág   341 | +16 novos | Total novo: 2112 | Detalhes: 0
+  Pág   342 | +16 novos | Total novo: 2128 | Detalhes: 0
+  Pág   343 | +16 novos | Total novo: 2144 | Detalhes: 0
+  Pág   344 | +16 novos | Total novo: 2160 | Detalhes: 0
+  Pág   345 | +16 novos | Total novo: 2176 | Detalhes: 0
+  Pág   346 | +16 novos | Total novo: 2192 | Detalhes: 0
+  Pág   347 | +16 novos | Total novo: 2208 | Detalhes: 0
+  Pág   348 | +16 novos | Total novo: 2224 | Detalhes: 0
+  Pág   349 | +16 novos | Total novo: 2240 | Detalhes: 0
+  Pág   350 | +16 novos | Total novo: 2256 | Detalhes: 0
+  Pág   351 | +16 novos | Total novo: 2272 | Detalhes: 0
+  Pág   352 | +16 novos | Total novo: 2288 | Detalhes: 0
+  Pág   353 | +16 novos | Total novo: 2304 | Detalhes: 0
+  Pág   354 | +16 novos | Total novo: 2320 | Detalhes: 0
+  Pág   355 | +16 novos | Total novo: 2336 | Detalhes: 0
+  Pág   356 | +16 novos | Total novo: 2352 | Detalhes: 0
+  Pág   357 | +16 novos | Total novo: 2368 | Detalhes: 0
+  Pág   358 | +16 novos | Total novo: 2384 | Detalhes: 0
+  Pág   359 | +16 novos | Total novo: 2400 | Detalhes: 0
+  Pág   360 | +16 novos | Total novo: 2416 | Detalhes: 0
+  Pág   361 | +16 novos | Total novo: 2432 | Detalhes: 0
+  Pág   362 | +16 novos | Total novo: 2448 | Detalhes: 0
+  Pág   363 | +16 novos | Total novo: 2464 | Detalhes: 0
+  Pág   364 | +16 novos | Total novo: 2480 | Detalhes: 0
+  Pág   365 | +16 novos | Total novo: 2496 | Detalhes: 0
+  Pág   366 | +16 novos | Total novo: 2512 | Detalhes: 0
+  Pág   367 | +16 novos | Total novo: 2528 | Detalhes: 0
+  Pág   368 | +16 novos | Total novo: 2544 | Detalhes: 0
+  Pág   369 | +16 novos | Total novo: 2560 | Detalhes: 0
+  Pág   370 | +16 novos | Total novo: 2576 | Detalhes: 0
+  Pág   371 | +16 novos | Total novo: 2592 | Detalhes: 0
+  Pág   372 | +16 novos | Total novo: 2608 | Detalhes: 0
+  Pág   373 | +16 novos | Total novo: 2624 | Detalhes: 0
+  Pág   374 | +16 novos | Total novo: 2640 | Detalhes: 0
+  Pág   375 | +16 novos | Total novo: 2656 | Detalhes: 0
+  Pág   376 | +16 novos | Total novo: 2672 | Detalhes: 0
+  Pág   377 | +16 novos | Total novo: 2688 | Detalhes: 0
+  Pág   378 | +16 novos | Total novo: 2704 | Detalhes: 0
+  Pág   379 | +16 novos | Total novo: 2720 | Detalhes: 0
+  Pág   380 | +16 novos | Total novo: 2736 | Detalhes: 0
+  Pág   381 | +16 novos | Total novo: 2752 | Detalhes: 0
+  Pág   382 | +16 novos | Total novo: 2768 | Detalhes: 0
+  Pág   383 | +16 novos | Total novo: 2784 | Detalhes: 0
+  Pág   384 | +16 novos | Total novo: 2800 | Detalhes: 0
+  Pág   385 | +16 novos | Total novo: 2816 | Detalhes: 0
+  Pág   386 | +16 novos | Total novo: 2832 | Detalhes: 0
+  Pág   387 | +16 novos | Total novo: 2848 | Detalhes: 0
+  Pág   388 | +16 novos | Total novo: 2864 | Detalhes: 0
+  Pág   389 | +16 novos | Total novo: 2880 | Detalhes: 0
+  Pág   390 | +16 novos | Total novo: 2896 | Detalhes: 0
+  Pág   391 | +16 novos | Total novo: 2912 | Detalhes: 0
+  Pág   392 | +16 novos | Total novo: 2928 | Detalhes: 0
+  Pág   393 | +16 novos | Total novo: 2944 | Detalhes: 0
+  Pág   394 | +16 novos | Total novo: 2960 | Detalhes: 0
+  Pág   395 | +16 novos | Total novo: 2976 | Detalhes: 0
+  Pág   396 | +16 novos | Total novo: 2992 | Detalhes: 0
+  Pág   397 | +16 novos | Total novo: 3008 | Detalhes: 0
+  Pág   398 | +16 novos | Total novo: 3024 | Detalhes: 0
+  Pág   399 | +16 novos | Total novo: 3040 | Detalhes: 0
+  Pág   400 | +16 novos | Total novo: 3056 | Detalhes: 0
+  Pág   401 | +16 novos | Total novo: 3072 | Detalhes: 0
+  Pág   402 | +16 novos | Total novo: 3088 | Detalhes: 0
+  Pág   403 | +16 novos | Total novo: 3104 | Detalhes: 0
+  Pág   404 | +16 novos | Total novo: 3120 | Detalhes: 0
+  Pág   405 | +16 novos | Total novo: 3136 | Detalhes: 0
+  Pág   406 | +16 novos | Total novo: 3152 | Detalhes: 0
+  Pág   407 | +16 novos | Total novo: 3168 | Detalhes: 0
+  Pág   408 | +16 novos | Total novo: 3184 | Detalhes: 0
+  Pág   409 | +16 novos | Total novo: 3200 | Detalhes: 0
+  Pág   410 | +16 novos | Total novo: 3216 | Detalhes: 0
+  Pág   411 | +16 novos | Total novo: 3232 | Detalhes: 0
+  Pág   412 | +16 novos | Total novo: 3248 | Detalhes: 0
+  Pág   413 | +16 novos | Total novo: 3264 | Detalhes: 0
+  Pág   414 | +16 novos | Total novo: 3280 | Detalhes: 0
+  Pág   415 | +16 novos | Total novo: 3296 | Detalhes: 0
+  Pág   416 | +16 novos | Total novo: 3312 | Detalhes: 0
+  Pág   417 | +16 novos | Total novo: 3328 | Detalhes: 0
+  Pág   418 | +16 novos | Total novo: 3344 | Detalhes: 0
+  Pág   419 | +16 novos | Total novo: 3360 | Detalhes: 0
+  Pág   420 | +16 novos | Total novo: 3376 | Detalhes: 0
+  Pág   421 | +16 novos | Total novo: 3392 | Detalhes: 0
+  Pág   422 | +16 novos | Total novo: 3408 | Detalhes: 0
+  Pág   423 | +16 novos | Total novo: 3424 | Detalhes: 0
+  Pág   424 | +16 novos | Total novo: 3440 | Detalhes: 0
+  Pág   425 | +16 novos | Total novo: 3456 | Detalhes: 0
+  Pág   426 | +16 novos | Total novo: 3472 | Detalhes: 0
+  Pág   427 | +16 novos | Total novo: 3488 | Detalhes: 0
+  Pág   428 | +16 novos | Total novo: 3504 | Detalhes: 0
+  Pág   429 | +16 novos | Total novo: 3520 | Detalhes: 0
+  Pág   430 | +16 novos | Total novo: 3536 | Detalhes: 0
+  Pág   431 | +16 novos | Total novo: 3552 | Detalhes: 0
+  Pág   432 | +16 novos | Total novo: 3568 | Detalhes: 0
+  Pág   433 | +16 novos | Total novo: 3584 | Detalhes: 0
+  Pág   434 | +16 novos | Total novo: 3600 | Detalhes: 0
+  Pág   435 | +16 novos | Total novo: 3616 | Detalhes: 0
+  Pág   436 | +16 novos | Total novo: 3632 | Detalhes: 0
+  Pág   437 | +16 novos | Total novo: 3648 | Detalhes: 0
+  Pág   438 | +16 novos | Total novo: 3664 | Detalhes: 0
+  Pág   439 | +16 novos | Total novo: 3680 | Detalhes: 0
+  Pág   440 | +16 novos | Total novo: 3696 | Detalhes: 0
+  Pág   441 | +16 novos | Total novo: 3712 | Detalhes: 0
+  Pág   442 | +16 novos | Total novo: 3728 | Detalhes: 0
+  Pág   443 | +16 novos | Total novo: 3744 | Detalhes: 0
+  Pág   444 | +16 novos | Total novo: 3760 | Detalhes: 0
+  Pág   445 | +16 novos | Total novo: 3776 | Detalhes: 0
+  Pág   446 | +16 novos | Total novo: 3792 | Detalhes: 0
+  Pág   447 | +16 novos | Total novo: 3808 | Detalhes: 0
+  Pág   448 | +16 novos | Total novo: 3824 | Detalhes: 0
+  Pág   449 | +16 novos | Total novo: 3840 | Detalhes: 0
+  Pág   450 | +16 novos | Total novo: 3856 | Detalhes: 0
+  Pág   451 | +16 novos | Total novo: 3872 | Detalhes: 0
+  Pág   452 | +16 novos | Total novo: 3888 | Detalhes: 0
+  Pág   453 | +16 novos | Total novo: 3904 | Detalhes: 0
+  Pág   454 | +16 novos | Total novo: 3920 | Detalhes: 0
+  Pág   455 | +16 novos | Total novo: 3936 | Detalhes: 0
+  Pág   456 | +16 novos | Total novo: 3952 | Detalhes: 0
+  Pág   457 | +16 novos | Total novo: 3968 | Detalhes: 0
+  Pág   458 | +16 novos | Total novo: 3984 | Detalhes: 0
+  Pág   459 | +16 novos | Total novo: 4000 | Detalhes: 0
+  Pág   460 | +16 novos | Total novo: 4016 | Detalhes: 0
+  Pág   461 | +16 novos | Total novo: 4032 | Detalhes: 0
+  Pág   462 | +16 novos | Total novo: 4048 | Detalhes: 0
+  Pág   463 | +16 novos | Total novo: 4064 | Detalhes: 0
+  Pág   464 | +16 novos | Total novo: 4080 | Detalhes: 0
+  Pág   465 | +16 novos | Total novo: 4096 | Detalhes: 0
+  Pág   466 | +16 novos | Total novo: 4112 | Detalhes: 0
+  Pág   467 | +16 novos | Total novo: 4128 | Detalhes: 0
+  Pág   468 | +16 novos | Total novo: 4144 | Detalhes: 0
+  Pág   469 | +16 novos | Total novo: 4160 | Detalhes: 0
+  Pág   470 | +16 novos | Total novo: 4176 | Detalhes: 0
+  Pág   471 | +16 novos | Total novo: 4192 | Detalhes: 0
+  Pág   472 | +16 novos | Total novo: 4208 | Detalhes: 0
+  Pág   473 | +16 novos | Total novo: 4224 | Detalhes: 0
+  Pág   474 | +16 novos | Total novo: 4240 | Detalhes: 0
+  Pág   475 | +16 novos | Total novo: 4256 | Detalhes: 0
+  Pág   476 | +16 novos | Total novo: 4272 | Detalhes: 0
+  Pág   477 | +16 novos | Total novo: 4288 | Detalhes: 0
+  Pág   478 | +16 novos | Total novo: 4304 | Detalhes: 0
+  Pág   479 | +16 novos | Total novo: 4320 | Detalhes: 0
+  Pág   480 | +16 novos | Total novo: 4336 | Detalhes: 0
+  Pág   481 | +16 novos | Total novo: 4352 | Detalhes: 0
+  Pág   482 | +16 novos | Total novo: 4368 | Detalhes: 0
+  Pág   483 | +16 novos | Total novo: 4384 | Detalhes: 0
+  Pág   484 | +16 novos | Total novo: 4400 | Detalhes: 0
+  Pág   485 | +16 novos | Total novo: 4416 | Detalhes: 0
+  Pág   486 | +16 novos | Total novo: 4432 | Detalhes: 0
+  Pág   487 | +16 novos | Total novo: 4448 | Detalhes: 0
+  Pág   488 | +16 novos | Total novo: 4464 | Detalhes: 0
+  Pág   489 | +16 novos | Total novo: 4480 | Detalhes: 0
+  Pág   490 | +16 novos | Total novo: 4496 | Detalhes: 0
+  Pág   491 | +16 novos | Total novo: 4512 | Detalhes: 0
+  Pág   492 | +16 novos | Total novo: 4528 | Detalhes: 0
+  Pág   493 | +16 novos | Total novo: 4544 | Detalhes: 0
+  Pág   494 | +16 novos | Total novo: 4560 | Detalhes: 0
+  Pág   495 | +16 novos | Total novo: 4576 | Detalhes: 0
+  Pág   496 | +16 novos | Total novo: 4592 | Detalhes: 0
+  Pág   497 | +16 novos | Total novo: 4608 | Detalhes: 0
+  Pág   498 | +16 novos | Total novo: 4624 | Detalhes: 0
+  Pág   499 | +16 novos | Total novo: 4640 | Detalhes: 0
+  Pág   500 | +16 novos | Total novo: 4656 | Detalhes: 0
+  [OK] Varredura completa marcada — próximas execuções serão incrementais.
+
+Novos: 4656 | Total: 8001
+Salvo em: C:\Users\andre\LEILÕES DE ARTE\cda_db.json
+Fim: 21/03/2026 19:59:41

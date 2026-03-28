@@ -1,0 +1,5 @@
+*.log
+*.bak
+*.xlsx
+__pycache__/
+garimpo_checkpoint.json

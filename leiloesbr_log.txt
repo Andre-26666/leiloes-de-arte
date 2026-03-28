@@ -1,0 +1,1633 @@
+====================================================================
+  CATÁLOGO DE PINTURAS — LeilõesBR
+  Execução: 21/03/2026 21:27:29
+====================================================================
+  Base atual: 121 pinturas  |  138 lotes processados total
+
+────────────────────────────────────────────────────────────────────
+  FASE 1 — Coletando lotes do site...
+────────────────────────────────────────────────────────────────────
+  [Quadros andamento] p1=138 p2=12
+
+  [varredura direta das casas]
+  [direto] www.galeriaartemresilva.art.br: 20 lotes
+  [direto] www.seculoxxleiloes.com.br: 17 lotes
+  [direto] www.toquedeclasseleiloes.com.br: 20 lotes
+  [direto] www.vilmarama.com.br: 15 lotes
+  [direto] www.antiguera.com.br: 11 lotes
+  [direto] www.evanioalvesleiloeiro.com.br: 20 lotes
+  [direto] www.oficinacenarioleiloes.com.br: 20 lotes
+  [direto] www.bruceangeirasleiloeiro.com.br: 187 lotes
+  [direto] br.antonioferreira.lel.br: 79 lotes
+  [direto] www.awleiloes.com.br: 20 lotes
+  [direto] www.barradasleiloes.com.br: 16 lotes
+  [direto] www.bsecbh.com.br: 20 lotes
+  [direto] www.cidamello.lel.br: 20 lotes
+  [direto] www.jbiglesias.com.br: 16 lotes
+  [direto] www.leiloesfp.com.br: 20 lotes
+  [direto] www.missleiloes.com.br: 20 lotes
+  [direto] www.novasreliquiasleiloes.com.br: 20 lotes
+  [direto] www.petrovickleiloes.com.br: 20 lotes
+  [direto] www.pontodocolecionadorleiloes.com.br: 20 lotes
+  [direto] www.pvleiloes.com.br: 20 lotes
+  [direto] www.rmgouvealeiloes.com.br: 128 lotes
+  [direto] www.tallonileiloes.com.br: 18 lotes
+  [direto] www.tpleiloes.com.br: 20 lotes
+  [direto] total novos via catálogo direto: 767
+  [finalizado] 'óleo sobre tela' p1=138 p2=12
+  [finalizado] 'acrílica sobre tela' p1=0
+  [finalizado] 'óleo sobre madeira' p1=0
+  [finalizado] 'aquarela' p1=0
+  [finalizado] 'técnica mista sobre tela' p1=0
+  [finalizado] 'guache' p1=0
+  [finalizado] 'pastel sobre' p1=0
+  [finalizado] 'têmpera' p1=0
+  [finalizado] 'OST' p1=0
+  [finalizado] 'AST' p1=0
+  [finalizado] 'TM s/tela' p1=0
+
+  Lotes encontrados no site : 1031
+  Já na base               : 0
+  Novos a processar        : 1031
+
+────────────────────────────────────────────────────────────────────
+  FASE 2 — Obtendo detalhes...
+────────────────────────────────────────────────────────────────────
+
+  [0001/1031]   0.1%  (ignor. — )
+  [0002/1031]   0.2%  Gilberto Cabral               base R$     500  sem lance  [acrílica sobre tela - Natureza]
+  [0003/1031]   0.3%  João José Rescala             base R$   2,500  sem lance  [óleo sobre tela - Marinha com ]
+  [0004/1031]   0.4%  HUMBERTO DA COSTA             base R$     600  sem lance  [óleo sobre tela]
+  [0005/1031]   0.5%  HUMBERTO DA COSTA             base R$     600  sem lance  [óleo sobre tela]
+  [0006/1031]   0.6%  MV `Jesus com pássaros`       base R$     100  sem lance  [óleo sobre madeira. - 32 x 14 ]
+  [0007/1031]   0.7%  Sylvio Pinto (1918            base R$   2,000  sem lance  [óleo sobre tela. - 66 x81 cm. ]
+  [0008/1031]   0.8%  Escola Cusquenha              base R$   1,300  sem lance  [óleo sobre tela. - 95 x 78 cm.]
+  [0009/1031]   0.9%  Escola italiana `Marinha`     base R$   1,000  sem lance  [óleo sobre tela. - 36 x 45 cm.]
+  [0010/1031]   1.0%  P. Lazló `Flores`             base R$     300  sem lance  [óleo sobre tela. - 70 x 80 mi8]
+  [0011/1031]   1.1%  `Vaso de flores`              base R$     200  sem lance  [óleo sobre tela. - 45 x 38 cm ]
+  [0012/1031]   1.2%  J Souza `Paisagem`            base R$     100  sem lance  [óleo sobre madeira. - 15 x 22 ]
+  [0013/1031]   1.3%  (ignor. — )
+  [0014/1031]   1.4%  E Stupakoff `Marinha`         base R$     800  sem lance  [óleo sobre tela. - 39 x 58 cm ]
+  [0015/1031]   1.5%  A. Cantanheda `Paisagem`      base R$     800  sem lance  [óleo sobre tela. - 90 x 65 cm ]
+  [0016/1031]   1.6%  Assis                         base R$     300  sem lance  [óleo sobre tela. - 40 x 25 cm ]
+  [0017/1031]   1.6%  W Sasson `Figura feminina`    base R$     500  sem lance  [óleo sobre tela. - 40 x 34 cm ]
+
+  >> DB salvo — 15 novos nesta execução
+
+  [0018/1031]   1.7%  R Weiss `Inverno na cidade`   base R$     150  sem lance  [óleo sobre madeira. - 16 x 24 ]
+  [0019/1031]   1.8%  Mauricio Machado `Cena árabe  base R$     300  sem lance  [óleo sobre tela. – 175 x 100 c]
+  [0020/1031]   1.9%  Arte popular `Nossa Senhora   base R$     500  sem lance  [óleo sobre tela. - 77 x 59 cm ]
+  [0021/1031]   2.0%  Koenig `Vendedores de frutas  base R$     300  sem lance  [óleo sobre tela. - 30 x 40 cm ]
+  [0022/1031]   2.1%  (ignor. — )
+  [0023/1031]   2.2%  Paulo Marinho (1944) `Rebanh  base R$     120  sem lance  [óleo sobre tela. - 27 x 35 cm ]
+  [0024/1031]   2.3%  Saavedra `Paisagem com casar  base R$     500  sem lance  [óleo sobre tela. - 60 x 73 cm ]
+  [0025/1031]   2.4%  Alberto Mattera (1925) `Mari  base R$     100  sem lance  [óleo sobre tela. - 54 x 65 cm ]
+  [0026/1031]   2.5%  Escola cusquenha              base R$     600  sem lance  [óleo sobre tela. – 92 x 72 cm ]
+  [0027/1031]   2.6%  Jacques Wely `Casal de dança  base R$     200  sem lance  [aquarela – 23 x 17 cm MI e 39 ]
+  [0028/1031]   2.7%  Angelim D. G. `Figura de mul  base R$     100  sem lance  [aquarela – 24 x 18 cm MI e 28 ]
+  [0029/1031]   2.8%  Escola cusquenha              base R$     500  sem lance  [óleo sobre tela. - 47 x 37 cm ]
+  [0030/1031]   2.9%  MA `Ilha com coqueiros e jan  base R$     100  sem lance  [aquarela – 26 x 36 cm MI e 35 ]
+  [0031/1031]   3.0%  Escola cusquenha              base R$     600  sem lance  [óleo sobre tela. – 67 x 49 cm ]
+  [0032/1031]   3.1%  Concessa Colaço `Flores e pá  base R$   1,000  R$   1,100 (1L)  [óleo sobre madeira. - 45 x 58 ]
+  [0033/1031]   3.2%  Victor L. S. `Casario com ma  base R$     400  sem lance  [óleo sobre tela. - 60 x 80 cm ]
+
+  >> DB salvo — 30 novos nesta execução
+
+  [0034/1031]   3.3%  Escola europeia               base R$     150  sem lance  [óleo sobre madeira. - 15 x 11 ]
+  [0035/1031]   3.4%  (ignor. — )
+  [0036/1031]   3.5%  Alan Carlson (1950) `Casa co  base R$     100  sem lance  [óleo sobre tela. - 38 x 46 cm ]
+  [0037/1031]   3.6%  Sansão Pereira (1919          base R$     400  sem lance  [óleo sobre tela. - 47 x 39 cm ]
+  [0038/1031]   3.7%  R Weiss `Inverno da cidade h  base R$     200  sem lance  [óleo sobre madeira. - 16 x 24 ]
+  [0039/1031]   3.8%  Renato Cataldi (1909 —1981)   base R$     150  sem lance  [óleo sobre tela. - 14 x 22 cm ]
+  [0040/1031]   3.9%  MARCIER                       base R$   4,800  sem lance  [óleo sobre tela. - 50 x 64 cm.]
+  [0041/1031]   4.0%  Escola cusquenha              base R$   1,800  sem lance  [óleo sobre tela. - 100 x 73 cm]
+  [0042/1031]   4.1%  Fernando P `Cena de bar`      base R$     500  R$     650 (3L)  [óleo sobre tela. - 27 x 35 cm ]
+  [0043/1031]   4.2%  Paulo Gagarin (1885 — 1980)   base R$   1,500  sem lance  [óleo sobre tela. - 80 x 65 cm ]
+  [0044/1031]   4.3%  Armando Balloni (1901         base R$     200  sem lance  [óleo sobre tela. - 41 x 32 cm ]
+  [0045/1031]   4.4%  PEDRO NASCIMENTO (1927/1986)  base R$     800  sem lance  [óleo sobre tela. - 60 x 80 cm ]
+  [0046/1031]   4.5%  (ignor. — )
+  [0047/1031]   4.6%  Escola italiana `Nossa Senho  base R$     800  sem lance  [óleo sobre tela. - 69 x 51 cm ]
+  [0048/1031]   4.7%  Escola austríaca `Abstrato`   base R$     300  sem lance  [óleo sobre tela. - 128 x 94 cm]
+  [0049/1031]   4.8%  (ignor. — )
+  [0050/1031]   4.8%  Antonio Cunha `Paisagem`      base R$   1,800  sem lance  [óleo sobre madeira. - 27 x 35 ]
+  [0051/1031]   4.9%  Prof. Rudinizza. `Marinha`    base R$     800  sem lance  [óleo sobre tela. - 70 x 100 cm]
+
+  >> DB salvo — 45 novos nesta execução
+
+  [0052/1031]   5.0%  Luciano G. `Nu feminino`      base R$     300  sem lance  [óleo sobre tela. – 48 x 74 cm ]
+  [0053/1031]   5.1%  Virgílio Lopes Rodrigues (18  base R$     400  sem lance  [óleo sobre madeira. 15 x 26 cm]
+  [0054/1031]   5.2%  Dario Mecatti (1909           base R$     500  R$     550 (1L)  [óleo sobre madeira. – 14 x 20 ]
+  [0055/1031]   5.3%  Domenico Lazzarini (1920      base R$     200  sem lance  [óleo sobre tela. - 33 x 41 cm ]
+  [0056/1031]   5.4%  Píndaro Castello Branco (193  base R$     200  sem lance  [óleo sobre tela. - 25 x 50 cm ]
+  [0057/1031]   5.5%  Alberto Mattera (1925) `Mari  base R$     150  sem lance  [óleo sobre tela. - 55 x 65 cm ]
+  [0058/1031]   5.6%  Eduardo León Garrido (1856-1  base R$   4,800  sem lance  [óleo sobre madeira. - 27 x 35 ]
+  [0059/1031]   5.7%  Sylvio Pinto (1918            base R$     300  sem lance  [óleo sobre tela. – 22 x 35 cm ]
+  [0060/1031]   5.8%  Alberto Mattera (1925) `Mari  base R$     100  sem lance  [óleo sobre tela. - 54 x 65 cm ]
+  [0061/1031]   5.9%  Alberto Mattera (1925) `Mari  base R$     100  sem lance  [óleo sobre tela. - 38 x 55 cm ]
+  [0062/1031]   6.0%  Satyro Marques (1935) `Guerr  base R$     500  sem lance  [óleo sobre tela. - 25 x 35 cm.]
+  [0063/1031]   6.1%  Josef Israel ( 1824 – 1911)   base R$   1,800  sem lance  [óleo sobre tela. – 28 x 36 cm ]
+  [0064/1031]   6.2%  Auguste Petit (1844           base R$     700  sem lance  [óleo sobre tela. - 36 x 45 cm ]
+  [0065/1031]   6.3%  (ignor. — )
+  [0066/1031]   6.4%  Saavedra `Paisagem de Teresó  base R$     500  sem lance  [óleo sobre tela. – 64 x 92 cm ]
+  [0067/1031]   6.5%  Rubens Gerchman (1942         base R$   4,000  sem lance  [óleo sobre tela. - 37 x 29 cm ]
+
+  >> DB salvo — 60 novos nesta execução
+
+  [0068/1031]   6.6%  MARCIER                       base R$   3,000  sem lance  [óleo sobre tela. 33 x 24 cm MI]
+  [0069/1031]   6.7%  Dario Mecatti (1090           base R$   1,000  R$   1,100 (1L)  [óleo sobre tela. - 50 x 100 cm]
+  [0070/1031]   6.8%  (ignor. — )
+  [0071/1031]   6.9%  (ignor. — )
+  [0072/1031]   7.0%  Escola cusquenha  Sec. XVIII  base R$   7,000  sem lance  [óleo sobre tela. - 178 x 123 c]
+  [0073/1031]   7.1%  (ignor. — )
+  [0074/1031]   7.2%  Chico da Silva (1910          base R$     700  sem lance  [óleo sobre tela. - 29 x 20 cm ]
+  [0075/1031]   7.3%  Carlos Chamberlland (1884     base R$     800  sem lance  [óleo sobre tela. - 60 x 70 cm ]
+  [0076/1031]   7.4%  Luiz Jasmin (1940) `Figuras   base R$     300  sem lance  [Guache sobre papel – 33 x42 cm]
+  [0077/1031]   7.5%  (ignor. — )
+  [0078/1031]   7.6%  Camões                        base R$   3,000  sem lance  [óleo sobre tela. - 40 x 70 cm ]
+  [0079/1031]   7.7%  Armindo Pascual (1920         base R$     150  sem lance  [óleo sobre tela. - 33 x 41 cm ]
+  [0080/1031]   7.8%  Rafaello Celommi (1883        base R$   1,000  sem lance  [óleo sobre tela. - 105 x 70 cm]
+  [0081/1031]   7.9%  Escola europeia               base R$     500  sem lance  [óleo sobre tela. - 32 x 26 cm ]
+  [0082/1031]   8.0%  Newton Rezende (1912          base R$   5,000  sem lance  [óleo sobre tela. – 80 x 44 cm ]
+  [0083/1031]   8.1%  MARCIER                       base R$   2,500  R$   2,600 (1L)  [óleo sobre tela. - 33 x 55 cm ]
+  [0084/1031]   8.1%  (ignor. — )
+  [0085/1031]   8.2%  H. C. Noronha `Paisagem`      base R$     100  sem lance  [óleo sobre tela. - 24 x 31 cm ]
+  [0086/1031]   8.3%  Manuel Pereira Madruga Filho  base R$     400  sem lance  [óleo sobre tela. - 44 x 30 cm ]
+  [0087/1031]   8.4%  Domenico Lazzarini (1920      base R$     300  sem lance  [óleo sobre tela. - 22 x 16 cm ]
+
+  >> DB salvo — 75 novos nesta execução
+
+  [0088/1031]   8.5%  (ignor. — )
+  [0089/1031]   8.6%  Francesco Brunocilla (1948)   base R$     200  sem lance  [óleo sobre tela. - 16 x 27 cm ]
+  [0090/1031]   8.7%  João Batista da Costa (1865   base R$  20,000  R$  20,500 (1L)  [óleo sobre madeira. - 61 x 49 ]
+  [0091/1031]   8.8%  Maria Tomaselli Cirne Lima (  base R$  10,000  sem lance  [óleo sobre tela. – 100 x 130 c]
+  [0092/1031]   8.9%  Chico da Silva (1910          base R$     800  sem lance  [óleo sobre tela. - 45 x 68 cm ]
+  [0093/1031]   9.0%  Virgílio Lopes Rodrigues (18  base R$     200  sem lance  [óleo sobre madeira. – 11 x 19 ]
+  [0094/1031]   9.1%  (ignor. — )
+  [0095/1031]   9.2%  Luiz Verri                    base R$     800  sem lance  [óleo sobre tela. – 50 x 65 cm ]
+  [0096/1031]   9.3%  Enrico Bianchini (1903 –1971  base R$     250  sem lance  [óleo sobre tela. - 30 x 40 cm ]
+  [0097/1031]   9.4%  Eduardo Camões (1955) `Rua B  base R$     700  R$     750 (1L)  [óleo sobre tela. - 40 x 70 cm ]
+  [0098/1031]   9.5%  Fukushima                     base R$   1,000  sem lance  [óleo sobre tela. - 38 x 58 cm ]
+  [0099/1031]   9.6%  Newton Rezende (1912          base R$   3,000  sem lance  [óleo sobre tela colada em euca]
+  [0100/1031]   9.7%  (ignor. — )
+  [0101/1031]   9.8%  (ignor. — )
+  [0102/1031]   9.9%  (ignor. — )
+  [0103/1031]  10.0%  (ignor. — )
+  [0104/1031]  10.1%  Militão dos Santos (1956) `P  base R$   1,000  sem lance  [óleo sobre tela. - 24 x 35 cm ]
+  [0105/1031]  10.2%  Antonio Maia (1928            base R$   3,000  sem lance  [óleo sobre tela. - 46 x 61 cm ]
+  [0106/1031]  10.3%  Domenico Lazzarini (1920      base R$     300  sem lance  [óleo sobre tela. – 38 x 45 cm ]
+  [0107/1031]  10.4%  . Assis                       base R$     500  sem lance  [óleo sobre tela. - 65 x 96 cm ]
+  [0108/1031]  10.5%  (ignor. — )
+  [0109/1031]  10.6%  karasavas                     base R$     300  sem lance  [óleo sobre tela. - 38 x 46 cm ]
+
+  >> DB salvo — 90 novos nesta execução
+
+  [0110/1031]  10.7%  Mauro Ferreira (1958          base R$   1,000  R$   1,300 (1L)  [óleo sobre tela. - 85 x 130 cm]
+  [0111/1031]  10.8%  (ignor. — )
+  [0112/1031]  10.9%  Maurice BOMPARD (1857-1936)   base R$   7,000  sem lance  [óleo sobre tela. 38 x 56cm MI ]
+  [0113/1031]  11.0%  Anne Marie Nivouliés de Pier  base R$   4,000  R$   4,100 (1L)  [óleo sobre tela. – 90 x 99 cm ]
+  [0114/1031]  11.1%  Glauco Rodrigues `6 de abril  base R$   7,000  sem lance  [óleo sobre tela colada em made]
+  [0115/1031]  11.2%  (ignor. — )
+  [0116/1031]  11.3%  Arte Naif                     base R$     300  sem lance  [óleo sobre tela. - 50 x 60 cm ]
+  [0117/1031]  11.3%  Georges Jules MOTELEY (1865-  base R$  10,000  sem lance  [óleo sobre tela. - 50 x 66 cm ]
+  [0118/1031]  11.4%  Militão dos Santos (1956) `F  base R$     100  sem lance  [óleo sobre tela. - 40 x 30 cm ]
+  [0119/1031]  11.5%  (ignor. — )
+  [0120/1031]  11.6%  MARCIER                       base R$   3,000  R$   3,100 (1L)  [óleo sobre tela. - 73 x 60 cm ]
+  [0121/1031]  11.7%  (ignor. — )
+  [0122/1031]  11.8%  (ignor. — )
+  [0123/1031]  11.9%  (ignor. — )
+  [0124/1031]  12.0%  MABE                          base R$ 110,000  sem lance  [óleo sobre tela. - 101 x 152 c]
+  [0125/1031]  12.1%  (ignor. — )
+  [0126/1031]  12.2%  Roberto Burle Marx            base R$  18,000  sem lance  [óleo sobre tela - Vaso de Flor]
+  [0127/1031]  12.3%  (ignor. — )
+  [0128/1031]  12.4%  (ignor. — )
+  [0129/1031]  12.5%  (ignor. — )
+  [0130/1031]  12.6%  (ignor. — )
+  [0131/1031]  12.7%  (ignor. — )
+  [0132/1031]  12.8%  (ignor. — )
+  [0133/1031]  12.9%  (ignor. — )
+  [0134/1031]  13.0%  (ignor. — )
+  [0135/1031]  13.1%  (ignor. — )
+  [0136/1031]  13.2%  (ignor. — )
+  [0137/1031]  13.3%  (ignor. — )
+  [0138/1031]  13.4%  (ignor. — )
+  [0139/1031]  13.5%  (ignor. — )
+  [0140/1031]  13.6%  (ignor. — )
+  [0141/1031]  13.7%  (ignor. — )
+  [0142/1031]  13.8%  (ignor. — )
+  [0143/1031]  13.9%  (ignor. — )
+  [0144/1031]  14.0%  (ignor. — )
+  [0145/1031]  14.1%  (ignor. — )
+  [0146/1031]  14.2%  (ignor. — )
+  [0147/1031]  14.3%  (ignor. — )
+  [0148/1031]  14.4%  (ignor. — )
+  [0149/1031]  14.5%  (ignor. — )
+  [0150/1031]  14.5%  (ignor. — )
+  [0151/1031]  14.6%  (ignor. — )
+  [0152/1031]  14.7%  (ignor. — )
+  [0153/1031]  14.8%  (ignor. — )
+  [0154/1031]  14.9%  (ignor. — )
+  [0155/1031]  15.0%  (ignor. — )
+  [0156/1031]  15.1%  (ignor. — )
+  [0157/1031]  15.2%  (ignor. — )
+  [0158/1031]  15.3%  (ignor. — )
+  [0159/1031]  15.4%  (ignor. — )
+  [0160/1031]  15.5%  (ignor. — )
+  [0161/1031]  15.6%  (ignor. — )
+  [0162/1031]  15.7%  (ignor. — )
+  [0163/1031]  15.8%  (ignor. — )
+  [0164/1031]  15.9%  (ignor. — )
+  [0165/1031]  16.0%  (ignor. — )
+  [0166/1031]  16.1%  (ignor. — )
+  [0167/1031]  16.2%  (ignor. — )
+  [0168/1031]  16.3%  (ignor. — )
+  [0169/1031]  16.4%  (ignor. — )
+  [0170/1031]  16.5%  (ignor. — )
+  [0171/1031]  16.6%  (ignor. — )
+  [0172/1031]  16.7%  (ignor. — )
+  [0173/1031]  16.8%  (ignor. — )
+  [0174/1031]  16.9%  (ignor. — )
+  [0175/1031]  17.0%  (ignor. — )
+  [0176/1031]  17.1%  (ignor. — )
+  [0177/1031]  17.2%  (ignor. — )
+  [0178/1031]  17.3%  (ignor. — )
+  [0179/1031]  17.4%  (ignor. — )
+  [0180/1031]  17.5%  (ignor. — )
+  [0181/1031]  17.6%  LEO PUTZ (Alemanha 1869       base R$     900  R$      15 (2L)  []
+  [0182/1031]  17.7%  (ignor. — )
+  [0183/1031]  17.7%  (ignor. — )
+  [0184/1031]  17.8%  LEO PUTZ (Alemanha 1869       base R$     500  sem lance  []
+  [0185/1031]  17.9%  (ignor. — )
+  [0186/1031]  18.0%  (ignor. — )
+  [0187/1031]  18.1%  (ignor. — )
+  [0188/1031]  18.2%  (ignor. — )
+  [0189/1031]  18.3%  (ignor. — )
+  [0190/1031]  18.4%  (ignor. — )
+  [0191/1031]  18.5%  (ignor. — )
+  [0192/1031]  18.6%  (ignor. — )
+  [0193/1031]  18.7%  (ignor. — )
+  [0194/1031]  18.8%  (ignor. — )
+  [0195/1031]  18.9%  (ignor. — )
+  [0196/1031]  19.0%  (ignor. — )
+  [0197/1031]  19.1%  (ignor. — )
+  [0198/1031]  19.2%  (ignor. — )
+  [0199/1031]  19.3%  (ignor. — )
+  [0200/1031]  19.4%  (ignor. — )
+  [0201/1031]  19.5%  (ignor. — )
+  [0202/1031]  19.6%  (ignor. — )
+  [0203/1031]  19.7%  (ignor. — )
+  [0204/1031]  19.8%  (ignor. — )
+  [0205/1031]  19.9%  (ignor. — )
+  [0206/1031]  20.0%  (ignor. — )
+  [0207/1031]  20.1%  (ignor. — )
+  [0208/1031]  20.2%  (ignor. — )
+  [0209/1031]  20.3%  (ignor. — )
+  [0210/1031]  20.4%  (ignor. — )
+  [0211/1031]  20.5%  (ignor. — )
+  [0212/1031]  20.6%  (ignor. — )
+  [0213/1031]  20.7%  (ignor. — )
+  [0214/1031]  20.8%  (ignor. — )
+  [0215/1031]  20.9%  (ignor. — )
+  [0216/1031]  21.0%  (ignor. — )
+  [0217/1031]  21.0%  (ignor. — )
+  [0218/1031]  21.1%  (ignor. — )
+  [0219/1031]  21.2%  (ignor. — )
+  [0220/1031]  21.3%  (ignor. — )
+  [0221/1031]  21.4%  (ignor. — )
+  [0222/1031]  21.5%  (ignor. — )
+  [0223/1031]  21.6%  (ignor. — )
+  [0224/1031]  21.7%  (ignor. — )
+  [0225/1031]  21.8%  (ignor. — )
+  [0226/1031]  21.9%  (ignor. — )
+  [0227/1031]  22.0%  (ignor. — )
+  [0228/1031]  22.1%  (ignor. — )
+  [0229/1031]  22.2%  (ignor. — )
+  [0230/1031]  22.3%  (ignor. — )
+  [0231/1031]  22.4%  (ignor. — )
+  [0232/1031]  22.5%  (ignor. — )
+  [0233/1031]  22.6%  (ignor. — )
+  [0234/1031]  22.7%  (ignor. — )
+  [0235/1031]  22.8%  (ignor. — )
+  [0236/1031]  22.9%  (ignor. — )
+  [0237/1031]  23.0%  (ignor. — )
+  [0238/1031]  23.1%  (ignor. — )
+  [0239/1031]  23.2%  (ignor. — )
+  [0240/1031]  23.3%  (ignor. — )
+  [0241/1031]  23.4%  (ignor. — )
+  [0242/1031]  23.5%  (ignor. — )
+  [0243/1031]  23.6%  (ignor. — )
+  [0244/1031]  23.7%  (ignor. — )
+  [0245/1031]  23.8%  (ignor. — )
+  [0246/1031]  23.9%  (ignor. — )
+  [0247/1031]  24.0%  (ignor. — )
+  [0248/1031]  24.1%  (ignor. — )
+  [0249/1031]  24.2%  (ignor. — )
+  [0250/1031]  24.2%  (ignor. — )
+  [0251/1031]  24.3%  (ignor. — )
+  [0252/1031]  24.4%  (ignor. — )
+  [0253/1031]  24.5%  (ignor. — )
+  [0254/1031]  24.6%  (ignor. — )
+  [0255/1031]  24.7%  (ignor. — )
+  [0256/1031]  24.8%  (ignor. — )
+  [0257/1031]  24.9%  (ignor. — )
+  [0258/1031]  25.0%  (ignor. — )
+  [0259/1031]  25.1%  (ignor. — )
+  [0260/1031]  25.2%  (ignor. — )
+  [0261/1031]  25.3%  (ignor. — )
+  [0262/1031]  25.4%  (ignor. — )
+  [0263/1031]  25.5%  (ignor. — )
+  [0264/1031]  25.6%  (ignor. — )
+  [0265/1031]  25.7%  (ignor. — )
+  [0266/1031]  25.8%  (ignor. — )
+  [0267/1031]  25.9%  (ignor. — )
+  [0268/1031]  26.0%  (ignor. — )
+  [0269/1031]  26.1%  (ignor. — )
+  [0270/1031]  26.2%  (ignor. — )
+  [0271/1031]  26.3%  (ignor. — )
+  [0272/1031]  26.4%  (ignor. — )
+  [0273/1031]  26.5%  (ignor. — )
+  [0274/1031]  26.6%  (ignor. — )
+  [0275/1031]  26.7%  (ignor. — )
+  [0276/1031]  26.8%  (ignor. — )
+  [0277/1031]  26.9%  (ignor. — )
+  [0278/1031]  27.0%  (ignor. — )
+  [0279/1031]  27.1%  (ignor. — )
+  [0280/1031]  27.2%  (ignor. — )
+  [0281/1031]  27.3%  (ignor. — )
+  [0282/1031]  27.4%  (ignor. — )
+  [0283/1031]  27.4%  (ignor. — )
+  [0284/1031]  27.5%  (ignor. — )
+  [0285/1031]  27.6%  (ignor. — )
+  [0286/1031]  27.7%  (ignor. — )
+  [0287/1031]  27.8%  (ignor. — )
+  [0288/1031]  27.9%  (ignor. — )
+  [0289/1031]  28.0%  (ignor. — )
+  [0290/1031]  28.1%  (ignor. — )
+  [0291/1031]  28.2%  (ignor. — )
+  [0292/1031]  28.3%  (ignor. — )
+  [0293/1031]  28.4%  (ignor. — )
+  [0294/1031]  28.5%  (ignor. — )
+  [0295/1031]  28.6%  (ignor. — )
+  [0296/1031]  28.7%  (ignor. — )
+  [0297/1031]  28.8%  (ignor. — )
+  [0298/1031]  28.9%  (ignor. — )
+  [0299/1031]  29.0%  (ignor. — )
+  [0300/1031]  29.1%  (ignor. — )
+  [0301/1031]  29.2%  (ignor. — )
+  [0302/1031]  29.3%  (ignor. — )
+  [0303/1031]  29.4%  (ignor. — )
+  [0304/1031]  29.5%  (ignor. — )
+  [0305/1031]  29.6%  (ignor. — )
+  [0306/1031]  29.7%  (ignor. — )
+  [0307/1031]  29.8%  (ignor. — )
+  [0308/1031]  29.9%  (ignor. — )
+  [0309/1031]  30.0%  (ignor. — )
+  [0310/1031]  30.1%  (ignor. — )
+  [0311/1031]  30.2%  (ignor. — )
+  [0312/1031]  30.3%  (ignor. — )
+  [0313/1031]  30.4%  (ignor. — )
+  [0314/1031]  30.5%  (ignor. — )
+  [0315/1031]  30.6%  (ignor. — )
+  [0316/1031]  30.6%  (ignor. — )
+  [0317/1031]  30.7%  (ignor. — )
+  [0318/1031]  30.8%  (ignor. — )
+  [0319/1031]  30.9%  (ignor. — )
+  [0320/1031]  31.0%  (ignor. — )
+  [0321/1031]  31.1%  (ignor. — )
+  [0322/1031]  31.2%  (ignor. — )
+  [0323/1031]  31.3%  (ignor. — )
+  [0324/1031]  31.4%  (ignor. — )
+  [0325/1031]  31.5%  (ignor. — )
+  [0326/1031]  31.6%  (ignor. — )
+  [0327/1031]  31.7%  (ignor. — )
+  [0328/1031]  31.8%  (ignor. — )
+  [0329/1031]  31.9%  (ignor. — )
+  [0330/1031]  32.0%  (ignor. — )
+  [0331/1031]  32.1%  (ignor. — )
+  [0332/1031]  32.2%  (ignor. — )
+  [0333/1031]  32.3%  (ignor. — )
+  [0334/1031]  32.4%  (ignor. — )
+  [0335/1031]  32.5%  (ignor. — )
+  [0336/1031]  32.6%  (ignor. — )
+  [0337/1031]  32.7%  (ignor. — )
+  [0338/1031]  32.8%  (ignor. — )
+  [0339/1031]  32.9%  (ignor. — )
+  [0340/1031]  33.0%  (ignor. — )
+  [0341/1031]  33.1%  (ignor. — )
+  [0342/1031]  33.2%  (ignor. — )
+  [0343/1031]  33.3%  (ignor. — )
+  [0344/1031]  33.4%  (ignor. — )
+  [0345/1031]  33.5%  (ignor. — )
+  [0346/1031]  33.6%  (ignor. — )
+  [0347/1031]  33.7%  (ignor. — )
+  [0348/1031]  33.8%  (ignor. — )
+  [0349/1031]  33.9%  (ignor. — )
+  [0350/1031]  33.9%  (ignor. — )
+  [0351/1031]  34.0%  (ignor. — )
+  [0352/1031]  34.1%  (ignor. — )
+  [0353/1031]  34.2%  (ignor. — )
+  [0354/1031]  34.3%  (ignor. — )
+  [0355/1031]  34.4%  (ignor. — )
+  [0356/1031]  34.5%  (ignor. — )
+  [0357/1031]  34.6%  (ignor. — )
+  [0358/1031]  34.7%  (ignor. — )
+  [0359/1031]  34.8%  (ignor. — )
+  [0360/1031]  34.9%  (ignor. — )
+  [0361/1031]  35.0%  (ignor. — )
+  [0362/1031]  35.1%  (ignor. — )
+  [0363/1031]  35.2%  (ignor. — )
+  [0364/1031]  35.3%  (ignor. — )
+  [0365/1031]  35.4%  (ignor. — )
+  [0366/1031]  35.5%  (ignor. — )
+  [0367/1031]  35.6%  (ignor. — )
+  [0368/1031]  35.7%  (ignor. — )
+  [0369/1031]  35.8%  (ignor. — )
+  [0370/1031]  35.9%  (ignor. — )
+  [0371/1031]  36.0%  (ignor. — )
+  [0372/1031]  36.1%  (ignor. — )
+  [0373/1031]  36.2%  (ignor. — )
+  [0374/1031]  36.3%  (ignor. — )
+  [0375/1031]  36.4%  (ignor. — )
+  [0376/1031]  36.5%  (ignor. — )
+  [0377/1031]  36.6%  (ignor. — )
+  [0378/1031]  36.7%  (ignor. — )
+  [0379/1031]  36.8%  (ignor. — )
+  [0380/1031]  36.9%  (ignor. — )
+  [0381/1031]  37.0%  (ignor. — )
+  [0382/1031]  37.1%  (ignor. — )
+  [0383/1031]  37.1%  (ignor. — )
+  [0384/1031]  37.2%  (ignor. — )
+  [0385/1031]  37.3%  (ignor. — )
+  [0386/1031]  37.4%  (ignor. — )
+  [0387/1031]  37.5%  (ignor. — )
+  [0388/1031]  37.6%  (ignor. — )
+  [0389/1031]  37.7%  (ignor. — )
+  [0390/1031]  37.8%  (ignor. — )
+  [0391/1031]  37.9%  (ignor. — )
+  [0392/1031]  38.0%  (ignor. — )
+  [0393/1031]  38.1%  (ignor. — )
+  [0394/1031]  38.2%  (ignor. — )
+  [0395/1031]  38.3%  (ignor. — )
+  [0396/1031]  38.4%  (ignor. — )
+  [0397/1031]  38.5%  (ignor. — )
+  [0398/1031]  38.6%  (ignor. — )
+  [0399/1031]  38.7%  (ignor. — )
+  [0400/1031]  38.8%  (ignor. — )
+  [0401/1031]  38.9%  (ignor. — )
+  [0402/1031]  39.0%  (ignor. — )
+  [0403/1031]  39.1%  (ignor. — )
+  [0404/1031]  39.2%  (ignor. — )
+  [0405/1031]  39.3%  (ignor. — )
+  [0406/1031]  39.4%  (ignor. — )
+  [0407/1031]  39.5%  (ignor. — )
+  [0408/1031]  39.6%  (ignor. — )
+  [0409/1031]  39.7%  (ignor. — )
+  [0410/1031]  39.8%  (ignor. — )
+  [0411/1031]  39.9%  (ignor. — )
+  [0412/1031]  40.0%  (ignor. — )
+  [0413/1031]  40.1%  (ignor. — )
+  [0414/1031]  40.2%  (ignor. — )
+  [0415/1031]  40.3%  (ignor. — )
+  [0416/1031]  40.3%  (ignor. — )
+  [0417/1031]  40.4%  (ignor. — )
+  [0418/1031]  40.5%  (ignor. — )
+  [0419/1031]  40.6%  (ignor. — )
+  [0420/1031]  40.7%  (ignor. — )
+  [0421/1031]  40.8%  (ignor. — )
+  [0422/1031]  40.9%  (ignor. — )
+  [0423/1031]  41.0%  (ignor. — )
+  [0424/1031]  41.1%  (ignor. — )
+  [0425/1031]  41.2%  (ignor. — )
+  [0426/1031]  41.3%  (ignor. — )
+  [0427/1031]  41.4%  (ignor. — )
+  [0428/1031]  41.5%  (ignor. — )
+  [0429/1031]  41.6%  (ignor. — )
+  [0430/1031]  41.7%  (ignor. — )
+  [0431/1031]  41.8%  (ignor. — )
+  [0432/1031]  41.9%  (ignor. — )
+  [0433/1031]  42.0%  (ignor. — )
+  [0434/1031]  42.1%  (ignor. — )
+  [0435/1031]  42.2%  (ignor. — )
+  [0436/1031]  42.3%  (ignor. — )
+  [0437/1031]  42.4%  (ignor. — )
+  [0438/1031]  42.5%  (ignor. — )
+  [0439/1031]  42.6%  (ignor. — )
+  [0440/1031]  42.7%  (ignor. — )
+  [0441/1031]  42.8%  (ignor. — )
+  [0442/1031]  42.9%  (ignor. — )
+  [0443/1031]  43.0%  (ignor. — )
+  [0444/1031]  43.1%  (ignor. — )
+  [0445/1031]  43.2%  (ignor. — )
+  [0446/1031]  43.3%  (ignor. — )
+  [0447/1031]  43.4%  (ignor. — )
+  [0448/1031]  43.5%  (ignor. — )
+  [0449/1031]  43.5%  (ignor. — )
+  [0450/1031]  43.6%  (ignor. — )
+  [0451/1031]  43.7%  (ignor. — )
+  [0452/1031]  43.8%  (ignor. — )
+  [0453/1031]  43.9%  (ignor. — )
+  [0454/1031]  44.0%  (ignor. — )
+  [0455/1031]  44.1%  (ignor. — )
+  [0456/1031]  44.2%  (ignor. — )
+  [0457/1031]  44.3%  (ignor. — )
+  [0458/1031]  44.4%  (ignor. — )
+  [0459/1031]  44.5%  (ignor. — )
+  [0460/1031]  44.6%  (ignor. — )
+  [0461/1031]  44.7%  (ignor. — )
+  [0462/1031]  44.8%  (ignor. — )
+  [0463/1031]  44.9%  (ignor. — )
+  [0464/1031]  45.0%  (ignor. — )
+  [0465/1031]  45.1%  (ignor. — )
+  [0466/1031]  45.2%  (ignor. — )
+  [0467/1031]  45.3%  (ignor. — )
+  [0468/1031]  45.4%  (ignor. — )
+  [0469/1031]  45.5%  (ignor. — )
+  [0470/1031]  45.6%  (ignor. — )
+  [0471/1031]  45.7%  (ignor. — )
+  [0472/1031]  45.8%  (ignor. — )
+  [0473/1031]  45.9%  (ignor. — )
+  [0474/1031]  46.0%  (ignor. — )
+  [0475/1031]  46.1%  (ignor. — )
+  [0476/1031]  46.2%  (ignor. — )
+  [0477/1031]  46.3%  (ignor. — )
+  [0478/1031]  46.4%  (ignor. — )
+  [0479/1031]  46.5%  (ignor. — )
+  [0480/1031]  46.6%  (ignor. — )
+  [0481/1031]  46.7%  (ignor. — )
+  [0482/1031]  46.8%  (ignor. — )
+  [0483/1031]  46.8%  (ignor. — )
+  [0484/1031]  46.9%  (ignor. — )
+  [0485/1031]  47.0%  (ignor. — )
+  [0486/1031]  47.1%  (ignor. — )
+  [0487/1031]  47.2%  (ignor. — )
+  [0488/1031]  47.3%  (ignor. — )
+  [0489/1031]  47.4%  (ignor. — )
+  [0490/1031]  47.5%  (ignor. — )
+  [0491/1031]  47.6%  (ignor. — )
+  [0492/1031]  47.7%  (ignor. — )
+  [0493/1031]  47.8%  (ignor. — )
+  [0494/1031]  47.9%  (ignor. — )
+  [0495/1031]  48.0%  (ignor. — )
+  [0496/1031]  48.1%  (ignor. — )
+  [0497/1031]  48.2%  (ignor. — )
+  [0498/1031]  48.3%  (ignor. — )
+  [0499/1031]  48.4%  (ignor. — )
+  [0500/1031]  48.5%  (ignor. — )
+  [0501/1031]  48.6%  (ignor. — )
+  [0502/1031]  48.7%  (ignor. — )
+  [0503/1031]  48.8%  (ignor. — )
+  [0504/1031]  48.9%  (ignor. — )
+  [0505/1031]  49.0%  (ignor. — )
+  [0506/1031]  49.1%  (ignor. — )
+  [0507/1031]  49.2%  (ignor. — )
+  [0508/1031]  49.3%  (ignor. — )
+  [0509/1031]  49.4%  (ignor. — )
+  [0510/1031]  49.5%  (ignor. — )
+  [0511/1031]  49.6%  (ignor. — )
+  [0512/1031]  49.7%  (ignor. — )
+  [0513/1031]  49.8%  (ignor. — )
+  [0514/1031]  49.9%  (ignor. — )
+  [0515/1031]  50.0%  (ignor. — )
+  [0516/1031]  50.0%  (ignor. — )
+  [0517/1031]  50.1%  (ignor. — )
+  [0518/1031]  50.2%  (ignor. — )
+  [0519/1031]  50.3%  (ignor. — )
+  [0520/1031]  50.4%  (ignor. — )
+  [0521/1031]  50.5%  (ignor. — )
+  [0522/1031]  50.6%  (ignor. — )
+  [0523/1031]  50.7%  (ignor. — )
+  [0524/1031]  50.8%  (ignor. — )
+  [0525/1031]  50.9%  (ignor. — )
+  [0526/1031]  51.0%  (ignor. — )
+  [0527/1031]  51.1%  (ignor. — )
+  [0528/1031]  51.2%  (ignor. — )
+  [0529/1031]  51.3%  (ignor. — )
+  [0530/1031]  51.4%  (ignor. — )
+  [0531/1031]  51.5%  (ignor. — )
+  [0532/1031]  51.6%  (ignor. — )
+  [0533/1031]  51.7%  (ignor. — )
+  [0534/1031]  51.8%  (ignor. — )
+  [0535/1031]  51.9%  (ignor. — )
+  [0536/1031]  52.0%  (ignor. — )
+  [0537/1031]  52.1%  (ignor. — )
+  [0538/1031]  52.2%  (ignor. — )
+  [0539/1031]  52.3%  (ignor. — )
+  [0540/1031]  52.4%  (ignor. — )
+  [0541/1031]  52.5%  (ignor. — )
+  [0542/1031]  52.6%  (ignor. — )
+  [0543/1031]  52.7%  (ignor. — )
+  [0544/1031]  52.8%  (ignor. — )
+  [0545/1031]  52.9%  (ignor. — )
+  [0546/1031]  53.0%  (ignor. — )
+  [0547/1031]  53.1%  (ignor. — )
+  [0548/1031]  53.2%  (ignor. — )
+  [0549/1031]  53.2%  (ignor. — )
+  [0550/1031]  53.3%  (ignor. — )
+  [0551/1031]  53.4%  (ignor. — )
+  [0552/1031]  53.5%  (ignor. — )
+  [0553/1031]  53.6%  (ignor. — )
+  [0554/1031]  53.7%  (ignor. — )
+  [0555/1031]  53.8%  (ignor. — )
+  [0556/1031]  53.9%  (ignor. — )
+  [0557/1031]  54.0%  (ignor. — )
+  [0558/1031]  54.1%  (ignor. — )
+  [0559/1031]  54.2%  (ignor. — )
+  [0560/1031]  54.3%  (ignor. — )
+  [0561/1031]  54.4%  (ignor. — )
+  [0562/1031]  54.5%  (ignor. — )
+  [0563/1031]  54.6%  (ignor. — )
+  [0564/1031]  54.7%  (ignor. — )
+  [0565/1031]  54.8%  (ignor. — )
+  [0566/1031]  54.9%  (ignor. — )
+  [0567/1031]  55.0%  (ignor. — )
+  [0568/1031]  55.1%  (ignor. — )
+  [0569/1031]  55.2%  (ignor. — )
+  [0570/1031]  55.3%  (ignor. — )
+  [0571/1031]  55.4%  (ignor. — )
+  [0572/1031]  55.5%  (ignor. — )
+  [0573/1031]  55.6%  (ignor. — )
+  [0574/1031]  55.7%  (ignor. — )
+  [0575/1031]  55.8%  (ignor. — )
+  [0576/1031]  55.9%  (ignor. — )
+  [0577/1031]  56.0%  (ignor. — )
+  [0578/1031]  56.1%  (ignor. — )
+  [0579/1031]  56.2%  (ignor. — )
+  [0580/1031]  56.3%  (ignor. — )
+  [0581/1031]  56.4%  (ignor. — )
+  [0582/1031]  56.5%  (ignor. — )
+  [0583/1031]  56.5%  (ignor. — )
+  [0584/1031]  56.6%  (ignor. — )
+  [0585/1031]  56.7%  (ignor. — )
+  [0586/1031]  56.8%  (ignor. — )
+  [0587/1031]  56.9%  (ignor. — )
+  [0588/1031]  57.0%  (ignor. — )
+  [0589/1031]  57.1%  (ignor. — )
+  [0590/1031]  57.2%  (ignor. — )
+  [0591/1031]  57.3%  (ignor. — )
+  [0592/1031]  57.4%  (ignor. — )
+  [0593/1031]  57.5%  (ignor. — )
+  [0594/1031]  57.6%  (ignor. — )
+  [0595/1031]  57.7%  (ignor. — )
+  [0596/1031]  57.8%  (ignor. — )
+  [0597/1031]  57.9%  (ignor. — )
+  [0598/1031]  58.0%  (ignor. — )
+  [0599/1031]  58.1%  (ignor. — )
+  [0600/1031]  58.2%  (ignor. — )
+  [0601/1031]  58.3%  (ignor. — )
+  [0602/1031]  58.4%  (ignor. — )
+  [0603/1031]  58.5%  (ignor. — )
+  [0604/1031]  58.6%  (ignor. — )
+  [0605/1031]  58.7%  (ignor. — )
+  [0606/1031]  58.8%  (ignor. — )
+  [0607/1031]  58.9%  (ignor. — )
+  [0608/1031]  59.0%  (ignor. — )
+  [0609/1031]  59.1%  (ignor. — )
+  [0610/1031]  59.2%  (ignor. — )
+  [0611/1031]  59.3%  (ignor. — )
+  [0612/1031]  59.4%  (ignor. — )
+  [0613/1031]  59.5%  (ignor. — )
+  [0614/1031]  59.6%  (ignor. — )
+  [0615/1031]  59.7%  (ignor. — )
+  [0616/1031]  59.7%  (ignor. — )
+  [0617/1031]  59.8%  (ignor. — )
+  [0618/1031]  59.9%  (ignor. — )
+  [0619/1031]  60.0%  (ignor. — )
+  [0620/1031]  60.1%  (ignor. — )
+  [0621/1031]  60.2%  (ignor. — )
+  [0622/1031]  60.3%  (ignor. — )
+  [0623/1031]  60.4%  (ignor. — )
+  [0624/1031]  60.5%  (ignor. — )
+  [0625/1031]  60.6%  (ignor. — )
+  [0626/1031]  60.7%  (ignor. — )
+  [0627/1031]  60.8%  (ignor. — )
+  [0628/1031]  60.9%  (ignor. — )
+  [0629/1031]  61.0%  (ignor. — )
+  [0630/1031]  61.1%  (ignor. — )
+  [0631/1031]  61.2%  (ignor. — )
+  [0632/1031]  61.3%  (ignor. — )
+  [0633/1031]  61.4%  (ignor. — )
+  [0634/1031]  61.5%  (ignor. — )
+  [0635/1031]  61.6%  (ignor. — )
+  [0636/1031]  61.7%  (ignor. — )
+  [0637/1031]  61.8%  (ignor. — )
+  [0638/1031]  61.9%  (ignor. — )
+  [0639/1031]  62.0%  (ignor. — )
+  [0640/1031]  62.1%  (ignor. — )
+  [0641/1031]  62.2%  (ignor. — )
+  [0642/1031]  62.3%  (ignor. — )
+  [0643/1031]  62.4%  (ignor. — )
+  [0644/1031]  62.5%  (ignor. — )
+  [0645/1031]  62.6%  (ignor. — )
+  [0646/1031]  62.7%  (ignor. — )
+  [0647/1031]  62.8%  (ignor. — )
+  [0648/1031]  62.9%  (ignor. — )
+  [0649/1031]  62.9%  (ignor. — )
+  [0650/1031]  63.0%  (ignor. — )
+  [0651/1031]  63.1%  (ignor. — )
+  [0652/1031]  63.2%  (ignor. — )
+  [0653/1031]  63.3%  (ignor. — )
+  [0654/1031]  63.4%  (ignor. — )
+  [0655/1031]  63.5%  (ignor. — )
+  [0656/1031]  63.6%  (ignor. — )
+  [0657/1031]  63.7%  (ignor. — )
+  [0658/1031]  63.8%  (ignor. — )
+  [0659/1031]  63.9%  (ignor. — )
+  [0660/1031]  64.0%  (ignor. — )
+  [0661/1031]  64.1%  (ignor. — )
+  [0662/1031]  64.2%  (ignor. — )
+  [0663/1031]  64.3%  (ignor. — )
+  [0664/1031]  64.4%  (ignor. — )
+  [0665/1031]  64.5%  (ignor. — )
+  [0666/1031]  64.6%  (ignor. — )
+  [0667/1031]  64.7%  (ignor. — )
+  [0668/1031]  64.8%  (ignor. — )
+  [0669/1031]  64.9%  (ignor. — )
+  [0670/1031]  65.0%  (ignor. — )
+  [0671/1031]  65.1%  (ignor. — )
+  [0672/1031]  65.2%  (ignor. — )
+  [0673/1031]  65.3%  (ignor. — )
+  [0674/1031]  65.4%  (ignor. — )
+  [0675/1031]  65.5%  (ignor. — )
+  [0676/1031]  65.6%  (ignor. — )
+  [0677/1031]  65.7%  (ignor. — )
+  [0678/1031]  65.8%  (ignor. — )
+  [0679/1031]  65.9%  (ignor. — )
+  [0680/1031]  66.0%  (ignor. — )
+  [0681/1031]  66.1%  (ignor. — )
+  [0682/1031]  66.1%  (ignor. — )
+  [0683/1031]  66.2%  (ignor. — )
+  [0684/1031]  66.3%  (ignor. — )
+  [0685/1031]  66.4%  (ignor. — )
+  [0686/1031]  66.5%  (ignor. — )
+  [0687/1031]  66.6%  (ignor. — )
+  [0688/1031]  66.7%  (ignor. — )
+  [0689/1031]  66.8%  (ignor. — )
+  [0690/1031]  66.9%  (ignor. — )
+  [0691/1031]  67.0%  (ignor. — )
+  [0692/1031]  67.1%  (ignor. — )
+  [0693/1031]  67.2%  (ignor. — )
+  [0694/1031]  67.3%  (ignor. — )
+  [0695/1031]  67.4%  (ignor. — )
+  [0696/1031]  67.5%  (ignor. — )
+  [0697/1031]  67.6%  (ignor. — )
+  [0698/1031]  67.7%  (ignor. — )
+  [0699/1031]  67.8%  (ignor. — )
+  [0700/1031]  67.9%  (ignor. — )
+  [0701/1031]  68.0%  (ignor. — )
+  [0702/1031]  68.1%  (ignor. — )
+  [0703/1031]  68.2%  (ignor. — )
+  [0704/1031]  68.3%  (ignor. — )
+  [0705/1031]  68.4%  (ignor. — )
+  [0706/1031]  68.5%  (ignor. — )
+  [0707/1031]  68.6%  (ignor. — )
+  [0708/1031]  68.7%  (ignor. — )
+  [0709/1031]  68.8%  (ignor. — )
+  [0710/1031]  68.9%  (ignor. — )
+  [0711/1031]  69.0%  (ignor. — )
+  [0712/1031]  69.1%  (ignor. — )
+  [0713/1031]  69.2%  (ignor. — )
+  [0714/1031]  69.3%  (ignor. — )
+  [0715/1031]  69.4%  (ignor. — )
+  [0716/1031]  69.4%  (ignor. — )
+  [0717/1031]  69.5%  (ignor. — )
+  [0718/1031]  69.6%  (ignor. — )
+  [0719/1031]  69.7%  (ignor. — )
+  [0720/1031]  69.8%  (ignor. — )
+  [0721/1031]  69.9%  (ignor. — )
+  [0722/1031]  70.0%  (ignor. — )
+  [0723/1031]  70.1%  (ignor. — )
+  [0724/1031]  70.2%  (ignor. — )
+  [0725/1031]  70.3%  (ignor. — )
+  [0726/1031]  70.4%  (ignor. — )
+  [0727/1031]  70.5%  (ignor. — )
+  [0728/1031]  70.6%  (ignor. — )
+  [0729/1031]  70.7%  (ignor. — )
+  [0730/1031]  70.8%  (ignor. — )
+  [0731/1031]  70.9%  (ignor. — )
+  [0732/1031]  71.0%  (ignor. — )
+  [0733/1031]  71.1%  (ignor. — )
+  [0734/1031]  71.2%  (ignor. — )
+  [0735/1031]  71.3%  (ignor. — )
+  [0736/1031]  71.4%  (ignor. — )
+  [0737/1031]  71.5%  (ignor. — )
+  [0738/1031]  71.6%  (ignor. — )
+  [0739/1031]  71.7%  (ignor. — )
+  [0740/1031]  71.8%  (ignor. — )
+  [0741/1031]  71.9%  (ignor. — )
+  [0742/1031]  72.0%  (ignor. — )
+  [0743/1031]  72.1%  (ignor. — )
+  [0744/1031]  72.2%  (ignor. — )
+  [0745/1031]  72.3%  (ignor. — )
+  [0746/1031]  72.4%  (ignor. — )
+  [0747/1031]  72.5%  (ignor. — )
+  [0748/1031]  72.6%  (ignor. — )
+  [0749/1031]  72.6%  (ignor. — )
+  [0750/1031]  72.7%  (ignor. — )
+  [0751/1031]  72.8%  (ignor. — )
+  [0752/1031]  72.9%  (ignor. — )
+  [0753/1031]  73.0%  (ignor. — )
+  [0754/1031]  73.1%  (ignor. — )
+  [0755/1031]  73.2%  (ignor. — )
+  [0756/1031]  73.3%  (ignor. — )
+  [0757/1031]  73.4%  (ignor. — )
+  [0758/1031]  73.5%  (ignor. — )
+  [0759/1031]  73.6%  (ignor. — )
+  [0760/1031]  73.7%  (ignor. — )
+  [0761/1031]  73.8%  (ignor. — )
+  [0762/1031]  73.9%  (ignor. — )
+  [0763/1031]  74.0%  (ignor. — )
+  [0764/1031]  74.1%  (ignor. — )
+  [0765/1031]  74.2%  (ignor. — )
+  [0766/1031]  74.3%  (ignor. — )
+  [0767/1031]  74.4%  (ignor. — )
+  [0768/1031]  74.5%  (ignor. — )
+  [0769/1031]  74.6%  (ignor. — )
+  [0770/1031]  74.7%  (ignor. — )
+  [0771/1031]  74.8%  (ignor. — )
+  [0772/1031]  74.9%  (ignor. — )
+  [0773/1031]  75.0%  (ignor. — )
+  [0774/1031]  75.1%  (ignor. — )
+  [0775/1031]  75.2%  (ignor. — )
+  [0776/1031]  75.3%  (ignor. — )
+  [0777/1031]  75.4%  (ignor. — )
+  [0778/1031]  75.5%  (ignor. — )
+  [0779/1031]  75.6%  (ignor. — )
+  [0780/1031]  75.7%  (ignor. — )
+  [0781/1031]  75.8%  (ignor. — )
+  [0782/1031]  75.8%  (ignor. — )
+  [0783/1031]  75.9%  (ignor. — )
+  [0784/1031]  76.0%  (ignor. — )
+  [0785/1031]  76.1%  (ignor. — )
+  [0786/1031]  76.2%  (ignor. — )
+  [0787/1031]  76.3%  (ignor. — )
+  [0788/1031]  76.4%  (ignor. — )
+  [0789/1031]  76.5%  (ignor. — )
+  [0790/1031]  76.6%  (ignor. — )
+  [0791/1031]  76.7%  (ignor. — )
+  [0792/1031]  76.8%  (ignor. — )
+  [0793/1031]  76.9%  (ignor. — )
+  [0794/1031]  77.0%  (ignor. — )
+  [0795/1031]  77.1%  (ignor. — )
+  [0796/1031]  77.2%  (ignor. — )
+  [0797/1031]  77.3%  (ignor. — )
+  [0798/1031]  77.4%  (ignor. — )
+  [0799/1031]  77.5%  (ignor. — )
+  [0800/1031]  77.6%  (ignor. — )
+  [0801/1031]  77.7%  (ignor. — )
+  [0802/1031]  77.8%  (ignor. — )
+  [0803/1031]  77.9%  (ignor. — )
+  [0804/1031]  78.0%  (ignor. — )
+  [0805/1031]  78.1%  (ignor. — )
+  [0806/1031]  78.2%  (ignor. — )
+  [0807/1031]  78.3%  (ignor. — )
+  [0808/1031]  78.4%  (ignor. — )
+  [0809/1031]  78.5%  (ignor. — )
+  [0810/1031]  78.6%  (ignor. — )
+  [0811/1031]  78.7%  (ignor. — )
+  [0812/1031]  78.8%  (ignor. — )
+  [0813/1031]  78.9%  (ignor. — )
+  [0814/1031]  79.0%  (ignor. — )
+  [0815/1031]  79.0%  (ignor. — )
+  [0816/1031]  79.1%  (ignor. — )
+  [0817/1031]  79.2%  (ignor. — )
+  [0818/1031]  79.3%  (ignor. — )
+  [0819/1031]  79.4%  (ignor. — )
+  [0820/1031]  79.5%  (ignor. — )
+  [0821/1031]  79.6%  (ignor. — )
+  [0822/1031]  79.7%  (ignor. — )
+  [0823/1031]  79.8%  (ignor. — )
+  [0824/1031]  79.9%  (ignor. — )
+  [0825/1031]  80.0%  (ignor. — )
+  [0826/1031]  80.1%  (ignor. — )
+  [0827/1031]  80.2%  (ignor. — )
+  [0828/1031]  80.3%  (ignor. — )
+  [0829/1031]  80.4%  (ignor. — )
+  [0830/1031]  80.5%  (ignor. — )
+  [0831/1031]  80.6%  (ignor. — )
+  [0832/1031]  80.7%  (ignor. — )
+  [0833/1031]  80.8%  (ignor. — )
+  [0834/1031]  80.9%  (ignor. — )
+  [0835/1031]  81.0%  (ignor. — )
+  [0836/1031]  81.1%  (ignor. — )
+  [0837/1031]  81.2%  (ignor. — )
+  [0838/1031]  81.3%  (ignor. — )
+  [0839/1031]  81.4%  (ignor. — )
+  [0840/1031]  81.5%  (ignor. — )
+  [0841/1031]  81.6%  (ignor. — )
+  [0842/1031]  81.7%  (ignor. — )
+  [0843/1031]  81.8%  (ignor. — )
+  [0844/1031]  81.9%  (ignor. — )
+  [0845/1031]  82.0%  (ignor. — )
+  [0846/1031]  82.1%  (ignor. — )
+  [0847/1031]  82.2%  (ignor. — )
+  [0848/1031]  82.3%  (ignor. — )
+  [0849/1031]  82.3%  (ignor. — )
+  [0850/1031]  82.4%  (ignor. — )
+  [0851/1031]  82.5%  (ignor. — )
+  [0852/1031]  82.6%  (ignor. — )
+  [0853/1031]  82.7%  (ignor. — )
+  [0854/1031]  82.8%  (ignor. — )
+  [0855/1031]  82.9%  (ignor. — )
+  [0856/1031]  83.0%  (ignor. — )
+  [0857/1031]  83.1%  (ignor. — )
+  [0858/1031]  83.2%  (ignor. — )
+  [0859/1031]  83.3%  (ignor. — )
+  [0860/1031]  83.4%  (ignor. — )
+  [0861/1031]  83.5%  (ignor. — )
+  [0862/1031]  83.6%  (ignor. — )
+  [0863/1031]  83.7%  (ignor. — )
+  [0864/1031]  83.8%  (ignor. — )
+  [0865/1031]  83.9%  (ignor. — )
+  [0866/1031]  84.0%  (ignor. — )
+  [0867/1031]  84.1%  (ignor. — )
+  [0868/1031]  84.2%  (ignor. — )
+  [0869/1031]  84.3%  (ignor. — )
+  [0870/1031]  84.4%  (ignor. — )
+  [0871/1031]  84.5%  (ignor. — )
+  [0872/1031]  84.6%  (ignor. — )
+  [0873/1031]  84.7%  (ignor. — )
+  [0874/1031]  84.8%  (ignor. — )
+  [0875/1031]  84.9%  (ignor. — )
+  [0876/1031]  85.0%  (ignor. — )
+  [0877/1031]  85.1%  (ignor. — )
+  [0878/1031]  85.2%  (ignor. — )
+  [0879/1031]  85.3%  (ignor. — )
+  [0880/1031]  85.4%  (ignor. — )
+  [0881/1031]  85.5%  (ignor. — )
+  [0882/1031]  85.5%  (ignor. — )
+  [0883/1031]  85.6%  (ignor. — )
+  [0884/1031]  85.7%  (ignor. — )
+  [0885/1031]  85.8%  (ignor. — )
+  [0886/1031]  85.9%  (ignor. — )
+  [0887/1031]  86.0%  (ignor. — )
+  [0888/1031]  86.1%  (ignor. — )
+  [0889/1031]  86.2%  (ignor. — )
+  [0890/1031]  86.3%  (ignor. — )
+  [0891/1031]  86.4%  (ignor. — )
+  [0892/1031]  86.5%  (ignor. — )
+  [0893/1031]  86.6%  (ignor. — )
+  [0894/1031]  86.7%  (ignor. — )
+  [0895/1031]  86.8%  (ignor. — )
+  [0896/1031]  86.9%  (ignor. — )
+  [0897/1031]  87.0%  (ignor. — )
+  [0898/1031]  87.1%  (ignor. — )
+  [0899/1031]  87.2%  (ignor. — )
+  [0900/1031]  87.3%  (ignor. — )
+  [0901/1031]  87.4%  (ignor. — )
+  [0902/1031]  87.5%  (ignor. — )
+  [0903/1031]  87.6%  (ignor. — )
+  [0904/1031]  87.7%  (ignor. — )
+  [0905/1031]  87.8%  (ignor. — )
+  [0906/1031]  87.9%  Cid Galvão                    base R$     250  sem lance  [óleo sobre tela]
+  [0907/1031]  88.0%  Joel Firmino do Amaral        base R$     400  sem lance  [óleo sobre tela]
+  [0908/1031]  88.1%  Asfaduroff Nibbes             base R$     850  sem lance  [óleo sobre tela]
+
+  >> DB salvo — 105 novos nesta execução
+
+  [0909/1031]  88.2%  Asfaduroff Nibbes             base R$     800  sem lance  [óleo sobre tela]
+  [0910/1031]  88.3%  Francisco Graciano            base R$   1,500  sem lance  [óleo sobre tela]
+  [0911/1031]  88.4%  Henry Vitor                   base R$     900  sem lance  [óleo sobre tela]
+  [0912/1031]  88.5%  Iraides                       base R$     150  sem lance  [óleo sobre tela]
+  [0913/1031]  88.6%  Asfaduroff Nibbes             base R$     300  sem lance  [óleo sobre tela]
+  [0914/1031]  88.7%  Quadro Paisagem montanhosa c  base R$      10  R$     160 (12L)  [óleo sobre tela]
+  [0915/1031]  88.7%  Quadro Marina com embarcaçõe  base R$      10  R$     310 (19L)  [óleo sobre tela]
+  [0916/1031]  88.8%  Paisagem bucólica             base R$      10  R$     160 (14L)  [óleo sobre tela]
+  [0917/1031]  88.9%  Francesco Brunocilla          base R$      10  R$      90 (9L)  [óleo sobre tela]
+  [0918/1031]  89.0%  Pintura a                     base R$      10  R$      90 (8L)  [óleo sobre tela]
+  [0919/1031]  89.1%  Pintura a                     base R$      10  R$     160 (12L)  [óleo sobre tela]
+  [0920/1031]  89.2%  Pintura a                     base R$      10  R$      50 (4L)  [óleo sobre tela]
+  [0921/1031]  89.3%  Pintura a                     base R$      10  R$      80 (8L)  [óleo sobre tela]
+  [0922/1031]  89.4%  Óleo sobre tela representand  base R$      10  R$      40 (3L)  [Óleo sobre tela representando ]
+  [0923/1031]  89.5%  6982 ANGELO CANNONE           base R$   1,290  sem lance  [ÓLEO SOBRE TELA - TIPO DA ASSI]
+
+  >> DB salvo — 120 novos nesta execução
+
+  [0924/1031]  89.6%  6943 CARDOSO VIEIRA           base R$     490  sem lance  [ÓLEO SOBRE TELA COLADO EM EUCA]
+  [0925/1031]  89.7%  6935 MENDES                   base R$     390  sem lance  [ÓLEO SOBRE TELA - TIPO DA ASSI]
+  [0926/1031]  89.8%  5096 ALEX DOS SANTOS          base R$     189  sem lance  [ÓLEO SOBRE TELA - TIPO DA ASSI]
+  [0927/1031]  89.9%  4419 JAVIER ALVARO ASFADUROF  base R$     499  sem lance  [ÓLEO SOBRE TELA - TIPO DA ASSI]
+  [0928/1031]  90.0%  5698 JAVIER ALVARO ASFADUROF  base R$     600  sem lance  [ÓLEO SOBRE TELA - TIPO DA ASSI]
+  [0929/1031]  90.1%  Win Van Dijk                  base R$      10  R$      60 (5L)  [óleo sobre tela representando ]
+  [0930/1031]  90.2%  Pintura em                    base R$      10  R$      30 (2L)  [óleo sobre tela representando ]
+  [0931/1031]  90.3%  Bebiana Calderon              base R$      10  R$     200 (15L)  [óleo sobre tela representando ]
+  [0932/1031]  90.4%  Pintura em                    base R$      10  R$      30 (2L)  [óleo sobre tela representando ]
+  [0933/1031]  90.5%  Inimá de Paula                base R$      10  R$     700 (34L)  [óleo sobre tela representando ]
+  [0934/1031]  90.6%  Óleo sobre tela representand  base R$      10  R$      90 (8L)  [Óleo sobre tela representando ]
+  [0935/1031]  90.7%  Quadro em                     base R$      10  R$     290 (15L)  [óleo sobre tela representando ]
+  [0936/1031]  90.8%  Quadro em                     base R$      10  R$     260 (18L)  [óleo sobre tela representando ]
+  [0937/1031]  90.9%  Óleo sobre tela de J. Pallad  base R$      10  R$      30 (2L)  [Óleo sobre tela de J. Palladio]
+  [0938/1031]  91.0%  Décio Villares                base R$      10  R$     100 (9L)  [óleo sobre tela apresentando]
+
+  >> DB salvo — 135 novos nesta execução
+
+  [0939/1031]  91.1%  Benedito Luizi - Paisagem     base R$      10  R$     291 (19L)  [óleo sobre tela representando ]
+  [0940/1031]  91.2%  Lazzarini                     base R$      10  R$      40 (3L)  [óleo sobre tela de temática sa]
+  [0941/1031]  91.3%  Bianco Nu feminino            base R$      10  R$   1,300 (24L)  [óleo sobre tela representando ]
+  [0942/1031]  91.4%  Quadro                        base R$      10  R$      50 (4L)  [óleo sobre tela representando ]
+  [0943/1031]  91.5%  Pintura a                     base R$      10  R$     180 (10L)  [óleo sobre tela de Lazzarini d]
+  [0944/1031]  91.6%  Mathilde Franco               base R$      10  R$     380 (24L)  [óleo sobre tela representando ]
+  [0945/1031]  91.7%  (ignor. — )
+  [0946/1031]  91.8%  (ignor. — )
+  [0947/1031]  91.9%  AFRÂNIO PESSOA (1930-2017)    base R$   1,100  sem lance  [Óleo sobre tela. Assinado no .]
+  [0948/1031]  91.9%  AFRÂNIO PESSOA (1930-2017)    base R$  35,000  sem lance  [Óleo sobre tela. Assinado no c]
+  [0949/1031]  92.0%  (ignor. — )
+  [0950/1031]  92.1%  (ignor. — )
+  [0951/1031]  92.2%  (ignor. — )
+  [0952/1031]  92.3%  (ignor. — )
+  [0953/1031]  92.4%  (ignor. — )
+  [0954/1031]  92.5%  (ignor. — )
+  [0955/1031]  92.6%  (ignor. — )
+  [0956/1031]  92.7%  (ignor. — )
+  [0957/1031]  92.8%  (ignor. — )
+  [0958/1031]  92.9%  (ignor. — )
+  [0959/1031]  93.0%  (ignor. — )
+  [0960/1031]  93.1%  (ignor. — )
+  [0961/1031]  93.2%  (ignor. — )
+  [0962/1031]  93.3%  (ignor. — )
+  [0963/1031]  93.4%  (ignor. — )
+  [0964/1031]  93.5%  (ignor. — )
+  [0965/1031]  93.6%  (ignor. — )
+  [0966/1031]  93.7%  (ignor. — )
+  [0967/1031]  93.8%  (ignor. — )
+  [0968/1031]  93.9%  AFRÂNIO PESSOA (1930-2017)    base R$     850  sem lance  [Óleo sobre tela]
+  [0969/1031]  94.0%  EMILIO JAIME                  base R$     380  sem lance  [Óleo sobre tela]
+  [0970/1031]  94.1%  (ignor. — )
+  [0971/1031]  94.2%  IVAN SERPA                    base R$  40,000  sem lance  [Óleo sobre tela. Obra ...]
+  [0972/1031]  94.3%  (ignor. — )
+  [0973/1031]  94.4%  CAYMMI                        base R$   1,000  sem lance  [Óleo sobre tela. Obra assinada]
+  [0974/1031]  94.5%  LOLÓ SOLDEVILLA               base R$   3,500  sem lance  [Óleo sobre tela. Obra ...]
+  [0975/1031]  94.6%  JOSÉ PANCETTI                 base R$ 100,000  sem lance  [Óleo sobre tela]
+  [0976/1031]  94.7%  EUGÈNE CLAUDE                 base R$   2,100  sem lance  [Óleo sobre tela. Medidas: ...]
+
+  >> DB salvo — 150 novos nesta execução
+
+  [0977/1031]  94.8%  HARRY SPENCE                  base R$     700  sem lance  [Óleo sobre tela. Obra ...]
+  [0978/1031]  94.9%  Paul Kayzer (Hamburgo 1869/   base R$   4,500  sem lance  [Óleo sobre tela. Assinado P. K]
+  [0979/1031]  95.0%  Obermuller. Marinha.          base R$   1,000  sem lance  [Óleo sobre tela. Assinado e da]
+  [0980/1031]  95.1%  Rey P. Manfredi. Marinha.     base R$     100  R$     120 (1L)  [Óleo sobre tela. Assinado. Mol]
+  [0981/1031]  95.2%  Assinatura não identificada.  base R$     500  R$     550 (1L)  [Óleo sobre tela. Assinado. Mol]
+  [0982/1031]  95.2%  Autor ñ Identificado          base R$     200  sem lance  [Óleo Sobre Tela - Não assinado]
+  [0983/1031]  95.3%  Autor ñ Identificado          base R$     200  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0984/1031]  95.4%  F. N                          base R$     200  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0985/1031]  95.5%  Romano Di Martino             base R$     400  R$     420 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0986/1031]  95.6%  Romano Di Martino             base R$     400  R$     420 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0987/1031]  95.7%  Romano Di Martino             base R$     400  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0988/1031]  95.8%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Verso e]
+  [0989/1031]  95.9%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0990/1031]  96.0%  Romano Di Martino             base R$     500  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0991/1031]  96.1%  Romano Di Martino             base R$     650  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+
+  >> DB salvo — 165 novos nesta execução
+
+  [0992/1031]  96.2%  Ferracioli                    base R$     500  R$     550 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0993/1031]  96.3%  Ferracioli                    base R$     500  R$     600 (2L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0994/1031]  96.4%  Marcos Zechetto               base R$     350  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0995/1031]  96.5%  Marcos Zechetto               base R$     350  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0996/1031]  96.6%  C. Castro                     base R$     300  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [0997/1031]  96.7%  Ilton Silva                   base R$     350  R$     370 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0998/1031]  96.8%  Ilton Silva                   base R$     350  R$     370 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [0999/1031]  96.9%  Ilton Silva                   base R$     350  R$     370 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1000/1031]  97.0%  Rodrigo Zaniboni              base R$     300  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1001/1031]  97.1%  Canozzo                       base R$     400  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1002/1031]  97.2%  Aravena                       base R$     300  R$     705 (15L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1003/1031]  97.3%  Aravena                       base R$     200  R$     220 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1004/1031]  97.4%  Sebastião Eduardo - Igreja S  base R$     600  sem lance  [Óleo Sobre Tela - Ass.]
+  [1005/1031]  97.5%  Ruberza                       base R$     300  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1006/1031]  97.6%  Nando Ribeiro                 base R$     400  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+
+  >> DB salvo — 180 novos nesta execução
+
+  [1007/1031]  97.7%  Moisés                        base R$       0  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1008/1031]  97.8%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1009/1031]  97.9%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Lateral]
+  [1010/1031]  98.0%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Lateral]
+  [1011/1031]  98.1%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Lateral]
+  [1012/1031]  98.2%  Dias Ramos                    base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1013/1031]  98.3%  Romano Di Martino - Homenage  base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1014/1031]  98.4%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1015/1031]  98.4%  Romano Di Martino             base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1016/1031]  98.5%  Marco Antonio Moreira         base R$     500  R$     600 (2L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1017/1031]  98.6%  Papas Estefanos               base R$     800  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1018/1031]  98.7%  Nando Ribeiro                 base R$     600  sem lance  [Óleo Sobre Tela - Não assinado]
+  [1019/1031]  98.8%  Sérgio Amorim - Monumento do  base R$     800  sem lance  [Óleo Sobre Tela - Ass. Canto]
+  [1020/1031]  98.9%  Elio J. Moreira               base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1021/1031]  99.0%  Josinaldo                     base R$     800  R$     900 (2L)  [Óleo Sobre Tela - Ass. Canto I]
+
+  >> DB salvo — 195 novos nesta execução
+
+  [1022/1031]  99.1%  Josinaldo                     base R$     800  R$     850 (1L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1023/1031]  99.2%  Papas Estefanos               base R$     700  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1024/1031]  99.3%  A. Grassi                     base R$     400  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1025/1031]  99.4%  Carozzo                       base R$     700  R$     800 (2L)  [Óleo Sobre Tela - Ass. Canto I]
+  [1026/1031]  99.5%  Josinaldo                     base R$   1,000  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1027/1031]  99.6%  Romano Di Martino             base R$     900  sem lance  [Óleo Sobre Tela - Ass. Lateral]
+  [1028/1031]  99.7%  Nando Ribeiro                 base R$     500  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1029/1031]  99.8%  Nando Ribeiro                 base R$     500  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1030/1031]  99.9%  Dias Ramos                    base R$     800  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+  [1031/1031] 100.0%  Romano Di Martino             base R$     900  sem lance  [Óleo Sobre Tela - Ass. Canto I]
+
+  Novos lotes adicionados : 205
+  Lotes ignorados         : 826
+
+────────────────────────────────────────────────────────────────────
+  TABLEAU — Varrendo lotes...
+────────────────────────────────────────────────────────────────────
+
+  TAB-001  (ignor. — )
+  TAB-002  (ignor. — )
+  TAB-003  (ignor. — )
+  TAB-004  (ignor. — )
+  TAB-005  (ignor. — )
+  TAB-006  (ignor. — )
+  TAB-007  (ignor. — )
+  TAB-008  (ignor. — )
+  TAB-009  (ignor. — )
+  TAB-010  (ignor. — )
+  TAB-011  (ignor. — )
+  TAB-012  (ignor. — )
+  TAB-013  (ignor. — )
+  TAB-014  (ignor. — )
+  TAB-015  (ignor. — )
+  TAB-016  (ignor. — )
+  TAB-017  (ignor. — )
+  TAB-018  (ignor. — )
+  TAB-019  (ignor. — )
+  TAB-020  (ignor. — )
+  TAB-021  (ignor. — )
+  TAB-022  (ignor. — )
+  TAB-023  (ignor. — )
+  TAB-024  (ignor. — )
+  TAB-025  (ignor. — )
+  TAB-026  (ignor. — )
+  TAB-027  (ignor. — )
+  TAB-028  (ignor. — )
+  TAB-029  (ignor. — )
+  TAB-030  (ignor. — )
+  TAB-031  (ignor. — )
+  TAB-032  (ignor. — )
+  TAB-033  (ignor. — )
+  TAB-034  (ignor. — )
+  TAB-035  (ignor. — )
+  TAB-036  (ignor. — )
+  TAB-037  (ignor. — )
+  TAB-038  (ignor. — )
+  TAB-039  (ignor. — )
+  TAB-040  (ignor. — )
+  TAB-041  (ignor. — )
+  TAB-042  (ignor. — )
+  TAB-043  (ignor. — )
+  TAB-044  (ignor. — )
+  TAB-045  (ignor. — )
+  TAB-046  (ignor. — )
+  TAB-047  (ignor. — )
+  TAB-048  (ignor. — )
+  TAB-049  (ignor. — )
+  TAB-050  (ignor. — )
+  TAB-051  (ignor. — )
+  TAB-052  (ignor. — )
+  TAB-053  (ignor. — )
+  TAB-054  (ignor. — )
+  TAB-055  (ignor. — )
+  TAB-056  (ignor. — )
+  TAB-057  (ignor. — )
+  TAB-058  (ignor. — )
+  TAB-059  (ignor. — )
+  TAB-060  (ignor. — )
+  TAB-061  (ignor. — )
+  TAB-062  (ignor. — )
+  TAB-063  (ignor. — )
+  TAB-064  (ignor. — )
+  TAB-065  (ignor. — )
+  TAB-066  (ignor. — )
+  TAB-067  (ignor. — )
+  TAB-068  (ignor. — )
+  TAB-069  (ignor. — )
+  TAB-070  (ignor. — )
+  TAB-071  (ignor. — )
+  TAB-072  (ignor. — )
+  TAB-073  (ignor. — )
+  TAB-074  (ignor. — )
+  TAB-075  (ignor. — )
+  TAB-076  (ignor. — )
+  TAB-077  (ignor. — )
+  TAB-078  (ignor. — )
+  TAB-079  (ignor. — )
+  TAB-080  (ignor. — )
+  TAB-081  (ignor. — )
+  TAB-082  (ignor. — )
+  TAB-083  (ignor. — )
+  TAB-084  (ignor. — )
+  TAB-085  (ignor. — )
+  TAB-086  (ignor. — )
+  TAB-087  (ignor. — )
+  TAB-088  (ignor. — )
+  TAB-089  (ignor. — )
+  TAB-090  (ignor. — )
+  TAB-091  (ignor. — )
+  TAB-092  (ignor. — )
+  TAB-093  (ignor. — )
+  TAB-094  (ignor. — )
+  TAB-095  (ignor. — )
+  TAB-096  (ignor. — )
+  TAB-097  (ignor. — )
+  TAB-098  (ignor. — )
+  TAB-099  (ignor. — )
+  TAB-100  (ignor. — )
+  TAB-101  (ignor. — )
+  TAB-102  (ignor. — )
+  TAB-103  (ignor. — )
+  TAB-104  (ignor. — )
+  TAB-105  (ignor. — )
+  TAB-106  (ignor. — )
+  TAB-107  (ignor. — )
+  TAB-108  (ignor. — )
+  TAB-109  (ignor. — )
+  TAB-110  (ignor. — )
+  TAB-111  (ignor. — )
+  TAB-112  (ignor. — )
+  TAB-113  (ignor. — )
+  TAB-114  (ignor. — )
+  TAB-115  (ignor. — )
+  TAB-116  (ignor. — )
+  TAB-117  (ignor. — )
+  TAB-118  (ignor. — )
+  TAB-119  (ignor. — )
+  TAB-120  (ignor. — )
+  TAB-121  (ignor. — )
+  TAB-122  (ignor. — )
+  TAB-123  (ignor. — )
+  TAB-125  (ignor. — )
+  TAB-126  (ignor. — )
+  TAB-127  (ignor. — )
+  TAB-128  (ignor. — )
+  TAB-129  (ignor. — )
+  TAB-130  (ignor. — )
+  TAB-131  (ignor. — )
+  TAB-132  (ignor. — )
+  TAB-133  (ignor. — )
+  TAB-134  (ignor. — )
+  TAB-135  (ignor. — )
+  TAB-136  (ignor. — )
+  TAB-137  (ignor. — )
+  TAB-138  (ignor. — )
+  TAB-139  (ignor. — )
+  TAB-140  (ignor. — )
+  TAB-141  (ignor. — )
+  TAB-142  (ignor. — )
+  TAB-143  (ignor. — )
+  TAB-144  (ignor. — )
+  TAB-145  (ignor. — )
+  TAB-146  (ignor. — )
+  TAB-147  (ignor. — )
+  TAB-148  (ignor. — )
+  TAB-149  (ignor. — )
+  TAB-150  (ignor. — )
+  TAB-151  (ignor. — )
+  TAB-152  (ignor. — )
+  TAB-153  (ignor. — )
+  TAB-154  (ignor. — )
+  TAB-155  (ignor. — )
+  TAB-156  (ignor. — )
+  TAB-157  (ignor. — )
+  TAB-158  (ignor. — )
+  TAB-159  (ignor. — )
+  TAB-160  (ignor. — )
+  TAB-161  (ignor. — )
+  TAB-162  (ignor. — )
+  TAB-163  (ignor. — )
+  TAB-164  (ignor. — )
+  TAB-165  (ignor. — )
+  TAB-166  (ignor. — )
+  TAB-167  (ignor. — )
+  TAB-168  (ignor. — )
+  TAB-169  (ignor. — )
+  TAB-170  (ignor. — )
+  TAB-171  (ignor. — )
+  TAB-172  (ignor. — )
+  TAB-173  (ignor. — )
+  TAB-174  (ignor. — )
+  TAB-175  (ignor. — )
+  TAB-176  (ignor. — )
+  TAB-177  (ignor. — )
+  TAB-178  (ignor. — )
+  TAB-179  (ignor. — )
+  TAB-180  (ignor. — )
+  TAB-181  (ignor. — )
+  TAB-182  (ignor. — )
+  TAB-183  (ignor. — )
+  TAB-184  (ignor. — )
+  TAB-185  (ignor. — )
+  TAB-186  (ignor. — )
+  TAB-187  (ignor. — )
+  TAB-188  (ignor. — )
+  TAB-189  (ignor. — )
+  TAB-190  (ignor. — )
+  TAB-191  (ignor. — )
+  TAB-192  (ignor. — )
+  TAB-193  (ignor. — )
+  TAB-194  (ignor. — )
+  TAB-195  (ignor. — )
+  TAB-196  (ignor. — )
+  TAB-197  (ignor. — )
+  TAB-198  (ignor. — )
+  TAB-199  (ignor. — )
+  TAB-200  (ignor. — )
+  TAB-201  (ignor. — )
+  TAB-202  (ignor. — )
+  TAB-203  (ignor. — )
+  TAB-204  (ignor. — )
+  TAB-205  (ignor. — )
+  TAB-206  (ignor. — )
+  TAB-207  (ignor. — )
+  TAB-208  (ignor. — )
+  TAB-209  (ignor. — )
+  TAB-210  (ignor. — )
+  TAB-211  (ignor. — )
+  TAB-212  (ignor. — )
+  TAB-213  (ignor. — )
+  TAB-214  (ignor. — )
+  TAB-215  (ignor. — )
+  TAB-216  (ignor. — )
+  TAB-217  (ignor. — )
+  TAB-218  (ignor. — )
+  TAB-219  (ignor. — )
+  TAB-220  (ignor. — )
+  TAB-221  (ignor. — )
+  TAB-222  (ignor. — )
+  TAB-223  (ignor. — )
+  TAB-224  (ignor. — )
+  TAB-225  (ignor. — )
+  TAB-226  (ignor. — )
+  TAB-227  (ignor. — )
+  TAB-228  (ignor. — )
+  TAB-229  (ignor. — )
+  TAB-230  (ignor. — )
+  TAB-231  (ignor. — )
+  TAB-232  (ignor. — )
+  TAB-233  (ignor. — )
+  TAB-234  (ignor. — )
+  TAB-235  (ignor. — )
+  TAB-236  (ignor. — )
+  TAB-237  (ignor. — )
+  TAB-238  (ignor. — )
+  TAB-239  (ignor. — )
+  TAB-240  (ignor. — )
+  TAB-241  (ignor. — )
+  TAB-242  (ignor. — )
+  TAB-243  (ignor. — )
+  TAB-244  (ignor. — )
+  TAB-245  (ignor. — )
+  TAB-246  (ignor. — )
+  TAB-247  (ignor. — )
+  TAB-248  (ignor. — )
+  TAB-249  (ignor. — )
+  TAB-250  (ignor. — )
+  TAB-251  (ignor. — )
+  TAB-252  (ignor. — )
+  TAB-253  (ignor. — )
+  TAB-254  (ignor. — )
+  TAB-255  (ignor. — )
+  TAB-256  (ignor. — )
+  TAB-257  (ignor. — )
+  TAB-258  (ignor. — )
+  TAB-259  (ignor. — )
+  TAB-260  (ignor. — )
+  TAB-261  (ignor. — )
+  TAB-262  (ignor. — )
+  TAB-263  (ignor. — )
+  TAB-265  (ignor. — )
+  TAB-266  (ignor. — )
+  TAB-267  (ignor. — )
+  TAB-268  (ignor. — )
+  TAB-269  (ignor. — )
+  TAB-270  (ignor. — )
+  TAB-272  (ignor. — )
+  TAB-273  (ignor. — )
+  TAB-274  (ignor. — )
+  TAB-275  (ignor. — )
+  TAB-276  (ignor. — )
+  TAB-277  (ignor. — )
+  TAB-278  (ignor. — )
+  TAB-279  (ignor. — )
+  TAB-280  (ignor. — )
+  TAB-281  (ignor. — )
+  TAB-282  (ignor. — )
+  TAB-283  (ignor. — )
+  TAB-284  (ignor. — )
+  TAB-285  (ignor. — )
+  TAB-286  (ignor. — )
+  TAB-287  (ignor. — )
+  TAB-288  (ignor. — )
+  TAB-289  (ignor. — )
+  TAB-290  (ignor. — )
+  TAB-291  (ignor. — )
+  TAB-292  (ignor. — )
+  TAB-293  (ignor. — )
+  TAB-294  (ignor. — )
+  TAB-295  (ignor. — )
+  TAB-296  (ignor. — )
+  TAB-297  (ignor. — )
+  TAB-298  (ignor. — )
+  TAB-299  (ignor. — )
+  TAB-300  (ignor. — )
+  TAB-301  (ignor. — )
+  TAB-302  (ignor. — )
+  TAB-303  (ignor. — )
+  TAB-304  (ignor. — )
+  TAB-305  (ignor. — )
+  TAB-306  (ignor. — )
+  TAB-307  (ignor. — )
+  TAB-308  (ignor. — )
+  TAB-309  (ignor. — )
+  TAB-310  (ignor. — )
+  TAB-311  (ignor. — )
+  TAB-312  (ignor. — )
+  TAB-313  (ignor. — )
+  TAB-314  (ignor. — )
+  TAB-315  (ignor. — )
+  TAB-316  (ignor. — )
+  TAB-317  (ignor. — )
+  TAB-318  (ignor. — )
+  TAB-319  (ignor. — )
+  TAB-320  (ignor. — )
+  TAB-321  (ignor. — )
+  TAB-322  (ignor. — )
+  TAB-323  (ignor. — )
+  TAB-324  (ignor. — )
+  TAB-325  (ignor. — )
+  TAB-326  (ignor. — )
+  TAB-327  (ignor. — )
+  TAB-328  (ignor. — )
+  TAB-329  (ignor. — )
+  TAB-330  (ignor. — )
+  TAB-331  (ignor. — )
+  TAB-332  (ignor. — )
+  TAB-333  (ignor. — )
+  TAB-334  (ignor. — )
+  TAB-335  (ignor. — )
+  TAB-336  (ignor. — )
+  TAB-337  (ignor. — )
+  TAB-338  (ignor. — )
+  TAB-339  (ignor. — )
+  TAB-340  (ignor. — )
+  TAB-341  (ignor. — )
+  TAB-342  (ignor. — )
+  TAB-343  (ignor. — )
+  TAB-344  (ignor. — )
+  TAB-345  (ignor. — )
+  TAB-346  (ignor. — )
+  TAB-347  (ignor. — )
+  TAB-348  (ignor. — )
+  TAB-349  (ignor. — )
+  TAB-350  (ignor. — )
+  TAB-351  (ignor. — )
+  TAB-352  (ignor. — )
+  TAB-353  (ignor. — )
+  TAB-354  (ignor. — )
+  TAB-355  (ignor. — )
+  TAB-356  (ignor. — )
+  TAB-357  (ignor. — )
+  TAB-358  (ignor. — )
+  TAB-359  (ignor. — )
+  TAB-360  (ignor. — )
+  TAB-361  (ignor. — )
+  TAB-362  (ignor. — )
+  TAB-363  (ignor. — )
+  TAB-364  (ignor. — )
+  TAB-365  (ignor. — )
+  TAB-366  (ignor. — )
+  TAB-367  (ignor. — )
+  TAB-368  (ignor. — )
+  TAB-369  (ignor. — )
+  TAB-370  (ignor. — )
+  TAB-371  (ignor. — )
+  TAB-372  (ignor. — )
+  TAB-373  (ignor. — )
+  TAB-374  (ignor. — )
+  TAB-375  (ignor. — )
+  TAB-376  (ignor. — )
+  TAB-377  (ignor. — )
+  TAB-378  (ignor. — )
+  TAB-379  (ignor. — )
+  TAB-380  (ignor. — )
+  TAB-381  (ignor. — )
+  TAB-382  (ignor. — )
+  TAB-383  (ignor. — )
+  TAB-384  (ignor. — )
+  TAB-385  (ignor. — )
+  TAB-386  (ignor. — )
+  TAB-387  (ignor. — )
+  TAB-388  (ignor. — )
+  TAB-389  (ignor. — )
+  TAB-390  (ignor. — )
+  TAB-391  (ignor. — )
+  TAB-392  (ignor. — )
+  TAB-393  (ignor. — )
+  TAB-394  (ignor. — )
+  TAB-395  (ignor. — )
+  TAB-396  (ignor. — )
+  TAB-397  (ignor. — )
+  TAB-399  (ignor. — )
+  TAB-400  (ignor. — )
+  TAB-401  (ignor. — )
+  TAB-402  (ignor. — )
+  TAB-403  (ignor. — )
+  TAB-404  (ignor. — )
+  TAB-405  (ignor. — )
+  TAB-406  (ignor. — )
+  TAB-407  (ignor. — )
+  TAB-408  (ignor. — )
+  TAB-409  (ignor. — )
+  TAB-410  (ignor. — )
+  TAB-411  (ignor. — )
+  TAB-412  (ignor. — )
+  TAB-413  (ignor. — )
+  TAB-414  (ignor. — )
+  TAB-415  (ignor. — )
+  TAB-416  (ignor. — )
+  TAB-417  (ignor. — )
+  TAB-418  (ignor. — )
+  TAB-419  (ignor. — )
+  TAB-420  (ignor. — )
+  TAB-421  (ignor. — )
+  TAB-422  (ignor. — )
+  TAB-423  (ignor. — )
+  TAB-424  (ignor. — )
+  TAB-425  (ignor. — )
+  TAB-426  (ignor. — )
+  TAB-427  (ignor. — )
+  TAB-428  (ignor. — )
+  TAB-429  (ignor. — )
+  TAB-430  (ignor. — )
+  TAB-431  (ignor. — )
+  TAB-432  (ignor. — )
+  TAB-434  (ignor. — )
+  TAB-435  (ignor. — )
+  TAB-436  (ignor. — )
+  TAB-437  (ignor. — )
+  TAB-438  (ignor. — )
+  TAB-439  (ignor. — )
+  TAB-440  (ignor. — )
+  TAB-441  (ignor. — )
+  TAB-442  (ignor. — )
+  TAB-443  (ignor. — )
+  TAB-444  (ignor. — )
+  TAB-446  (ignor. — )
+  TAB-447  (ignor. — )
+  TAB-448  (ignor. — )
+  TAB-449  (ignor. — )
+  TAB-450  (ignor. — )
+  TAB-451  (ignor. — )
+  TAB-452  (ignor. — )
+  TAB-453  (ignor. — )
+  TAB-454  (ignor. — )
+  TAB-455  (ignor. — )
+  TAB-456  (ignor. — )
+  TAB-457  (ignor. — )
+  TAB-458  (ignor. — )
+  TAB-459  (ignor. — )
+  TAB-460  (ignor. — )
+  TAB-461  (ignor. — )
+  TAB-462  (ignor. — )
+  TAB-463  (ignor. — )
+  TAB-464  (ignor. — )
+  TAB-465  (ignor. — )
+  TAB-466  (ignor. — )
+  TAB-467  (ignor. — )
+  TAB-468  (ignor. — )
+  TAB-469  (ignor. — )
+  TAB-470  (ignor. — )
+  TAB-471  (ignor. — )
+  TAB-472  (ignor. — )
+  TAB-473  (ignor. — )
+  TAB-474  (ignor. — )
+  TAB-475  (ignor. — )
+  TAB-476  (ignor. — )
+  TAB-477  (ignor. — )
+  TAB-478  (ignor. — )
+  TAB-479  (ignor. — )
+  TAB-480  (ignor. — )
+
+  Tableau — novos: 0  |  ignorados: 474
+
+────────────────────────────────────────────────────────────────────
+  FASE 3 — Gerando planilha...
+
+  Salvando Excel: C:\Users\andre\LEILÕES DE ARTE\catalogo_pinturas_leiloesbr.xlsx
+  [OK] 326 pinturas salvas (com lance: 61) → C:\Users\andre\LEILÕES DE ARTE\catalogo_pinturas_leiloesbr.xlsx
+
+====================================================================
+  RESUMO FINAL
+  Total de pinturas na base : 326
+  Lotes com lance registrado: 61
+  Arquivo: C:\Users\andre\LEILÕES DE ARTE\catalogo_pinturas_leiloesbr.xlsx
+====================================================================
+
+  Pressione ENTER para fechar...
+Traceback (most recent call last):
+  File "C:\Users\andre\LEILÕES DE ARTE\catalogo_leiloesbr.py", line 1282, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\andre\LEILÕES DE ARTE\catalogo_leiloesbr.py", line 1269, in pausar
+    print(f"  Total de pinturas na base : {len(pinturas_final)}")
+    ^^^^^^^
+EOFError: EOF when reading a line
