@@ -524,6 +524,16 @@ V89_HOUSES = [
     "http://www.coisaantigaleiloes.com.br",     # Coisa Antiga Leilões
     "http://www.solmarelualeiloes.com.br",      # Sol Mar e Lua Leilões
     "http://www.jfleiloeira.com.br",            # JF Leiloeira
+    # ── Casas identificadas em março/2026 — ainda não varridas ───────────────
+    "http://www.a2arteantiguidadeleilao.com.br", # A2 Arte Antiguidade
+    "http://www.antiquariolavienrose.com.br",    # Antiquário La Vie En Rose
+    "http://www.arteseantiquariobenjamin.com.br",# Artes e Antiquário Benjamin
+    "http://www.caviunaleiloes.com.br",          # Caviúna Arte Antiguidade
+    "http://www.galeriaabaporu.lel.br",          # Galeria Abaporu
+    "http://www.manvaniarteseleiloes.com.br",    # Manvani Artes e Leilões
+    "http://www.mozartleiloeiro.com.br",         # Mozart Melo Leilões
+    "http://www.paivaribeiroleiloes.com.br",     # Paiva Ribeiro Leilões
+    "http://www.republicadaarte.com.br",         # Galeria República da Arte
 ]
 
 
