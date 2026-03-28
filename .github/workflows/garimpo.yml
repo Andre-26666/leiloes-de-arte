@@ -21,7 +21,9 @@ jobs:
           python-version: '3.11'
 
       - name: Instala dependências
-        run: pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas
+        run: |
+          pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas
+          python -c "from bs4 import BeautifulSoup; BeautifulSoup('<a>', 'lxml'); print('lxml OK')"
 
       - name: Roda garimpo LeiloesBR
         env:
