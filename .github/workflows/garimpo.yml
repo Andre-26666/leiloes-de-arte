@@ -22,7 +22,7 @@ jobs:
           cache: 'pip'
 
       - name: Instala dependências
-        run: pip install requests beautifulsoup4 openpyxl Pillow imagehash pandas
+        run: pip install requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas
 
       - name: Roda garimpo LeiloesBR
         env:
