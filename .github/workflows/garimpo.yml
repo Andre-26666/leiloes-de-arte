@@ -52,3 +52,10 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
         run: python catalogo_tableau.py
         continue-on-error: true
+
+      - name: Atualiza índice visual
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python build_visual_index.py --threads 4
+        continue-on-error: true

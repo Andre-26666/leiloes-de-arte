@@ -78,8 +78,54 @@ def main():
     ap.add_argument("--rebuild",   action="store_true",    help="Reconstrói do zero (ignora índice existente)")
     args = ap.parse_args()
 
+    import os as _os
+    SB_URL = _os.environ.get("SUPABASE_URL", "https://mzjyxqwdnlzmotqxgcqa.supabase.co")
+    SB_KEY = _os.environ.get("SUPABASE_KEY", "")
+    USE_SB = bool(SB_KEY)
+
+    def _sb_headers():
+        return {
+            "apikey": SB_KEY,
+            "Authorization": f"Bearer {SB_KEY}",
+            "Content-Type": "application/json",
+            "Prefer": "resolution=merge-duplicates",
+        }
+
+    def _sb_fetch_all_vi():
+        rows, offset = [], 0
+        while True:
+            r = requests.get(f"{SB_URL}/rest/v1/visual_index?select=url_key",
+                             headers=_sb_headers(),
+                             params={"offset": offset, "limit": 1000}, timeout=30)
+            batch = r.json() if r.status_code == 200 else []
+            rows.extend(batch)
+            if len(batch) < 1000: break
+            offset += 1000
+        return {r["url_key"] for r in rows}
+
+    def _sb_fetch_bda():
+        rows, offset = [], 0
+        while True:
+            r = requests.get(f"{SB_URL}/rest/v1/lotes?select=chave,artista,titulo,tecnica,dimensoes,maior_lance,casa,data_leilao,foto_url&fonte=eq.bda",
+                             headers=_sb_headers(),
+                             params={"offset": offset, "limit": 1000}, timeout=30)
+            batch = r.json() if r.status_code == 200 else []
+            rows.extend(batch)
+            if len(batch) < 1000: break
+            offset += 1000
+        return rows
+
+    def _sb_upsert_vi(rows_vi):
+        url = f"{SB_URL}/rest/v1/visual_index"
+        for i in range(0, len(rows_vi), 400):
+            requests.post(url, headers=_sb_headers(), json=rows_vi[i:i+400], timeout=60)
+
     # Carrega índice existente para retomar (incremental)
-    if os.path.exists(INDEX_FILE) and not args.rebuild:
+    if USE_SB and not args.rebuild:
+        index_keys = _sb_fetch_all_vi()
+        index = {k: True for k in index_keys}  # só as chaves para checar duplicatas
+        print(f"Índice Supabase: {len(index)} obras já indexadas")
+    elif os.path.exists(INDEX_FILE) and not args.rebuild:
         with open(INDEX_FILE, encoding="utf-8") as f:
             index = json.load(f)
         print(f"Índice existente: {len(index)} obras já indexadas (use --rebuild para reconstruir)")
@@ -88,10 +134,19 @@ def main():
         print("Construindo índice do zero...")
 
     # Carrega BDA
-    print(f"Carregando {os.path.basename(BDA_FILE)}...", end=" ", flush=True)
-    with open(BDA_FILE, encoding="utf-8") as f:
-        bda = json.load(f)
-    print(f"{len(bda)} registros")
+    if USE_SB:
+        print("Carregando BDA do Supabase...", end=" ", flush=True)
+        bda_rows = _sb_fetch_bda()
+        bda = {}
+        for r in bda_rows:
+            url_key = r["chave"].replace("bda|", "", 1)
+            bda[url_key] = r
+        print(f"{len(bda)} registros")
+    else:
+        print(f"Carregando {os.path.basename(BDA_FILE)}...", end=" ", flush=True)
+        with open(BDA_FILE, encoding="utf-8") as f:
+            bda = json.load(f)
+        print(f"{len(bda)} registros")
 
     # Filtra candidatos válidos ainda não indexados
     candidatos = []
@@ -154,13 +209,26 @@ def main():
                 print(f"  [{pct:3d}%] {i}/{total} — {ok} ok | {err} erros | "
                       f"{elapsed:.0f}s decorridos | ETA ~{eta:.0f}s")
                 # Salva progressivamente a cada 100
-                with open(INDEX_FILE, "w", encoding="utf-8") as f:
-                    json.dump(index, f, ensure_ascii=False)
+                if USE_SB:
+                    novas = [{"url_key": k, **v} for k, v in index.items()
+                             if isinstance(v, dict)][-min(ok, 100):]
+                    _sb_upsert_vi(novas)
+                else:
+                    with open(INDEX_FILE, "w", encoding="utf-8") as f:
+                        json.dump(index, f, ensure_ascii=False)
+
+    # Salva final
+    if USE_SB:
+        todas = [{"url_key": k, **v} for k, v in index.items() if isinstance(v, dict)]
+        _sb_upsert_vi(todas)
+    else:
+        with open(INDEX_FILE, "w", encoding="utf-8") as f:
+            json.dump(index, f, ensure_ascii=False)
 
     print(f"\n{'='*60}")
     print(f"  Concluído! {ok} obras indexadas ({err} falhas)")
     print(f"  Total no índice: {len(index)} obras")
-    print(f"  Arquivo: {INDEX_FILE}")
+    print(f"  {'Supabase' if USE_SB else INDEX_FILE}")
     print(f"{'='*60}")
 
 

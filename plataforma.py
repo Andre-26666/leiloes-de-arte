@@ -1293,8 +1293,11 @@ _RE_DESCONHECIDO = _re.compile(
 )
 
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=600)
 def _load_visual_index() -> dict:
+    if _USE_SUPABASE:
+        rows = _sb_fetch_all("visual_index")
+        return {r["url_key"]: r for r in rows if r.get("phash")}
     if not os.path.exists(VISUAL_INDEX):
         return {}
     with open(VISUAL_INDEX, encoding="utf-8") as f:
