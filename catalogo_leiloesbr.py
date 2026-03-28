@@ -534,6 +534,10 @@ V89_HOUSES = [
     "http://www.mozartleiloeiro.com.br",         # Mozart Melo Leilões
     "http://www.paivaribeiroleiloes.com.br",     # Paiva Ribeiro Leilões
     "http://www.republicadaarte.com.br",         # Galeria República da Arte
+    "http://www.bradg.com.br",                   # Bradg Brazilian Art e Design Gallery
+    "http://www.classicosmodernosleiloes.com.br", # Clássicos Modernos Leilões
+    "http://www.leilaodeantiguidades.com.br",    # Cachimbo Enferrujado
+    "http://www.santayana.com.br",               # Santayana Leilões
 ]
 
 
