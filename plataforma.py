@@ -1363,6 +1363,38 @@ def render_garimpo(df_leiloes):
 
     st.caption(f"Índice visual: **{len(idx):,}** obras históricas com artista identificado")
 
+    # ── Modo teste: busca por URL de foto ──────────────────────────────────
+    with st.expander("🔬 Testar com URL de foto", expanded=False):
+        url_teste = st.text_input("Cole a URL de uma imagem para buscar obras similares:",
+                                  placeholder="https://www.site.com.br/imagem.jpg",
+                                  key="garimpo_url_teste")
+        if url_teste:
+            with st.spinner("Buscando similares..."):
+                similares_teste = _buscar_similares(url_teste, top_n=5, max_dist=25)
+            col_t1, col_t2 = st.columns([1, 2])
+            with col_t1:
+                st.image(url_teste, use_container_width=True)
+            with col_t2:
+                if not similares_teste:
+                    st.info("Nenhuma obra similar encontrada no índice.")
+                else:
+                    _mh_t = load_media_hist()
+                    st.markdown("**Obras visualmente similares:**")
+                    for s in similares_teste:
+                        art_norm = _norm_art(s["artista"])
+                        media = _mh_t.get(art_norm, s["maior_lance"])
+                        sim_color = "#7dd4a0" if s["similarity"] >= 75 else ("#fbbf24" if s["similarity"] >= 55 else "#888")
+                        st.markdown(
+                            f'<div style="border:1px solid #2a2a42;border-radius:8px;padding:10px;margin-bottom:8px">'
+                            f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
+                            f'<b>{s["artista"]}</b><br>'
+                            f'<span style="font-size:12px;color:#aaa">{s["titulo"][:60]}</span><br>'
+                            f'Lance histórico: <b>{fmt_brl(s["maior_lance"])}</b> · '
+                            f'Média artista: <b>{fmt_brl(media) if media else "—"}</b>'
+                            f'</div>',
+                            unsafe_allow_html=True,
+                        )
+
     # Filtra lotes desconhecidos com foto
     desconhecidos = df_leiloes[
         df_leiloes["artista"].apply(_eh_desconhecido) &
