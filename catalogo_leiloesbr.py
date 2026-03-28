@@ -2410,6 +2410,15 @@ def main():
     print(f"  Arquivo: {OUTPUT_XLSX}")
     print("=" * 68)
 
+    # ── Sincroniza com Supabase (se SUPABASE_KEY estiver definida) ─────────────
+    try:
+        import supabase_sync
+        if supabase_sync.enabled():
+            print("\n  Sincronizando com Supabase...")
+            supabase_sync.sync_leiloesbr(db)
+    except Exception as _e:
+        print(f"  [supabase] aviso: {_e}")
+
 
 def pausar():
     if sys.stdin.isatty():

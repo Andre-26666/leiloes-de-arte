@@ -338,6 +338,14 @@ def main():
     print(f"Salvo em: {DB_FILE}")
     print(f"Fim: {datetime.now().strftime('%d/%m/%Y %H:%M:%S')}")
 
+    try:
+        import supabase_sync
+        if supabase_sync.enabled():
+            print("\nSincronizando com Supabase...")
+            supabase_sync.sync_cda(db)
+    except Exception as _e:
+        print(f"[supabase] aviso: {_e}")
+
 
 if __name__ == "__main__":
     main()

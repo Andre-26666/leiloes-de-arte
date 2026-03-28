@@ -380,6 +380,15 @@ def main():
             log(f"Valor base máximo: R$ {max(valores):,.2f}")
             log(f"Valor base médio:  R$ {sum(valores)/len(valores):,.2f}")
 
+    # Sincroniza com Supabase
+    try:
+        import supabase_sync
+        if supabase_sync.enabled():
+            log("Sincronizando com Supabase...")
+            supabase_sync.sync_tableau(lotes_unicos)
+    except Exception as _e:
+        log(f"[supabase] aviso: {_e}")
+
     return lotes_unicos
 
 if __name__ == '__main__':
