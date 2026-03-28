@@ -16,6 +16,22 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
+# ── Supabase ─────────────────────────────────────────────────────────────────
+def _get_supabase():
+    """Retorna cliente Supabase se configurado, senão None."""
+    url = os.environ.get("SUPABASE_URL") or st.secrets.get("SUPABASE_URL", "")
+    key = os.environ.get("SUPABASE_KEY") or st.secrets.get("SUPABASE_KEY", "")
+    if not url or not key:
+        return None
+    try:
+        from supabase import create_client
+        return create_client(url, key)
+    except Exception:
+        return None
+
+_SB = _get_supabase()
+_USE_SUPABASE = _SB is not None
+
 
 def _norm_art(s):
     """Normaliza nome de artista para comparação: maiúsculas, sem acentos, sem preposições."""
@@ -589,11 +605,52 @@ def _data_leilao_passou(data_str):
     return False
 
 
-@st.cache_data(ttl=30)
-def load_leiloes():
-    """Lotes ativos — LeilõesBR + Arremate Arte + Tableau. Exclui lotes com data já passada."""
-    frames = []
+def _sb_fetch_all(table, filters=None, columns="*", page_size=1000):
+    """Busca todos os registros de uma tabela Supabase com paginação."""
+    rows = []
+    offset = 0
+    while True:
+        q = _SB.table(table).select(columns)
+        if filters:
+            for col, val in filters.items():
+                if val is True:
+                    q = q.eq(col, True)
+                elif val is False:
+                    q = q.eq(col, False)
+                else:
+                    q = q.eq(col, val)
+        result = q.range(offset, offset + page_size - 1).execute()
+        batch = result.data or []
+        rows.extend(batch)
+        if len(batch) < page_size:
+            break
+        offset += page_size
+    return rows
 
+
+@st.cache_data(ttl=300)
+def load_leiloes():
+    """Lotes ativos — todas as fontes. Exclui lotes com data já passada."""
+    if _USE_SUPABASE:
+        rows = _sb_fetch_all("lotes", filters={"em_leilao": True, "ignorado": False})
+        if not rows:
+            return pd.DataFrame()
+        df = pd.DataFrame(rows)
+        if "data_leilao" in df.columns:
+            df = df[~df["data_leilao"].apply(_data_leilao_passou)]
+        # Recria foto_url para leiloesbr sem foto (chave tem 4 partes separadas por |)
+        if "foto_url" in df.columns and "chave" in df.columns:
+            mask = (df["fonte"] == "leiloesbr") & (df["foto_url"].isna() | (df["foto_url"] == ""))
+            def _fix_foto(chave):
+                parts = chave.replace("leiloesbr|", "", 1).split("|")
+                if len(parts) == 4:
+                    return f"https://d1o6h00a1h5k7q.cloudfront.net/imagens/img_g/{parts[2]}/{parts[3]}.jpg"
+                return ""
+            df.loc[mask, "foto_url"] = df.loc[mask, "chave"].apply(_fix_foto)
+        return _normalize_df(df)
+
+    # ── Fallback: leitura local ──────────────────────────────────────────────
+    frames = []
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
@@ -614,7 +671,6 @@ def load_leiloes():
             rows.append(v)
         if rows:
             frames.append(pd.DataFrame(rows))
-
     if os.path.exists(ARR_FILE):
         with open(ARR_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
@@ -624,7 +680,6 @@ def load_leiloes():
                 and not _data_leilao_passou(v.get("data_leilao", ""))]
         if rows:
             frames.append(pd.DataFrame(rows))
-
     if os.path.exists(TAB_FILE):
         with open(TAB_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
@@ -634,18 +689,24 @@ def load_leiloes():
                 df_tab = df_tab[~df_tab["data_leilao"].apply(_data_leilao_passou)]
                 if not df_tab.empty:
                     frames.append(df_tab)
-
     if not frames:
         return pd.DataFrame()
     return _normalize_df(pd.concat(frames, ignore_index=True))
 
 
-@st.cache_data(ttl=30)
+@st.cache_data(ttl=300)
 def load_historico():
-    """Histórico de preços — LeiloesBR finalizados + Bolsa de Arte + Catálogo das Artes."""
-    frames = []
+    """Histórico de preços — todas as fontes finalizadas."""
+    if _USE_SUPABASE:
+        rows = _sb_fetch_all("lotes", filters={"em_leilao": False})
+        if not rows:
+            return pd.DataFrame()
+        df = pd.DataFrame(rows)
+        df = df[df["artista"].notna() & (df["artista"] != "")]
+        return _normalize_df(df)
 
-    # LeiloesBR — apenas lotes finalizados (em_leilao=False)
+    # ── Fallback: leitura local ──────────────────────────────────────────────
+    frames = []
     if os.path.exists(DB_FILE):
         with open(DB_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
@@ -654,22 +715,18 @@ def load_historico():
                 and v.get("em_leilao") is False]
         if rows:
             frames.append(pd.DataFrame(rows))
-
     if os.path.exists(BDA_FILE):
         with open(BDA_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
         rows = [v for k, v in raw.items() if k != "__meta__" and isinstance(v, dict) and v.get("artista")]
         if rows:
             frames.append(pd.DataFrame(rows))
-
     if os.path.exists(CDA_FILE):
         with open(CDA_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
         rows = [v for k, v in raw.items() if k != "__meta__" and isinstance(v, dict) and v.get("artista")]
         if rows:
             frames.append(pd.DataFrame(rows))
-
-    # Arremate Arte — apenas lotes finalizados (em_leilao=False)
     if os.path.exists(ARR_FILE):
         with open(ARR_FILE, "r", encoding="utf-8") as f:
             raw = json.load(f)
@@ -678,10 +735,7 @@ def load_historico():
                 and v.get("artista") and not v.get("em_leilao", True)]
         if rows:
             frames.append(pd.DataFrame(rows))
-
-    # Tableau — lotes com data de leilão passada (já encerrados)
     if os.path.exists(TAB_FILE):
-        import re as _re
         from datetime import date as _date_cls
         _today = _date_cls.today()
         with open(TAB_FILE, "r", encoding="utf-8") as f:
@@ -710,46 +764,23 @@ def load_historico():
                     pass
         if tab_hist:
             frames.append(pd.DataFrame(tab_hist))
-
     if not frames:
         return pd.DataFrame()
     return _normalize_df(pd.concat(frames, ignore_index=True))
 
 
-@st.cache_data(ttl=60)
+@st.cache_data(ttl=600)
 def load_media_hist():
-    """Média histórica de preços por artista (BDA + CDA + LeiloesBR finalizados + Arremate).
-    Retorna dict norm_name → média (int)."""
+    """Média histórica de preços por artista. Retorna dict norm_name → média (int)."""
     hist = {}
-    for arq in [BDA_FILE, CDA_FILE]:
-        if not os.path.exists(arq):
-            continue
-        with open(arq, "r", encoding="utf-8") as f:
-            d = json.load(f)
-        for v in d.values():
-            if not isinstance(v, dict):
-                continue
+
+    if _USE_SUPABASE:
+        # Busca apenas campos necessários para economizar dados
+        rows = _sb_fetch_all("lotes", filters={"em_leilao": False},
+                             columns="artista,maior_lance")
+        for v in rows:
             art = _norm_art(v.get("artista", ""))
-            if not art:
-                continue
-            p = v.get("maior_lance") or v.get("lance_atual") or 0
-            try:
-                p = float(p)
-            except Exception:
-                p = 0
-            if p > 0:
-                hist.setdefault(art, []).append(p)
-    for arq in [DB_FILE, ARR_FILE]:
-        if not os.path.exists(arq):
-            continue
-        with open(arq, "r", encoding="utf-8") as f:
-            d = json.load(f)
-        for k, v in d.items():
-            if not isinstance(v, dict) or v.get("em_leilao") is not False:
-                continue
-            art = _norm_art(v.get("artista", ""))
-            if not art:
-                continue
+            if not art: continue
             p = v.get("maior_lance") or 0
             try:
                 p = float(p)
@@ -757,23 +788,56 @@ def load_media_hist():
                 p = 0
             if p > 0:
                 hist.setdefault(art, []).append(p)
-    # Histórico Levy + Conrad (historico_casas.py)
-    if os.path.exists(HCF_FILE):
-        with open(HCF_FILE, "r", encoding="utf-8") as f:
-            d = json.load(f)
-        for v in d.get("lotes", []):
-            if not isinstance(v, dict):
-                continue
+        # Histórico Levy + Conrad
+        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance")
+        for v in hcf_rows:
             art = _norm_art(v.get("artista", ""))
-            if not art:
-                continue
-            p = v.get("maior_lance", 0)
+            if not art: continue
+            p = v.get("maior_lance") or 0
             try:
                 p = float(p)
             except Exception:
                 p = 0
             if p > 0:
                 hist.setdefault(art, []).append(p)
+        return {art: round(sum(ps) / len(ps)) for art, ps in hist.items() if ps}
+
+    # ── Fallback: leitura local ──────────────────────────────────────────────
+    for arq in [BDA_FILE, CDA_FILE]:
+        if not os.path.exists(arq): continue
+        with open(arq, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        for v in d.values():
+            if not isinstance(v, dict): continue
+            art = _norm_art(v.get("artista", ""))
+            if not art: continue
+            p = v.get("maior_lance") or v.get("lance_atual") or 0
+            try: p = float(p)
+            except Exception: p = 0
+            if p > 0: hist.setdefault(art, []).append(p)
+    for arq in [DB_FILE, ARR_FILE]:
+        if not os.path.exists(arq): continue
+        with open(arq, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        for k, v in d.items():
+            if not isinstance(v, dict) or v.get("em_leilao") is not False: continue
+            art = _norm_art(v.get("artista", ""))
+            if not art: continue
+            p = v.get("maior_lance") or 0
+            try: p = float(p)
+            except Exception: p = 0
+            if p > 0: hist.setdefault(art, []).append(p)
+    if os.path.exists(HCF_FILE):
+        with open(HCF_FILE, "r", encoding="utf-8") as f:
+            d = json.load(f)
+        for v in d.get("lotes", []):
+            if not isinstance(v, dict): continue
+            art = _norm_art(v.get("artista", ""))
+            if not art: continue
+            p = v.get("maior_lance", 0)
+            try: p = float(p)
+            except Exception: p = 0
+            if p > 0: hist.setdefault(art, []).append(p)
     return {art: round(sum(ps) / len(ps)) for art, ps in hist.items() if ps}
 
 

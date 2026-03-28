@@ -1,0 +1,52 @@
+name: Garimpo Diário
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # 06:00 horário de Brasília (09:00 UTC)
+    - cron: '0 21 * * *'  # 18:00 horário de Brasília (21:00 UTC)
+  workflow_dispatch:        # permite rodar manualmente
+
+jobs:
+  garimpo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configura Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Instala dependências
+        run: pip install -r requirements.txt
+
+      - name: Roda garimpo LeiloesBR
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python catalogo_leiloesbr.py --supabase
+
+      - name: Roda garimpo Bolsa de Arte
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python catalogo_bolsadearte.py --supabase
+        continue-on-error: true
+
+      - name: Roda garimpo CDA
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python catalogo_cda.py --supabase
+        continue-on-error: true
+
+      - name: Roda garimpo Tableau
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python catalogo_tableau.py --supabase
+        continue-on-error: true

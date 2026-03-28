@@ -3,3 +3,6 @@
 *.xlsx
 __pycache__/
 garimpo_checkpoint.json
+.streamlit/secrets.toml
+migrar_supabase.py
+supabase_schema.sql
