@@ -809,7 +809,7 @@ def load_media_hist():
             except Exception: mb = 0
             _add(art, ml, mb)
         # Histórico Levy + Conrad
-        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance,lance_base")
+        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance")
         for v in hcf_rows:
             art = _norm_art(v.get("artista", ""))
             try: ml = float(v.get("maior_lance") or 0)
