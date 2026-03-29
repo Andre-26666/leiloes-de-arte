@@ -893,12 +893,24 @@ def _build_artistas_opcoes(df):
 def render_filtros(df_all, prefix="", campo_preco="lance_base"):
     col_a, col_b, col_c = st.columns([3, 2, 2])
     with col_a:
-        busca_artista = st.text_input(
+        _opcoes = _build_artistas_opcoes(df_all)
+        _labels     = [o[2] for o in _opcoes]   # "Nome Artista  [N]"
+        _principals = [o[1] for o in _opcoes]
+        _norms      = [o[0] for o in _opcoes]
+        sel_label = st.selectbox(
             "Artista",
-            placeholder="Digite o nome do artista…",
+            options=_labels,
+            index=None,
+            placeholder="Digite ou selecione um artista…",
             key=f"{prefix}_artista",
         )
-        busca_artista_norm = _norm_art(busca_artista) if busca_artista.strip() else ""
+        if sel_label is None:
+            busca_artista = ""
+            busca_artista_norm = ""
+        else:
+            _i = _labels.index(sel_label)
+            busca_artista = _principals[_i]
+            busca_artista_norm = _norms[_i]
     with col_b:
         lista_casas = sorted(df_all["casa"].replace("", pd.NA).dropna().unique().tolist())
         casa_sel = st.selectbox("Fonte", ["Todas"] + lista_casas, key=f"{prefix}_casa")
