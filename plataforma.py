@@ -1472,91 +1472,144 @@ def _buscar_similares(foto_url: str, top_n: int = 5, max_dist: int = 18) -> list
     return results[:top_n]
 
 
+def _prioridade_tecnica(tecnica: str) -> int:
+    """Retorna prioridade de ordenação por técnica (menor = mais prioritário)."""
+    t = tecnica.lower()
+    if _re.search(r'\b(leo|leo sobre|oleo|óleo)\b', t): return 0   # óleo
+    if _re.search(r'acr[ií]lic',  t): return 1                     # acrílico
+    if _re.search(r'tempera|guach|gouache', t): return 2            # têmpera/guache
+    if _re.search(r'aquarela|watercolor',  t): return 3             # aquarela
+    if _re.search(r'pastel|grafite|crayon|giz', t): return 4        # seco
+    if _re.search(r'mista|mixed',  t): return 5                     # técnica mista
+    if t.strip():                          return 6                  # outra identificada
+    return 7                                                         # sem técnica
+
+
 def render_garimpo(df_leiloes):
-    """Aba de garimpo: lotes com artista desconhecido vs. índice visual histórico."""
-    idx = _load_visual_index()
-    tem_indice = bool(idx)
+    """Aba de garimpo: lotes vigentes com artista não identificado."""
 
-    if not tem_indice:
-        st.warning(
-            "Índice visual ainda não construído. "
-            "Execute `python build_visual_index.py` para começar."
-        )
-        st.code("python build_visual_index.py --max 2000 --threads 10", language="bash")
-        st.caption("Indexa as 2.000 obras com maior lance do histórico (~5 min).")
-        return
+    # ── Todos os lotes com artista desconhecido (com ou sem foto) ──────────
+    df_desc = df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)].copy()
 
-    st.caption(f"Índice visual: **{len(idx):,}** obras históricas com artista identificado")
+    # Prioridade por técnica
+    df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
+    df_desc = df_desc.sort_values(["_prio", "lance_base"], ascending=[True, False])
 
-    # ── Modo teste: busca por URL de foto ──────────────────────────────────
-    with st.expander("🔬 Testar com URL de foto", expanded=False):
-        url_teste = st.text_input("Cole a URL de uma imagem para buscar obras similares:",
-                                  placeholder="https://www.site.com.br/imagem.jpg",
-                                  key="garimpo_url_teste")
-        if url_teste:
-            with st.spinner("Buscando similares..."):
-                similares_teste = _buscar_similares(url_teste, top_n=5, max_dist=25)
-            col_t1, col_t2 = st.columns([1, 2])
-            with col_t1:
-                st.image(url_teste, use_container_width=True)
-            with col_t2:
-                if not similares_teste:
-                    st.info("Nenhuma obra similar encontrada no índice.")
-                else:
-                    _mh_t = load_media_hist()
-                    st.markdown("**Obras visualmente similares:**")
-                    for s in similares_teste:
-                        art_norm = _norm_art(s["artista"])
-                        media = _mh_t.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
-                        sim_color = "#7dd4a0" if s["similarity"] >= 75 else ("#fbbf24" if s["similarity"] >= 55 else "#888")
-                        st.markdown(
-                            f'<div style="border:1px solid #2a2a42;border-radius:8px;padding:10px;margin-bottom:8px">'
-                            f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
-                            f'<b>{s["artista"]}</b><br>'
-                            f'<span style="font-size:12px;color:#aaa">{s["titulo"][:60]}</span><br>'
-                            f'Lance histórico: <b>{fmt_brl(s["maior_lance"])}</b> · '
-                            f'Média artista: <b>{fmt_brl(media) if media else "—"}</b>'
-                            f'</div>',
-                            unsafe_allow_html=True,
-                        )
+    total_desc  = len(df_desc)
+    com_foto    = (df_desc["foto_url"].str.strip() != "").sum()
+    oleo_count  = (df_desc["_prio"] == 0).sum()
 
-    # ── Carrega resultados pré-calculados ───────────────────────────────────
+    # Métricas
+    col_s1, col_s2, col_s3, col_s4 = st.columns(4)
+    col_s1.metric("Não identificados", total_desc)
+    col_s2.metric("Óleo / pintura", oleo_count)
+    col_s3.metric("Com foto", com_foto)
+
+    # Carrega similares pré-calculados e índice visual
     resultados_pre = _load_garimpo_resultados()
-
-    # Filtra lotes desconhecidos com foto
-    desconhecidos = df_leiloes[
-        df_leiloes["artista"].apply(_eh_desconhecido) &
-        (df_leiloes["foto_url"].str.strip() != "")
-    ].copy()
-
-    total_desc = len(df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)])
-
-    # Conta quantos têm resultados pré-calculados com similares
+    idx = _load_visual_index()
     com_similares = sum(
-        1 for _, r in desconhecidos.iterrows()
+        1 for _, r in df_desc.iterrows()
         if r.get("url_detalhe") in resultados_pre
         and resultados_pre[r["url_detalhe"]].get("similares")
     )
+    col_s4.metric("Com similar visual", com_similares)
 
-    col_s1, col_s2, col_s3 = st.columns(3)
-    col_s1.metric("Artista não identificado", total_desc)
-    col_s2.metric("Com foto disponível", len(desconhecidos))
-    col_s3.metric("Com similares encontrados", com_similares)
-
-    if desconhecidos.empty:
-        st.info("Nenhum lote com artista desconhecido e foto disponível.")
+    if df_desc.empty:
+        st.info("Nenhum lote com artista não identificado em andamento.")
         return
 
-    # Ordena por lance_base desc
-    desconhecidos = desconhecidos.sort_values("lance_base", ascending=False)
+    st.markdown("---")
 
-    # Filtro: mostrar só com similares ou todos
-    mostrar_todos = st.checkbox("Mostrar também lotes sem similar encontrado", value=False, key="garimpo_mostrar_todos")
+    # ── Filtros ─────────────────────────────────────────────────────────────
+    col_f1, col_f2, col_f3, col_f4 = st.columns([2, 2, 2, 2])
+    with col_f1:
+        _tec_opts = ["Todas as técnicas", "Óleo", "Acrílico", "Aquarela", "Mista", "Sem técnica"]
+        filtro_tec = st.selectbox("Técnica", _tec_opts, key="g_tec")
+    with col_f2:
+        _casas = ["Todas"] + sorted(df_desc["casa"].replace("", pd.NA).dropna().unique().tolist())
+        filtro_casa = st.selectbox("Casa", _casas, key="g_casa")
+    with col_f3:
+        filtro_foto = st.selectbox("Foto", ["Todas", "Com foto", "Sem foto"], key="g_foto")
+    with col_f4:
+        filtro_similar = st.selectbox("Similar visual", ["Todos", "Com similar", "Sem similar"], key="g_sim")
 
+    # Aplica filtros
+    df_g = df_desc.copy()
+    if filtro_tec == "Óleo":
+        df_g = df_g[df_g["_prio"] == 0]
+    elif filtro_tec == "Acrílico":
+        df_g = df_g[df_g["_prio"] == 1]
+    elif filtro_tec == "Aquarela":
+        df_g = df_g[df_g["_prio"] == 3]
+    elif filtro_tec == "Mista":
+        df_g = df_g[df_g["_prio"] == 5]
+    elif filtro_tec == "Sem técnica":
+        df_g = df_g[df_g["_prio"] == 7]
+    if filtro_casa != "Todas":
+        df_g = df_g[df_g["casa"] == filtro_casa]
+    if filtro_foto == "Com foto":
+        df_g = df_g[df_g["foto_url"].str.strip() != ""]
+    elif filtro_foto == "Sem foto":
+        df_g = df_g[df_g["foto_url"].str.strip() == ""]
+    if filtro_similar == "Com similar":
+        df_g = df_g[df_g["url_detalhe"].apply(
+            lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
+    elif filtro_similar == "Sem similar":
+        df_g = df_g[~df_g["url_detalhe"].apply(
+            lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
+
+    st.markdown(f"**{len(df_g)}** lotes — ordenados por técnica (óleo primeiro) e valor base")
+
+    if df_g.empty:
+        st.info("Nenhum resultado para os filtros selecionados.")
+        return
+
+    # ── Modo teste: busca por URL de foto ──────────────────────────────────
+    with st.expander("🔬 Testar com URL de foto", expanded=False):
+        url_teste = st.text_input("Cole a URL de uma imagem:",
+                                  placeholder="https://www.site.com.br/imagem.jpg",
+                                  key="garimpo_url_teste")
+        if url_teste:
+            if not idx:
+                st.warning("Índice visual vazio.")
+            else:
+                with st.spinner("Buscando similares..."):
+                    similares_teste = _buscar_similares(url_teste, top_n=5, max_dist=25)
+                col_t1, col_t2 = st.columns([1, 2])
+                with col_t1:
+                    st.image(url_teste, use_container_width=True)
+                with col_t2:
+                    if not similares_teste:
+                        st.info("Nenhuma obra similar encontrada no índice.")
+                    else:
+                        _mh_t = load_media_hist()
+                        for s in similares_teste:
+                            art_norm = _norm_art(s["artista"])
+                            media = _mh_t.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
+                            sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#a09080")
+                            st.markdown(
+                                f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
+                                f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
+                                f'<b>{s["artista"]}</b><br>'
+                                f'<span style="font-size:12px;color:#6b5e50">{s["titulo"][:60]}</span><br>'
+                                f'Lance: <b>{fmt_brl(s["maior_lance"])}</b> · Média: <b>{fmt_brl(media) if media else "—"}</b>'
+                                f'</div>',
+                                unsafe_allow_html=True,
+                            )
+
+    st.markdown("---")
+
+    # ── Listagem ─────────────────────────────────────────────────────────────
     _mh = load_media_hist()
-    mostrados = 0
+    _TECS = {0:"🎨 Óleo", 1:"🖌 Acrílico", 2:"🖼 Têmpera/Guache", 3:"💧 Aquarela",
+             4:"✏️ Seco", 5:"🔀 Mista", 6:"🖼 Outra", 7:"— Sem técnica"}
 
-    for _, lote in desconhecidos.iterrows():
+    for mostrados, (_, lote) in enumerate(df_g.iterrows()):
+        if mostrados >= 80:
+            st.caption(f"Exibindo 80 de {len(df_g)} lotes. Use os filtros para refinar.")
+            break
+
         url     = lote.get("url_detalhe", "")
         foto    = lote.get("foto_url", "")
         titulo  = lote.get("titulo", "") or "Sem título"
@@ -1564,48 +1617,45 @@ def render_garimpo(df_leiloes):
         dims    = lote.get("dimensoes", "") or ""
         base    = lote.get("lance_base", 0)
         casa    = lote.get("casa", "")
+        prio    = int(lote.get("_prio", 7))
+        tec_badge = _TECS.get(prio, "")
 
         pre = resultados_pre.get(url)
         similares = (pre.get("similares") or []) if pre else None
+        sim_badge = "🟢" if similares else ("⚪" if similares is not None else ("🔍" if foto else ""))
 
-        # Pula sem similar se não quiser ver todos
-        if similares is not None and not similares and not mostrar_todos:
-            continue
-
-        # Limita exibição a 50
-        if mostrados >= 50:
-            st.caption("Mostrando primeiros 50 resultados. Filtre por casa ou aguarde próximo garimpo.")
-            break
-        mostrados += 1
-
-        badge = "🟢" if similares else ("🔄" if similares is None else "⚪")
-        with st.expander(f"{badge}  {titulo[:60]}  —  base {fmt_brl(base)}  ·  {casa}", expanded=False):
+        header = f"{sim_badge} {tec_badge}  ·  {titulo[:55]}  —  {fmt_brl(base)}  ·  {casa}"
+        with st.expander(header, expanded=False):
             col_img, col_res = st.columns([1, 2])
 
             with col_img:
                 if foto:
                     st.image(foto, use_container_width=True)
-                st.caption(f"{tecnica}  {dims}".strip())
+                else:
+                    st.caption("Sem foto")
+                info_parts = [x for x in [tecnica, dims] if x]
+                if info_parts:
+                    st.caption(" · ".join(info_parts))
                 if url:
                     st.markdown(f"[Ver lote ↗]({url})")
 
             with col_res:
-                if similares is None:
-                    # Não pré-calculado — calcula na hora
-                    with st.spinner("Buscando similares no histórico..."):
+                if not foto:
+                    st.info("Sem foto — busca visual não disponível para este lote.")
+                elif similares is None and idx:
+                    with st.spinner("Buscando similares..."):
                         similares = _buscar_similares(foto, top_n=5, max_dist=20)
+                elif not idx:
+                    st.caption("Índice visual não disponível.")
 
-                if not similares:
-                    st.info("Nenhuma obra similar encontrada no índice visual.")
-                else:
+                if similares:
                     if pre and pre.get("atualizado"):
                         st.caption(f"Atualizado: {pre['atualizado'][:10]}")
                     st.markdown("**Obras visualmente similares:**")
                     for s in similares:
                         art_norm = _norm_art(s["artista"])
-                        _mhe2 = _mh.get(art_norm, {})
-                        media = _mhe2.get("lance", 0) or s["maior_lance"]
-                        sim_bar  = "█" * (s["similarity"] // 10) + "░" * (10 - s["similarity"] // 10)
+                        media = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
+                        sim_bar = "█" * (s["similarity"] // 10) + "░" * (10 - s["similarity"] // 10)
                         sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#a09080")
                         st.markdown(
                             f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
@@ -1614,13 +1664,11 @@ def render_garimpo(df_leiloes):
                             f'<b>{s["artista"]}</b><br>'
                             f'<span style="font-size:12px;color:#6b5e50">{s["titulo"][:60]}</span><br>'
                             f'<span style="font-size:12px">{s["tecnica"]}</span><br>'
-                            f'Lance histórico: <b>{fmt_brl(s["maior_lance"])}</b> · '
-                            f'Média artista: <b>{fmt_brl(media) if media else "—"}</b>'
+                            f'Lance hist.: <b>{fmt_brl(s["maior_lance"])}</b> · '
+                            f'Média: <b>{fmt_brl(media) if media else "—"}</b>'
                             f'</div>',
                             unsafe_allow_html=True,
                         )
-
-                    # Resumo de oportunidade
                     melhor = similares[0]
                     media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
                     if media_melhor > base > 0:
@@ -1630,6 +1678,8 @@ def render_garimpo(df_leiloes):
                             f"**{melhor['artista']}** em {fmt_brl(media_melhor)} "
                             f"(+{potencial}% se confirmado)"
                         )
+                elif foto and similares is not None:
+                    st.info("Nenhuma obra similar encontrada no índice visual.")
 
 
 # ── Favoritos & Watchlist ───────────────────────────────────────────────────
