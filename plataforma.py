@@ -893,18 +893,12 @@ def _build_artistas_opcoes(df):
 def render_filtros(df_all, prefix="", campo_preco="lance_base"):
     col_a, col_b, col_c = st.columns([3, 2, 2])
     with col_a:
-        _opcoes = _build_artistas_opcoes(df_all)
-        _labels     = ["— Todos os artistas —"] + [o[2] for o in _opcoes]
-        _principals = [""]                       + [o[1] for o in _opcoes]
-        _norms      = [""]                       + [o[0] for o in _opcoes]
-        _sel = st.selectbox(
+        busca_artista = st.text_input(
             "Artista",
-            range(len(_labels)),
-            format_func=lambda i: _labels[i],
+            placeholder="Digite o nome do artista…",
             key=f"{prefix}_artista",
         )
-        busca_artista       = _principals[_sel]   # nome canônico ou ""
-        busca_artista_norm  = _norms[_sel]         # norm para filtro exato
+        busca_artista_norm = _norm_art(busca_artista) if busca_artista.strip() else ""
     with col_b:
         lista_casas = sorted(df_all["casa"].replace("", pd.NA).dropna().unique().tolist())
         casa_sel = st.selectbox("Fonte", ["Todas"] + lista_casas, key=f"{prefix}_casa")
@@ -942,10 +936,8 @@ def render_filtros(df_all, prefix="", campo_preco="lance_base"):
 
 def aplicar_filtros(df, busca_artista, busca_artista_norm, busca_titulo, casa_sel, filtro_ass, apenas_foto, apenas_base, preco_range=None, campo_preco="lance_base"):
     if busca_artista_norm:
-        # Compara pela forma normalizada — agrupa "José Flores" e "José das Flores"
-        df = df[df["artista"].apply(lambda x: _norm_art(str(x))) == busca_artista_norm]
-    elif busca_artista.strip():
-        df = df[df["artista"].str.contains(busca_artista.strip(), case=False, na=False)]
+        # Busca parcial normalizada: "picasso" acha "Pablo Picasso", ignora acentos/case
+        df = df[df["artista"].apply(lambda x: busca_artista_norm in _norm_art(str(x)))]
     if busca_titulo.strip():
         df = df[
             df["titulo"].str.contains(busca_titulo.strip(), case=False, na=False)
@@ -1283,6 +1275,69 @@ def render_export(df, key="export"):
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         key=key,
     )
+
+
+def render_cards_por_artista(df):
+    """Exibe cards agrupados por artista (seção por artista, cards dentro)."""
+    media_hist = load_media_hist()
+    df = df.copy()
+    df["_art_sort"] = df["artista"].apply(lambda x: _norm_art(str(x)) or "zzz")
+    df = df.sort_values(["_art_sort", "lance_base"], ascending=[True, False])
+
+    grupos = df.groupby("_art_sort", sort=False)
+    for art_norm, grupo in grupos:
+        nome = grupo["artista"].iloc[0] or "Desconhecido"
+        n = len(grupo)
+        aval = media_hist.get(art_norm, 0)
+        aval_str = f" · Média histórica: {fmt_brl(aval)}" if aval else ""
+        st.markdown(
+            f'<div style="background:#1a1a2e;border-left:3px solid #6c5dd3;'
+            f'padding:8px 14px;margin:18px 0 6px;border-radius:0 6px 6px 0">'
+            f'<span style="font-weight:700;font-size:15px">{nome}</span>'
+            f'<span style="color:#888;font-size:12px;margin-left:10px">{n} lote{"s" if n>1 else ""}{aval_str}</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+        render_cards_leilao(grupo.drop(columns=["_art_sort"]))
+
+
+def render_duplicatas(df):
+    """Detecta e exibe lotes que aparecem em mais de uma casa (mesma obra, casas diferentes)."""
+    if df.empty:
+        return
+
+    df = df.copy()
+    df["_art_n"] = df["artista"].apply(lambda x: _norm_art(str(x)))
+    df["_tit_n"] = df["titulo"].apply(
+        lambda x: _re.sub(r'\s+', ' ', _re.sub(r'[^a-z0-9 ]', '', _norm_art(str(x)))).strip()
+    )
+    # Considera duplicata: mesmo artista E título normalizado com >= 6 chars
+    df_valido = df[(df["_art_n"] != "") & (df["_tit_n"].str.len() >= 6)].copy()
+
+    grupos = df_valido.groupby(["_art_n", "_tit_n"]).filter(lambda g: g["casa"].nunique() > 1)
+
+    if grupos.empty:
+        st.info("Nenhuma duplicata detectada no conjunto filtrado.")
+        return
+
+    n_obras = grupos.groupby(["_art_n", "_tit_n"]).ngroups
+    st.markdown(f"**{n_obras}** obra(s) aparecem em mais de uma casa:")
+    st.markdown("---")
+
+    media_hist = load_media_hist()
+    for (art_n, tit_n), grupo in grupos.groupby(["_art_n", "_tit_n"]):
+        casas = ", ".join(grupo["casa"].unique())
+        nome = grupo["artista"].iloc[0] or "Desconhecido"
+        titulo = grupo["titulo"].iloc[0] or "Sem título"
+        st.markdown(
+            f'<div style="background:#1c1c30;border:1px solid #f59e0b44;border-radius:8px;padding:10px 14px;margin-bottom:10px">'
+            f'<span style="color:#f59e0b;font-weight:700">⚠ Duplicata</span> · '
+            f'<b>{nome}</b> — {titulo[:70]}<br>'
+            f'<span style="color:#888;font-size:12px">Casas: {casas} · {len(grupo)} lotes</span>'
+            f'</div>',
+            unsafe_allow_html=True,
+        )
+        render_cards_leilao(grupo.drop(columns=["_art_n", "_tit_n"]))
 
 
 # ── Garimpo Visual ──────────────────────────────────────────────────────────
@@ -1790,7 +1845,7 @@ with aba1:
         st.markdown('<div class="section-title">Filtros</div>', unsafe_allow_html=True)
         fa, fa_norm, ft, fc, fass, ffoto, fbase, preco_range = render_filtros(df_leiloes, prefix="L", campo_preco="lance_base")
 
-        col_r, col_d2, col_o = st.columns([2, 2, 2])
+        col_r, col_d2, col_o, col_v = st.columns([2, 2, 2, 2])
         with col_r:
             filtro_lance = st.selectbox("Lances", ["Todos", "Com lance", "Sem lance"], key="L_lances")
         with col_d2:
@@ -1807,11 +1862,16 @@ with aba1:
                 key="L_data",
             )
         with col_o:
-            _ordem_default = 0 if filtro_data == "Todas as datas" else 0
             ordem = st.selectbox(
                 "Ordenar",
                 ["Rentabilidade ↓", "Data ↑", "Maior Lance ↓", "Valor Base ↓", "Artista (A-Z)", "Qtd. Lances ↓"],
                 key="L_ordem",
+            )
+        with col_v:
+            modo_exib = st.selectbox(
+                "Exibição",
+                ["Cards", "Agrupar por artista", "Duplicatas"],
+                key="L_modo",
             )
 
         df = aplicar_filtros(df_leiloes, fa, fa_norm, ft, fc, fass, ffoto, fbase, preco_range, campo_preco="lance_base")
@@ -1849,26 +1909,31 @@ with aba1:
                 na_position="last",
             )
 
-        total_res = len(df)
-        total_pag = max(1, (total_res + PER_PAGE - 1) // PER_PAGE)
-
-        # Reset de página quando filtros mudam
-        _fk = f"{fa_norm}|{ft}|{fc}|{fass}|{ffoto}|{fbase}|{preco_range}|{filtro_lance}|{filtro_data}|{ordem}"
-        if st.session_state.get("L_fk") != _fk:
-            st.session_state["L_fk"] = _fk
-            st.session_state["L_pag"] = 1
-        pag = st.session_state.get("L_pag", 1)
-        pag = max(1, min(pag, total_pag))
-
-        st.markdown(f"**{total_res}** resultado(s) — página **{pag}** de **{total_pag}**")
+        st.markdown(f"**{len(df)}** resultado(s)")
 
         if df.empty:
             st.info("Nenhum resultado.")
+        elif modo_exib == "Agrupar por artista":
+            render_cards_por_artista(df.drop(columns=["_rent"], errors="ignore"))
+        elif modo_exib == "Duplicatas":
+            render_duplicatas(df.drop(columns=["_rent"], errors="ignore"))
         else:
+            # Cards paginados (modo padrão)
+            total_res = len(df)
+            total_pag = max(1, (total_res + PER_PAGE - 1) // PER_PAGE)
+
+            _fk = f"{fa_norm}|{ft}|{fc}|{fass}|{ffoto}|{fbase}|{preco_range}|{filtro_lance}|{filtro_data}|{ordem}"
+            if st.session_state.get("L_fk") != _fk:
+                st.session_state["L_fk"] = _fk
+                st.session_state["L_pag"] = 1
+            pag = st.session_state.get("L_pag", 1)
+            pag = max(1, min(pag, total_pag))
+
+            st.markdown(f"Página **{pag}** de **{total_pag}**")
+
             df_pag = df.iloc[(pag - 1) * PER_PAGE : pag * PER_PAGE]
             render_cards_leilao(df_pag)
 
-            # Navegação
             st.markdown("---")
             cp, ci, cn = st.columns([1, 3, 1])
             with cp:
