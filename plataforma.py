@@ -6,7 +6,7 @@ Execute com:  streamlit run plataforma.py --server.address localhost
 """
 
 import hashlib
-import io
+
 import json
 import os
 import re as _re
@@ -1291,21 +1291,6 @@ def render_resumo_artista(df):
     st.dataframe(resumo, use_container_width=True, hide_index=True)
 
 
-def render_export(df, key="export"):
-    cols_export = [c for c in ["artista", "titulo", "tecnica", "dimensoes", "ano", "assinatura",
-                                "estimativa_min", "estimativa_max", "lance_base", "maior_lance",
-                                "data_leilao", "casa", "foto_url", "url_detalhe", "data_coleta"] if c in df.columns]
-    export_df = df[cols_export].copy()
-    buf = io.BytesIO()
-    with pd.ExcelWriter(buf, engine="openpyxl") as writer:
-        export_df.to_excel(writer, index=False, sheet_name="Resultado")
-    st.download_button(
-        label="⬇️ Baixar Excel",
-        data=buf.getvalue(),
-        file_name="arte_resultado.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        key=key,
-    )
 
 
 def render_cards_por_artista(df):
