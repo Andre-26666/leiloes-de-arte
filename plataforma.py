@@ -1084,7 +1084,9 @@ def render_cards_leilao(df):
 
             meta_str = " · ".join(x for x in [tecnica, dims, ano] if x) or "&nbsp;"
             img_html = (
-                f'<img class="card-img" src="{foto_url}" loading="lazy" onerror="this.style.display=\'none\'">'
+                f'<img class="card-img" src="{foto_url}" loading="lazy" referrerpolicy="no-referrer" '
+                f'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+                f'<div class="card-img-placeholder" style="display:none">🖼️</div>'
                 if foto_url else '<div class="card-img-placeholder">🖼️</div>'
             )
             link_html = f'<a href="{url}" target="_blank">Ver lote ↗</a>' if url else ""
@@ -1202,7 +1204,9 @@ def render_cards_historico(df):
 
             meta_str = " · ".join(x for x in [tecnica, dims, ano] if x) or "&nbsp;"
             img_html = (
-                f'<img class="card-img" src="{foto_url}" loading="lazy" onerror="this.style.display=\'none\'">'
+                f'<img class="card-img" src="{foto_url}" loading="lazy" referrerpolicy="no-referrer" '
+                f'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
+                f'<div class="card-img-placeholder" style="display:none">🖼️</div>'
                 if foto_url else '<div class="card-img-placeholder">🖼️</div>'
             )
             link_html = f'<a href="{url}" target="_blank">Ver obra ↗</a>' if url else ""
