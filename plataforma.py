@@ -786,36 +786,45 @@ def load_historico():
 
 @st.cache_data(ttl=600)
 def load_media_hist():
-    """Média histórica de preços por artista. Retorna dict norm_name → média (int)."""
-    hist = {}
+    """Média histórica por artista.
+    Retorna dict norm_name → {"lance": média_lances, "base": média_bases}
+    Campos ausentes ficam em 0.
+    """
+    lances = {}   # art_norm → [valores]
+    bases  = {}
+
+    def _add(art, lance, base):
+        if not art: return
+        if lance > 0: lances.setdefault(art, []).append(lance)
+        if base  > 0: bases.setdefault(art,  []).append(base)
 
     if _USE_SUPABASE:
-        # Busca apenas campos necessários para economizar dados
         rows = _sb_fetch_all("lotes", filters={"em_leilao": False},
-                             columns="artista,maior_lance")
+                             columns="artista,maior_lance,lance_base")
         for v in rows:
             art = _norm_art(v.get("artista", ""))
-            if not art: continue
-            p = v.get("maior_lance") or 0
-            try:
-                p = float(p)
-            except Exception:
-                p = 0
-            if p > 0:
-                hist.setdefault(art, []).append(p)
+            try: ml = float(v.get("maior_lance") or 0)
+            except Exception: ml = 0
+            try: mb = float(v.get("lance_base") or 0)
+            except Exception: mb = 0
+            _add(art, ml, mb)
         # Histórico Levy + Conrad
-        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance")
+        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance,lance_base")
         for v in hcf_rows:
             art = _norm_art(v.get("artista", ""))
-            if not art: continue
-            p = v.get("maior_lance") or 0
-            try:
-                p = float(p)
-            except Exception:
-                p = 0
-            if p > 0:
-                hist.setdefault(art, []).append(p)
-        return {art: round(sum(ps) / len(ps)) for art, ps in hist.items() if ps}
+            try: ml = float(v.get("maior_lance") or 0)
+            except Exception: ml = 0
+            try: mb = float(v.get("lance_base") or 0)
+            except Exception: mb = 0
+            _add(art, ml, mb)
+        arts = set(lances) | set(bases)
+        return {
+            art: {
+                "lance": round(sum(lances[art]) / len(lances[art])) if art in lances else 0,
+                "base":  round(sum(bases[art])  / len(bases[art]))  if art in bases  else 0,
+            }
+            for art in arts
+        }
 
     # ── Fallback: leitura local ──────────────────────────────────────────────
     for arq in [BDA_FILE, CDA_FILE]:
@@ -825,11 +834,11 @@ def load_media_hist():
         for v in d.values():
             if not isinstance(v, dict): continue
             art = _norm_art(v.get("artista", ""))
-            if not art: continue
-            p = v.get("maior_lance") or v.get("lance_atual") or 0
-            try: p = float(p)
-            except Exception: p = 0
-            if p > 0: hist.setdefault(art, []).append(p)
+            try: ml = float(v.get("maior_lance") or v.get("lance_atual") or 0)
+            except Exception: ml = 0
+            try: mb = float(v.get("lance_base") or 0)
+            except Exception: mb = 0
+            _add(art, ml, mb)
     for arq in [DB_FILE, ARR_FILE]:
         if not os.path.exists(arq): continue
         with open(arq, "r", encoding="utf-8") as f:
@@ -837,23 +846,30 @@ def load_media_hist():
         for k, v in d.items():
             if not isinstance(v, dict) or v.get("em_leilao") is not False: continue
             art = _norm_art(v.get("artista", ""))
-            if not art: continue
-            p = v.get("maior_lance") or 0
-            try: p = float(p)
-            except Exception: p = 0
-            if p > 0: hist.setdefault(art, []).append(p)
+            try: ml = float(v.get("maior_lance") or 0)
+            except Exception: ml = 0
+            try: mb = float(v.get("lance_base") or 0)
+            except Exception: mb = 0
+            _add(art, ml, mb)
     if os.path.exists(HCF_FILE):
         with open(HCF_FILE, "r", encoding="utf-8") as f:
             d = json.load(f)
         for v in d.get("lotes", []):
             if not isinstance(v, dict): continue
             art = _norm_art(v.get("artista", ""))
-            if not art: continue
-            p = v.get("maior_lance", 0)
-            try: p = float(p)
-            except Exception: p = 0
-            if p > 0: hist.setdefault(art, []).append(p)
-    return {art: round(sum(ps) / len(ps)) for art, ps in hist.items() if ps}
+            try: ml = float(v.get("maior_lance") or 0)
+            except Exception: ml = 0
+            try: mb = float(v.get("lance_base") or 0)
+            except Exception: mb = 0
+            _add(art, ml, mb)
+    arts = set(lances) | set(bases)
+    return {
+        art: {
+            "lance": round(sum(lances[art]) / len(lances[art])) if art in lances else 0,
+            "base":  round(sum(bases[art])  / len(bases[art]))  if art in bases  else 0,
+        }
+        for art in arts
+    }
 
 
 def fmt_brl(v):
@@ -1072,16 +1088,29 @@ def render_cards_leilao(df):
             data     = item["data_leilao"] or item["data_coleta"] or ""
             url      = item["url_detalhe"] or ""
             assinatura = item["assinatura"] or ""
-            _art_norm  = _norm_art(artista)
-            _aval_val  = media_hist.get(_art_norm, 0)
-            _base_val  = item["lance_base"]
-            aval_str   = fmt_brl(_aval_val)
-            aval_css   = "price-val-aval" if _aval_val > 0 else "price-val-aval-vazio"
-            aval_disp  = aval_str if _aval_val > 0 else "sem histórico"
+            _art_norm   = _norm_art(artista)
+            _mh_entry   = media_hist.get(_art_norm, {})
+            _aval_lance = _mh_entry.get("lance", 0)
+            _aval_base  = _mh_entry.get("base", 0)
+            _base_val   = item["lance_base"]
 
-            # Badge de rentabilidade
-            if _aval_val > 0 and _base_val > 0:
-                _rent = (_aval_val / _base_val - 1) * 100
+            if _aval_lance > 0 and _aval_base > 0:
+                aval_disp = (f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
+                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'base méd. {fmt_brl(_aval_base)}</div>')
+            elif _aval_lance > 0:
+                aval_disp = f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
+            elif _aval_base > 0:
+                aval_disp = (f'<span class="price-val-aval-vazio">sem lances</span>'
+                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'base méd. {fmt_brl(_aval_base)}</div>')
+            else:
+                aval_disp = '<span class="price-val-aval-vazio">sem histórico</span>'
+
+            # Badge de rentabilidade (usa média de lances como referência)
+            _ref = _aval_lance or _aval_base
+            if _ref > 0 and _base_val > 0:
+                _rent = (_ref / _base_val - 1) * 100
                 if _rent >= 100:
                     _rent_cls = "rent-alto"
                     _rent_lbl = f"▲ {_rent:,.0f}% potencial"
@@ -1144,8 +1173,8 @@ def render_cards_leilao(df):
         <div class="price-val-lance">{lance}</div>
       </div>
       <div class="price-box">
-        <div class="price-label">Avaliação R$</div>
-        <div class="{aval_css}">{aval_disp}</div>
+        <div class="price-label">Histórico</div>
+        {aval_disp}
       </div>
     </div>
     <div class="card-footer">
@@ -1186,24 +1215,39 @@ def render_cards_historico(df):
             url        = item["url_detalhe"] or ""
             assinatura = item["assinatura"] or ""
             status     = item.get("status", "") or ""
-            _art_norm  = _norm_art(artista)
-            _aval_val  = media_hist.get(_art_norm, 0)
-            aval_str   = fmt_brl(_aval_val) if _aval_val > 0 else "sem histórico"
-            aval_css   = "price-val-aval" if _aval_val > 0 else "price-val-aval-vazio"
-            # % do arremate em relação à avaliação histórica
-            if _aval_val > 0 and lance > 0:
-                _pct = round(lance / _aval_val * 100)
+            _art_norm   = _norm_art(artista)
+            _mh_entry   = media_hist.get(_art_norm, {})
+            _aval_lance = _mh_entry.get("lance", 0)
+            _aval_base  = _mh_entry.get("base", 0)
+
+            if _aval_lance > 0 and _aval_base > 0:
+                aval_disp = (f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
+                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'base méd. {fmt_brl(_aval_base)}</div>')
+            elif _aval_lance > 0:
+                aval_disp = f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
+            elif _aval_base > 0:
+                aval_disp = (f'<span class="price-val-aval-vazio">sem lances</span>'
+                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'base méd. {fmt_brl(_aval_base)}</div>')
+            else:
+                aval_disp = '<span class="price-val-aval-vazio">sem histórico</span>'
+
+            # % do arremate em relação à média de lances histórica
+            _ref = _aval_lance or _aval_base
+            if _ref > 0 and lance > 0:
+                _pct = round(lance / _ref * 100)
                 if _pct <= 80:
-                    _pct_color, _pct_bg = "#7dd4a0", "#0d2e1a"
+                    _pct_color, _pct_bg = "#1d7a4a", "#e8f5ee"
                 elif _pct <= 110:
-                    _pct_color, _pct_bg = "#fbbf24", "#2a1f00"
+                    _pct_color, _pct_bg = "#9a7010", "#fdf5e0"
                 else:
-                    _pct_color, _pct_bg = "#f87171", "#2e0d0d"
+                    _pct_color, _pct_bg = "#a82020", "#fde8e8"
                 _pct_str = (
                     f'<div style="margin-top:4px;padding:3px 8px;border-radius:6px;'
                     f'background:{_pct_bg};display:inline-block">'
                     f'<span style="font-size:12px;color:{_pct_color};font-weight:700">'
-                    f'{_pct}% da avaliação histórica</span></div>'
+                    f'{_pct}% da média hist.</span></div>'
                 )
             else:
                 _pct_str = ""
@@ -1258,8 +1302,8 @@ def render_cards_historico(df):
         {_pct_str}
       </div>
       <div class="price-box">
-        <div class="price-label">Avaliação R$</div>
-        <div class="{aval_css}">{aval_str}</div>
+        <div class="price-label">Histórico</div>
+        {aval_disp}
       </div>
     </div>
     <div class="card-footer">
@@ -1304,13 +1348,14 @@ def render_cards_por_artista(df):
     for art_norm, grupo in grupos:
         nome = grupo["artista"].iloc[0] or "Desconhecido"
         n = len(grupo)
-        aval = media_hist.get(art_norm, 0)
-        aval_str = f" · Média histórica: {fmt_brl(aval)}" if aval else ""
+        _mhe = media_hist.get(art_norm, {})
+        _al, _ab = _mhe.get("lance", 0), _mhe.get("base", 0)
+        aval_str = (f" · lances: {fmt_brl(_al)}" if _al else "") + (f" · base: {fmt_brl(_ab)}" if _ab else "")
         st.markdown(
-            f'<div style="background:#1a1a2e;border-left:3px solid #6c5dd3;'
+            f'<div style="background:#f0ece6;border-left:3px solid #a07828;'
             f'padding:8px 14px;margin:18px 0 6px;border-radius:0 6px 6px 0">'
-            f'<span style="font-weight:700;font-size:15px">{nome}</span>'
-            f'<span style="color:#888;font-size:12px;margin-left:10px">{n} lote{"s" if n>1 else ""}{aval_str}</span>'
+            f'<span style="font-weight:700;font-size:15px;color:#1e1a14">{nome}</span>'
+            f'<span style="color:#a09080;font-size:12px;margin-left:10px">{n} lote{"s" if n>1 else ""}{aval_str}</span>'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -1462,7 +1507,7 @@ def render_garimpo(df_leiloes):
                     st.markdown("**Obras visualmente similares:**")
                     for s in similares_teste:
                         art_norm = _norm_art(s["artista"])
-                        media = _mh_t.get(art_norm, s["maior_lance"])
+                        media = _mh_t.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
                         sim_color = "#7dd4a0" if s["similarity"] >= 75 else ("#fbbf24" if s["similarity"] >= 55 else "#888")
                         st.markdown(
                             f'<div style="border:1px solid #2a2a42;border-radius:8px;padding:10px;margin-bottom:8px">'
@@ -1558,15 +1603,16 @@ def render_garimpo(df_leiloes):
                     st.markdown("**Obras visualmente similares:**")
                     for s in similares:
                         art_norm = _norm_art(s["artista"])
-                        media    = _mh.get(art_norm, s["maior_lance"])
+                        _mhe2 = _mh.get(art_norm, {})
+                        media = _mhe2.get("lance", 0) or s["maior_lance"]
                         sim_bar  = "█" * (s["similarity"] // 10) + "░" * (10 - s["similarity"] // 10)
-                        sim_color = "#7dd4a0" if s["similarity"] >= 75 else ("#fbbf24" if s["similarity"] >= 55 else "#888")
+                        sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#a09080")
                         st.markdown(
-                            f'<div style="border:1px solid #2a2a42;border-radius:8px;padding:10px;margin-bottom:8px">'
+                            f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
                             f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
                             f'<span style="font-size:11px;color:{sim_color}">{sim_bar}</span><br>'
                             f'<b>{s["artista"]}</b><br>'
-                            f'<span style="font-size:12px;color:#aaa">{s["titulo"][:60]}</span><br>'
+                            f'<span style="font-size:12px;color:#6b5e50">{s["titulo"][:60]}</span><br>'
                             f'<span style="font-size:12px">{s["tecnica"]}</span><br>'
                             f'Lance histórico: <b>{fmt_brl(s["maior_lance"])}</b> · '
                             f'Média artista: <b>{fmt_brl(media) if media else "—"}</b>'
@@ -1576,7 +1622,7 @@ def render_garimpo(df_leiloes):
 
                     # Resumo de oportunidade
                     melhor = similares[0]
-                    media_melhor = _mh.get(_norm_art(melhor["artista"]), melhor["maior_lance"])
+                    media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
                     if media_melhor > base > 0:
                         potencial = round((media_melhor / base - 1) * 100)
                         st.success(
@@ -1901,8 +1947,10 @@ with aba1:
         # Coluna de rentabilidade para ordenação
         _mh = load_media_hist()
         df["_rent"] = df.apply(
-            lambda r: ((_mh.get(_norm_art(str(r["artista"])), 0) / r["lance_base"]) - 1) * 100
-            if r["lance_base"] > 0 and _mh.get(_norm_art(str(r["artista"])), 0) > 0
+            lambda r: ((((_mh.get(_norm_art(str(r["artista"])), {}).get("lance", 0) or
+                          _mh.get(_norm_art(str(r["artista"])), {}).get("base", 0))) / r["lance_base"]) - 1) * 100
+            if r["lance_base"] > 0 and (_mh.get(_norm_art(str(r["artista"])), {}).get("lance", 0) or
+                                         _mh.get(_norm_art(str(r["artista"])), {}).get("base", 0))
             else -9999,
             axis=1,
         )
@@ -2016,12 +2064,15 @@ with aba2:
         _mh_hist = load_media_hist()
         if ordem == "Avaliação ↓":
             df = df.copy()
-            df["_aval_sort"] = df["artista"].apply(lambda a: _mh_hist.get(_norm_art(str(a)), 0))
+            df["_aval_sort"] = df["artista"].apply(
+                lambda a: _mh_hist.get(_norm_art(str(a)), {}).get("lance", 0) or
+                          _mh_hist.get(_norm_art(str(a)), {}).get("base", 0))
             df = df.sort_values("_aval_sort", ascending=False)
         elif ordem == "% da Avaliação ↓":
             df = df.copy()
             def _pct_sort(r):
-                av = _mh_hist.get(_norm_art(str(r["artista"])), 0)
+                av = (_mh_hist.get(_norm_art(str(r["artista"])), {}).get("lance", 0) or
+                      _mh_hist.get(_norm_art(str(r["artista"])), {}).get("base", 0))
                 return (r["maior_lance"] / av * 100) if av > 0 and r["maior_lance"] > 0 else -9999
             df["_pct_sort"] = df.apply(_pct_sort, axis=1)
             df = df.sort_values("_pct_sort", ascending=False)
