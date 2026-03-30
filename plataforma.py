@@ -808,15 +808,16 @@ def load_media_hist():
             try: mb = float(v.get("lance_base") or 0)
             except Exception: mb = 0
             _add(art, ml, mb)
-        # Histórico Levy + Conrad
-        hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance")
-        for v in hcf_rows:
-            art = _norm_art(v.get("artista", ""))
-            try: ml = float(v.get("maior_lance") or 0)
-            except Exception: ml = 0
-            try: mb = float(v.get("lance_base") or 0)
-            except Exception: mb = 0
-            _add(art, ml, mb)
+        # Histórico Levy + Conrad (lance_base não existe nessa tabela)
+        try:
+            hcf_rows = _sb_fetch_all("historico_casas", columns="artista,maior_lance")
+            for v in hcf_rows:
+                art = _norm_art(v.get("artista", ""))
+                try: ml = float(v.get("maior_lance") or 0)
+                except Exception: ml = 0
+                _add(art, ml, 0)
+        except Exception:
+            pass
         arts = set(lances) | set(bases)
         return {
             art: {
