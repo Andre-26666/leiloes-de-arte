@@ -1459,12 +1459,18 @@ _RE_TECNICA_PALAVRA = _re.compile(
 
 
 def _artista_do_titulo(titulo: str) -> str:
-    """Tenta extrair nome de artista do título no formato 'NOME - descrição'.
+    """Tenta extrair nome de artista do título nos formatos:
+      'NOME - descrição'  ou  'NOME. descrição'
     Retorna string vazia se não encontrar padrão de nome."""
     titulo = str(titulo or "").strip()
-    if " - " not in titulo:
+    # Tenta separadores: " - " e ". " (ponto seguido de espaço)
+    candidato = ""
+    for sep in (" - ", ". "):
+        if sep in titulo:
+            candidato = titulo.split(sep)[0].strip()
+            break
+    if not candidato:
         return ""
-    candidato = titulo.split(" - ")[0].strip()
     # Descarta se contém palavras de técnica/descrição (não é nome de pessoa)
     if _RE_TECNICA_PALAVRA.search(candidato):
         return ""
