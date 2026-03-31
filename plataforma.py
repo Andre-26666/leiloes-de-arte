@@ -5,6 +5,7 @@ Plataforma de Arte — Leilões & Histórico de Preços
 Execute com:  streamlit run plataforma.py --server.address localhost
 """
 
+import base64
 import hashlib
 
 import json
@@ -66,7 +67,7 @@ def _tela_login():
     </style>
     <div class="login-box">
       <div class="login-logo">🖼️</div>
-      <div class="login-title">Arte em Leilão</div>
+      <div class="login-title">Art Radar</div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -95,10 +96,21 @@ VISUAL_INDEX = os.path.join(_DIR, "visual_index.json")
 
 # ── Página ─────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="Arte em Leilão",
-    page_icon="🖼️",
+    page_title="Art Radar",
+    page_icon="🎯",
     layout="wide",
 )
+
+# ── Fundo hero ────────────────────────────────────────────────────────────────
+def _b64_img(filename: str) -> str:
+    path = os.path.join(_DIR, filename)
+    try:
+        with open(path, "rb") as f:
+            return base64.b64encode(f.read()).decode()
+    except Exception:
+        return ""
+
+_FUNDO_B64 = _b64_img("fundo.png")
 
 st.markdown("""
 <style>
@@ -126,49 +138,47 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 .hero {
     position: relative;
     width: 100%;
-    border-radius: 0 0 24px 24px;
+    height: 220px;
+    border-radius: 0 0 20px 20px;
     overflow: hidden;
     margin-bottom: 2rem;
-}
-.hero-bg {
-    display: block;
-    width: 100%;
-    height: 220px;
+    background-size: cover;
+    background-position: center 30%;
 }
 .hero-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(20,12,4,0.05) 0%,
-        rgba(20,12,4,0.45) 55%,
-        rgba(20,12,4,0.82) 100%
+        rgba(255,255,255,0.08) 0%,
+        rgba(255,255,255,0.45) 60%,
+        rgba(245,241,235,0.82) 100%
     );
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 28px;
+    justify-content: center;
+    gap: 6px;
 }
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 48px;
+    font-size: 54px;
     font-weight: 300;
-    color: #f5e6c8;
-    letter-spacing: 0.12em;
+    color: #1e1a14;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     line-height: 1;
     margin: 0;
-    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+    text-shadow: 0 1px 12px rgba(255,255,255,0.9);
 }
 .hero-sub {
     font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 300;
-    color: rgba(245,230,200,0.65);
-    letter-spacing: 0.35em;
+    font-size: 10px;
+    font-weight: 400;
+    color: #5a4e3c;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
-    margin-top: 8px;
+    margin: 0;
 }
 
 /* ── Tabs ── */
@@ -1919,49 +1929,12 @@ def render_mercado(df_hist):
 # ══════════════════════════════════════════════════════════════════════════════
 # LAYOUT PRINCIPAL
 # ══════════════════════════════════════════════════════════════════════════════
-st.markdown("""
-<div class="hero">
-  <svg class="hero-bg" viewBox="0 0 1400 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <radialGradient id="g1" cx="20%" cy="40%" r="60%"><stop offset="0%" stop-color="#1a0a2e"/><stop offset="100%" stop-color="#06060f"/></radialGradient>
-      <radialGradient id="g2" cx="80%" cy="60%" r="50%"><stop offset="0%" stop-color="#0d1a10"/><stop offset="100%" stop-color="#06060f"/></radialGradient>
-      <radialGradient id="g3" cx="50%" cy="20%" r="70%"><stop offset="0%" stop-color="#1a1208"/><stop offset="100%" stop-color="#06060f"/></radialGradient>
-      <filter id="blur1"><feGaussianBlur stdDeviation="18"/></filter>
-      <filter id="blur2"><feGaussianBlur stdDeviation="10"/></filter>
-      <filter id="blur3"><feGaussianBlur stdDeviation="6"/></filter>
-    </defs>
-    <rect width="1400" height="220" fill="#06060f"/>
-    <!-- Fundo gradiente -->
-    <ellipse cx="280" cy="110" rx="420" ry="180" fill="url(#g1)" opacity="0.9"/>
-    <ellipse cx="1100" cy="90" rx="380" ry="160" fill="url(#g2)" opacity="0.8"/>
-    <ellipse cx="700" cy="40" rx="500" ry="120" fill="url(#g3)" opacity="0.6"/>
-    <!-- Manchas grandes — camada de base -->
-    <path d="M 0 160 Q 120 60 280 130 Q 380 180 460 90 Q 540 20 650 80 Q 720 120 800 60 Q 900 0 1000 70 Q 1100 130 1200 50 Q 1320 -20 1400 90 L1400 220 L0 220Z" fill="#0b0b18" opacity="0.7"/>
-    <!-- Pinceladas longas — cor quente dourada -->
-    <path d="M -40 170 Q 200 90 420 150 Q 580 195 720 130 Q 860 70 1050 140 Q 1200 195 1440 110" stroke="#c9a96e" stroke-width="1.8" fill="none" opacity="0.18" filter="url(#blur2)"/>
-    <path d="M -40 185 Q 180 120 350 165 Q 500 200 660 155 Q 820 108 1000 160 Q 1180 205 1440 140" stroke="#c9a96e" stroke-width="0.8" fill="none" opacity="0.09"/>
-    <!-- Manchas de cor — azul profundo -->
-    <path d="M 80 30 Q 160 -20 240 50 Q 300 100 200 130 Q 100 155 60 90 Z" fill="#1a3a5a" opacity="0.35" filter="url(#blur1)"/>
-    <path d="M 950 10 Q 1080 -30 1150 60 Q 1200 120 1100 150 Q 990 175 960 100 Z" fill="#0f2a4a" opacity="0.4" filter="url(#blur1)"/>
-    <!-- Manchas vinho / borgonha -->
-    <path d="M 500 -20 Q 620 10 640 80 Q 655 140 560 160 Q 460 175 430 100 Q 410 40 500 -20 Z" fill="#3a1020" opacity="0.4" filter="url(#blur1)"/>
-    <path d="M 1200 80 Q 1310 40 1380 110 Q 1420 155 1340 185 Q 1250 210 1200 160 Z" fill="#2a0e18" opacity="0.5" filter="url(#blur1)"/>
-    <!-- Toque de verde escuro -->
-    <path d="M 320 140 Q 400 100 480 150 Q 520 175 460 200 Q 380 215 320 185 Z" fill="#0a2a1a" opacity="0.45" filter="url(#blur1)"/>
-    <path d="M 780 20 Q 860 -10 920 50 Q 950 90 890 120 Q 820 145 770 100 Z" fill="#0d2a20" opacity="0.35" filter="url(#blur1)"/>
-    <!-- Pinceladas finas de detalhe — dourado -->
-    <path d="M 60 200 Q 300 155 500 185 Q 650 205 780 175 Q 920 145 1100 185 Q 1260 215 1400 175" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.22" filter="url(#blur3)"/>
-    <!-- Pontos de luz — brilho suave -->
-    <circle cx="185" cy="72" r="55" fill="#2a1a4a" opacity="0.3" filter="url(#blur1)"/>
-    <circle cx="185" cy="72" r="12" fill="#c9a96e" opacity="0.06" filter="url(#blur2)"/>
-    <circle cx="1050" cy="55" r="70" fill="#1a2a10" opacity="0.25" filter="url(#blur1)"/>
-    <circle cx="680"  cy="35" r="90" fill="#1e0e2a" opacity="0.3"  filter="url(#blur1)"/>
-    <!-- Linhas de textura fina -->
-    <line x1="0" y1="218" x2="1400" y2="218" stroke="#c9a96e" stroke-width="0.5" opacity="0.2"/>
-  </svg>
+_fundo_css = f"background-image: url('data:image/png;base64,{_FUNDO_B64}');" if _FUNDO_B64 else "background: #d8e8ee;"
+st.markdown(f"""
+<div class="hero" style="{_fundo_css}">
   <div class="hero-overlay">
-    <p class="hero-title">Arte em Leilão</p>
-    <p class="hero-sub">Catálogo &nbsp;·&nbsp; Histórico &nbsp;·&nbsp; Análise de Mercado</p>
+    <p class="hero-title">Art Radar</p>
+    <p class="hero-sub">Leilões &nbsp;·&nbsp; Histórico &nbsp;·&nbsp; Inteligência de Mercado</p>
   </div>
 </div>
 """, unsafe_allow_html=True)
@@ -1969,9 +1942,9 @@ st.markdown("""
 col_tabs, col_refresh = st.columns([10, 1])
 with col_tabs:
     aba1, aba2, aba3, aba4, aba5 = st.tabs([
-        "  🔨  Em Leilão Agora  ",
-        "  📈  Histórico de Preços  ",
-        "  📊  Análise de Mercado  ",
+        "  🔨  Em Leilão  ",
+        "  📈  Histórico  ",
+        "  📊  Mercado  ",
         "  ★  Favoritos  ",
         "  🔍  Garimpo  ",
     ])
