@@ -110,20 +110,24 @@ def _compute_hash(foto_url: str):
         r = requests.get(foto_url, headers=_IMG_HEADERS, timeout=15)
         if r.status_code != 200 or len(r.content) < 500:
             return None
-        return imagehash.phash(Image.open(BytesIO(r.content)).convert("RGB"))
+        return imagehash.phash(Image.open(BytesIO(r.content)).convert("RGB"), hash_size=12)
     except Exception:
         return None
 
 
 # ── Busca similares no índice ────────────────────────────────────────────────
 
-def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 20) -> list:
+def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 45) -> list:
+    hash_bits = query_hash.hash.size  # 144 para hash_size=12
     results = []
     for entry in index:
         try:
-            dist = query_hash - imagehash.hex_to_hash(entry["phash"])
+            ref_hash = imagehash.hex_to_hash(entry["phash"])
+            if ref_hash.hash.size != hash_bits:
+                continue  # ignora entradas com hash de tamanho diferente (índice antigo)
+            dist = query_hash - ref_hash
             if dist <= max_dist:
-                sim = round(max(0, 100 - dist * 100 / 64))
+                sim = round(max(0, 100 - dist * 100 / hash_bits))
                 results.append({
                     "artista":     entry.get("artista", ""),
                     "titulo":      entry.get("titulo", ""),
@@ -145,7 +149,7 @@ def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 2
 
 # ── Processamento de um lote ─────────────────────────────────────────────────
 
-def _processar_lote(lote: dict, index: list) -> dict | None:
+def _processar_lote(lote: dict, index: list, max_dist: int = 45) -> dict | None:
     """Processa um lote: baixa foto, calcula phash, busca similares. Retorna linha para upsert ou None."""
     foto = (lote.get("foto_url") or "").strip()
     if not foto:
@@ -155,7 +159,7 @@ def _processar_lote(lote: dict, index: list) -> dict | None:
     if query_hash is None:
         return None
 
-    similares = _buscar_similares(query_hash, index, top_n=5, max_dist=20)
+    similares = _buscar_similares(query_hash, index, top_n=5, max_dist=max_dist)
 
     agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -180,7 +184,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--max",     type=int, default=0,   help="Máximo de lotes a processar (0=todos)")
     ap.add_argument("--threads", type=int, default=6,   help="Threads paralelas")
-    ap.add_argument("--max-dist",type=int, default=20,  help="Distância máxima phash (0-64)")
+    ap.add_argument("--max-dist",type=int, default=45,  help="Distância máxima phash (0-144 para hash_size=12)")
     ap.add_argument("--rebuild", action="store_true",   help="Recalcula todos (ignora já processados)")
     args = ap.parse_args()
 
@@ -245,7 +249,7 @@ def main():
     buffer = []
 
     with ThreadPoolExecutor(max_workers=args.threads) as ex:
-        futuros = {ex.submit(_processar_lote, c, index): c for c in candidatos}
+        futuros = {ex.submit(_processar_lote, c, index, args.max_dist): c for c in candidatos}
 
         for i, fut in enumerate(as_completed(futuros), 1):
             res = fut.result()

@@ -45,8 +45,8 @@ def _compute_hash(foto_url: str) -> str | None:
         if r.status_code != 200 or len(r.content) < 800:
             return None
         img = Image.open(BytesIO(r.content)).convert("RGB")
-        # Usa phash (64 bits) — bom para composição/cores gerais
-        return str(imagehash.phash(img, hash_size=8))
+        # Usa phash (144 bits, hash_size=12) — maior resolução, menos falsos positivos
+        return str(imagehash.phash(img, hash_size=12))
     except Exception:
         return None
 
@@ -103,12 +103,19 @@ def main():
             offset += 1000
         return {r["url_key"] for r in rows}
 
-    def _sb_fetch_bda():
+    def _sb_fetch_historico():
+        """Busca todos os lotes históricos (todas as casas) com foto e artista identificado."""
         rows, offset = [], 0
         while True:
-            r = requests.get(f"{SB_URL}/rest/v1/lotes?select=chave,artista,titulo,tecnica,dimensoes,maior_lance,casa,data_leilao,foto_url&fonte=eq.bda",
+            r = requests.get(f"{SB_URL}/rest/v1/lotes",
                              headers=_sb_headers(),
-                             params={"offset": offset, "limit": 1000}, timeout=30)
+                             params={
+                                 "select": "chave,artista,titulo,tecnica,dimensoes,maior_lance,casa,data_leilao,foto_url",
+                                 "em_leilao": "eq.false",
+                                 "foto_url": "not.is.null",
+                                 "offset": offset,
+                                 "limit": 1000,
+                             }, timeout=30)
             batch = r.json() if r.status_code == 200 else []
             rows.extend(batch)
             if len(batch) < 1000: break
@@ -133,14 +140,13 @@ def main():
         index = {}
         print("Construindo índice do zero...")
 
-    # Carrega BDA
+    # Carrega histórico de todas as casas
     if USE_SB:
-        print("Carregando BDA do Supabase...", end=" ", flush=True)
-        bda_rows = _sb_fetch_bda()
+        print("Carregando histórico (todas as casas) do Supabase...", end=" ", flush=True)
+        bda_rows = _sb_fetch_historico()
         bda = {}
         for r in bda_rows:
-            url_key = r["chave"].replace("bda|", "", 1)
-            bda[url_key] = r
+            bda[r["chave"]] = r
         print(f"{len(bda)} registros")
     else:
         print(f"Carregando {os.path.basename(BDA_FILE)}...", end=" ", flush=True)
