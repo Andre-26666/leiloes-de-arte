@@ -1450,6 +1450,33 @@ def _eh_desconhecido(artista: str) -> bool:
     return False
 
 
+_RE_TECNICA_PALAVRA = _re.compile(
+    r'\b(oleo|óleo|acril[íi]co|aquarela|guache|gouache|mista|sobre|'
+    r'tela|madeira|papel|lona|cart[aã]o|s[eé]c|escola|arte|'
+    r'sem|t[ií]tulo|lote|obra|pintura|desenho|escultura|gravura)\b',
+    _re.I | _re.UNICODE,
+)
+
+
+def _artista_do_titulo(titulo: str) -> str:
+    """Tenta extrair nome de artista do título no formato 'NOME - descrição'.
+    Retorna string vazia se não encontrar padrão de nome."""
+    titulo = str(titulo or "").strip()
+    if " - " not in titulo:
+        return ""
+    candidato = titulo.split(" - ")[0].strip()
+    # Descarta se contém palavras de técnica/descrição (não é nome de pessoa)
+    if _RE_TECNICA_PALAVRA.search(candidato):
+        return ""
+    # Precisa ter 2+ palavras (nome e sobrenome)
+    if len(candidato.split()) < 2:
+        return ""
+    # Descarta se for muito longa (provavelmente frase, não nome)
+    if len(candidato) > 50:
+        return ""
+    return candidato
+
+
 def _buscar_similares(foto_url: str, top_n: int = 5, max_dist: int = 18) -> list[dict]:
     """Compara foto_url contra o índice visual. Retorna top_n mais similares."""
     try:
@@ -1518,7 +1545,14 @@ def render_garimpo(df_leiloes):
             )
         ].copy()
     else:
-        df_desc = df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)].copy()
+        def _realmente_desconhecido(row):
+            if not _eh_desconhecido(row["artista"]):
+                return False
+            # Se o título tem um nome identificável antes do " - ", não é desconhecido
+            if _artista_do_titulo(row.get("titulo", "")):
+                return False
+            return True
+        df_desc = df_leiloes[df_leiloes.apply(_realmente_desconhecido, axis=1)].copy()
 
     # Prioridade por técnica
     df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
