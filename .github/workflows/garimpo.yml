@@ -60,6 +60,13 @@ jobs:
         run: python catalogo_tableau.py
         continue-on-error: true
 
+      - name: Roda garimpo CCF Galeria
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python catalogo_ccf.py
+        continue-on-error: true
+
       - name: Atualiza índice visual
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

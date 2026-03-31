@@ -170,3 +170,34 @@ def sync_tableau(lotes: list):
         })
     n = upsert_raw("lotes", rows)
     print(f"  [supabase] tableau: {n}/{len(rows)} registros sincronizados")
+
+
+def sync_ccf(db: dict):
+    """Sincroniza ccf_db com Supabase."""
+    if not enabled():
+        return
+    rows = []
+    for k, v in db.items():
+        if not isinstance(v, dict):
+            continue
+        rows.append({
+            "chave":       k if k.startswith("ccf|") else f"ccf|{k}",
+            "fonte":       "ccf",
+            "artista":     _safe(v.get("artista")),
+            "titulo":      _safe(v.get("titulo")),
+            "tecnica":     _safe(v.get("tecnica")),
+            "dimensoes":   _safe(v.get("dimensoes")),
+            "ano":         _safe(v.get("ano")),
+            "lance_base":  _safe(v.get("lance_base")),
+            "maior_lance": _safe(v.get("maior_lance")),
+            "num_lances":  _safe(v.get("num_lances")),
+            "data_leilao": _safe(v.get("data_leilao")),
+            "casa":        _safe(v.get("casa")),
+            "url_detalhe": _safe(v.get("url_detalhe")),
+            "foto_url":    _safe(v.get("foto_url")),
+            "em_leilao":   bool(v.get("em_leilao", True)),
+            "ignorado":    bool(v.get("_ignorado", False)),
+            "data_coleta": _safe(v.get("data_coleta")),
+        })
+    n = upsert_raw("lotes", rows)
+    print(f"  [supabase] ccf: {n}/{len(rows)} registros sincronizados")
