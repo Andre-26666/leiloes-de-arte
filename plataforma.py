@@ -1646,6 +1646,7 @@ def render_garimpo(df_leiloes):
         dims    = lote.get("dimensoes", "") or ""
         base    = lote.get("lance_base", 0)
         casa    = lote.get("casa", "")
+        data    = lote.get("data_leilao", "") or ""
         prio    = int(lote.get("_prio", 7))
         tec_badge = _TECS.get(prio, "")
 
@@ -1653,34 +1654,56 @@ def render_garimpo(df_leiloes):
         similares = (pre.get("similares") or []) if pre else None
         sim_badge = "🟢" if similares else ("⚪" if similares is not None else ("🔍" if foto else ""))
 
-        header = f"{sim_badge} {tec_badge}  ·  {titulo[:55]}  —  {fmt_brl(base)}  ·  {casa}"
-        with st.expander(header, expanded=False):
-            col_img, col_res = st.columns([1, 2])
+        # ── Card: foto sempre visível ─────────────────────────────────────
+        col_img, col_info = st.columns([1, 2])
 
-            with col_img:
-                if foto:
-                    st.image(foto, use_container_width=True)
-                else:
-                    st.caption("Sem foto")
-                info_parts = [x for x in [tecnica, dims] if x]
-                if info_parts:
-                    st.caption(" · ".join(info_parts))
-                if url:
-                    st.markdown(f"[Ver lote ↗]({url})")
+        with col_img:
+            if foto:
+                st.markdown(
+                    f'<img src="{foto}" referrerpolicy="no-referrer" '
+                    f'style="width:100%;border-radius:6px;object-fit:cover;max-height:220px" '
+                    f'onerror="this.style.opacity=\'0.3\'">',
+                    unsafe_allow_html=True,
+                )
+            else:
+                st.markdown(
+                    '<div style="width:100%;height:120px;background:#ece7df;border-radius:6px;'
+                    'display:flex;align-items:center;justify-content:center;color:#a09080;font-size:13px">'
+                    'Sem foto</div>',
+                    unsafe_allow_html=True,
+                )
 
-            with col_res:
-                if not foto:
-                    st.info("Sem foto — busca visual não disponível para este lote.")
-                elif similares is None and idx:
-                    with st.spinner("Buscando similares..."):
-                        similares = _buscar_similares(foto, top_n=5, max_dist=20)
-                elif not idx:
-                    st.caption("Índice visual não disponível.")
+        with col_info:
+            info_parts = [x for x in [tecnica, dims] if x]
+            meta = " · ".join(info_parts) if info_parts else ""
+            st.markdown(
+                f'<div style="padding:4px 0">'
+                f'<span style="font-size:13px">{sim_badge} {tec_badge}</span><br>'
+                f'<span style="font-weight:600;font-size:15px">{titulo[:70]}</span><br>'
+                f'<span style="font-size:12px;color:#6b5e50">{meta}</span><br>'
+                f'<span style="font-size:13px">Base: <b>{fmt_brl(base)}</b> &nbsp;·&nbsp; {casa}</span><br>'
+                f'<span style="font-size:12px;color:#8a7a6a">{data}</span>'
+                f'</div>',
+                unsafe_allow_html=True,
+            )
+            if url:
+                st.markdown(f"[Ver lote ↗]({url})")
 
-                if similares:
+            # Similares em expander
+            if similares is None and foto and idx:
+                with st.spinner(""):
+                    similares = _buscar_similares(foto, top_n=5, max_dist=20)
+
+            if similares:
+                n_sim = len(similares)
+                melhor = similares[0]
+                media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
+                if media_melhor > base > 0:
+                    potencial = round((media_melhor / base - 1) * 100)
+                    st.success(f"💎 +{potencial}% potencial · {melhor['artista']} ({fmt_brl(media_melhor)} médio)")
+                with st.expander(f"🔍 {n_sim} obra(s) similar(es) encontrada(s)", expanded=False):
                     if pre and pre.get("atualizado"):
                         st.caption(f"Atualizado: {pre['atualizado'][:10]}")
-                    st.markdown("**Obras visualmente similares:**")
                     for s in similares:
                         art_norm = _norm_art(s["artista"])
                         media = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
@@ -1698,17 +1721,10 @@ def render_garimpo(df_leiloes):
                             f'</div>',
                             unsafe_allow_html=True,
                         )
-                    melhor = similares[0]
-                    media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
-                    if media_melhor > base > 0:
-                        potencial = round((media_melhor / base - 1) * 100)
-                        st.success(
-                            f"💎 Potencial: lote a {fmt_brl(base)} vs média de "
-                            f"**{melhor['artista']}** em {fmt_brl(media_melhor)} "
-                            f"(+{potencial}% se confirmado)"
-                        )
-                elif foto and similares is not None:
-                    st.info("Nenhuma obra similar encontrada no índice visual.")
+            elif foto and similares is not None:
+                st.caption("Nenhuma obra similar no índice visual.")
+
+        st.markdown('<hr style="margin:12px 0;border:none;border-top:1px solid #e0d8cc">', unsafe_allow_html=True)
 
 
 # ── Favoritos & Watchlist ───────────────────────────────────────────────────
