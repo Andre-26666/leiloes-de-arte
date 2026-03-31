@@ -1528,31 +1528,16 @@ def _prioridade_tecnica(tecnica: str) -> int:
 
 
 def render_garimpo(df_leiloes):
-    """Aba de garimpo: lotes vigentes com artista não identificado."""
+    """Aba de garimpo: lotes vigentes com artista não identificado, confrontados com acervo visual."""
 
-    # Modo: só desconhecidos OU todos os não reconhecidos no histórico
-    _mh_keys = set(load_media_hist().keys())
-    modo_garimpo = st.radio(
-        "Mostrar lotes com:",
-        ["Artista não identificado", "Artista não reconhecido no histórico"],
-        horizontal=True, key="g_modo",
-    )
+    def _realmente_desconhecido(row):
+        if not _eh_desconhecido(row["artista"]):
+            return False
+        if _artista_do_titulo(row.get("titulo", "")):
+            return False
+        return True
 
-    if modo_garimpo == "Artista não reconhecido no histórico":
-        df_desc = df_leiloes[
-            df_leiloes["artista"].apply(
-                lambda a: bool(a) and _norm_art(str(a)) not in _mh_keys
-            )
-        ].copy()
-    else:
-        def _realmente_desconhecido(row):
-            if not _eh_desconhecido(row["artista"]):
-                return False
-            # Se o título tem um nome identificável antes do " - ", não é desconhecido
-            if _artista_do_titulo(row.get("titulo", "")):
-                return False
-            return True
-        df_desc = df_leiloes[df_leiloes.apply(_realmente_desconhecido, axis=1)].copy()
+    df_desc = df_leiloes[df_leiloes.apply(_realmente_desconhecido, axis=1)].copy()
 
     # Prioridade por técnica
     df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
