@@ -49,18 +49,18 @@ def _tela_login():
     st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@400;500&display=swap');
-    [data-testid="stAppViewContainer"] { background: #f5f1eb; }
+    [data-testid="stAppViewContainer"] { background: #eef3f7; }
     [data-testid="stSidebar"] { display: none; }
     .login-box {
         max-width: 380px; margin: 8vh auto 0;
-        background: #ffffff; border: 1px solid #ddd5c8;
+        background: #ffffff; border: 1px solid #b8d0de;
         border-radius: 16px; padding: 48px 40px 40px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     }
     .login-logo { font-size: 2.4rem; text-align: center; margin-bottom: 6px; }
     .login-title {
         font-family: 'Cormorant Garamond', serif;
-        color: #a07828; font-size: 1.5rem; font-weight: 300;
+        color: #4a8fa8; font-size: 1.5rem; font-weight: 300;
         text-align: center; letter-spacing: .1em;
         text-transform: uppercase; margin-bottom: 28px;
     }
@@ -117,20 +117,20 @@ st.markdown("""
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 /* ── Paleta ──────────────────────────────────────────────────
-   Fundo: creme quente  #f5f1eb
+   Fundo: creme quente  #eef3f7
    Card:  branco        #ffffff
-   Texto: carvão        #1e1a14
-   Texto 2: castanho    #6b5e50
-   Borda: bege          #ddd5c8
-   Destaque: ouro       #a07828
+   Texto: carvão        #1a2a35
+   Texto 2: castanho    #3a5a6e
+   Borda: bege          #b8d0de
+   Destaque: ouro       #4a8fa8
    ─────────────────────────────────────────────────────────── */
 
 /* ── Reset & base ── */
 [data-testid="stAppViewContainer"] {
-    background: #f5f1eb;
+    background: #eef3f7;
 }
 [data-testid="stHeader"] { background: transparent !important; }
-[data-testid="stSidebar"] { background: #ece7df !important; }
+[data-testid="stSidebar"] { background: #dde8f0 !important; }
 section[data-testid="stMain"] > div { padding-top: 0 !important; }
 .block-container { padding: 0 2rem 2rem 2rem !important; max-width: 1400px; }
 
@@ -150,9 +150,9 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     inset: 0;
     background: linear-gradient(
         to bottom,
-        rgba(255,255,255,0.08) 0%,
-        rgba(255,255,255,0.45) 60%,
-        rgba(245,241,235,0.82) 100%
+        rgba(200,220,235,0.08) 0%,
+        rgba(210,228,240,0.45) 60%,
+        rgba(220,232,240,0.85) 100%
     );
     display: flex;
     flex-direction: column;
@@ -164,7 +164,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Cormorant Garamond', serif;
     font-size: 54px;
     font-weight: 300;
-    color: #1e1a14;
+    color: #1a2a35;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     line-height: 1;
@@ -175,7 +175,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Inter', sans-serif;
     font-size: 10px;
     font-weight: 400;
-    color: #5a4e3c;
+    color: #3a5a6e;
     letter-spacing: 0.4em;
     text-transform: uppercase;
     margin: 0;
@@ -184,7 +184,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 /* ── Tabs ── */
 [data-baseweb="tab-list"] {
     background: transparent !important;
-    border-bottom: 1px solid #ddd5c8 !important;
+    border-bottom: 1px solid #b8d0de !important;
     gap: 0 !important;
 }
 [data-baseweb="tab"] {
@@ -192,15 +192,15 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-size: 12px !important;
     font-weight: 500 !important;
     letter-spacing: 0.1em !important;
-    color: #a09080 !important;
+    color: #7a9aaa !important;
     padding: 12px 28px !important;
     background: transparent !important;
     border: none !important;
     text-transform: uppercase !important;
 }
 [aria-selected="true"][data-baseweb="tab"] {
-    color: #a07828 !important;
-    border-bottom: 2px solid #a07828 !important;
+    color: #4a8fa8 !important;
+    border-bottom: 2px solid #4a8fa8 !important;
 }
 [data-baseweb="tab-highlight"] { display: none !important; }
 [data-baseweb="tab-border"]    { display: none !important; }
@@ -208,23 +208,23 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 /* ── Metric boxes ── */
 .mbox {
     background: #ffffff;
-    border: 1px solid #ddd5c8;
+    border: 1px solid #b8d0de;
     border-radius: 14px;
     padding: 18px 12px;
     text-align: center;
     transition: border-color .25s, transform .25s;
     box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
-.mbox:hover { border-color: #a0782866; transform: translateY(-2px); }
+.mbox:hover { border-color: #4a8fa866; transform: translateY(-2px); }
 .msub {
     font-family: 'Inter', sans-serif;
     font-size: 11px;
-    color: #a09080;
+    color: #7a9aaa;
     margin-top: 5px;
     letter-spacing: 0.04em;
 }
 .mprog-wrap {
-    background: #ece7df;
+    background: #dde8f0;
     border-radius: 4px;
     height: 5px;
     margin-top: 10px;
@@ -234,7 +234,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Inter', sans-serif;
     font-size: 10px;
     font-weight: 500;
-    color: #a09080;
+    color: #7a9aaa;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 6px;
@@ -243,7 +243,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
     font-weight: 300;
-    color: #a07828;
+    color: #4a8fa8;
     line-height: 1;
 }
 
@@ -256,12 +256,12 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     letter-spacing: 0.08em;
     margin: 1.5rem 0 1rem;
     padding-bottom: 8px;
-    border-bottom: 1px solid #ddd5c8;
+    border-bottom: 1px solid #b8d0de;
 }
 
 /* ── Cards ── */
 .card {
-    border: 1px solid #ddd5c8;
+    border: 1px solid #b8d0de;
     border-radius: 16px;
     overflow: hidden;
     background: #ffffff;
@@ -270,7 +270,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 .card:hover {
-    border-color: #a0782866;
+    border-color: #4a8fa866;
     box-shadow: 0 8px 32px rgba(160,120,40,0.12);
     transform: translateY(-3px);
 }
@@ -284,7 +284,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 .card-img-placeholder {
     width: 100%;
     aspect-ratio: 4/3;
-    background: linear-gradient(135deg, #ede8e0 0%, #f5f1eb 100%);
+    background: linear-gradient(135deg, #ede8e0 0%, #eef3f7 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -305,7 +305,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 700;
-    color: #1e1a14;
+    color: #1a2a35;
     text-transform: uppercase;
     letter-spacing: 0.07em;
     margin-bottom: 4px;
@@ -316,11 +316,11 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-size: 15px;
     font-style: italic;
     font-weight: 400;
-    color: #6b5e50;
+    color: #3a5a6e;
     text-transform: lowercase;
     margin-bottom: 8px;
     padding-top: 4px;
-    border-top: 1px solid #ece7df;
+    border-top: 1px solid #dde8f0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -328,7 +328,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 .card-meta {
     font-family: 'Inter', sans-serif;
     font-size: 10px;
-    color: #a09080;
+    color: #7a9aaa;
     margin-bottom: 14px;
     letter-spacing: 0.05em;
 }
@@ -349,21 +349,21 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     font-family: 'Inter', sans-serif;
     font-size: 8px;
     font-weight: 500;
-    color: #a09080;
+    color: #7a9aaa;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     margin-bottom: 4px;
 }
 .price-val-base  { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #1a6fa8; }
 .price-val-lance { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #1d7a4a; }
-.price-val-est   { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #a07828; }
+.price-val-est   { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #4a8fa8; }
 .price-val-aval  { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #6b4bbf; }
 .price-val-aval-vazio { font-family: 'Inter', sans-serif; font-size: 11px; color: #c0b8b0; }
 .card-data-leilao {
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 600;
-    color: #a07828;
+    color: #4a8fa8;
     background: rgba(160,120,40,0.08);
     border: 1px solid rgba(160,120,40,0.22);
     border-radius: 6px;
@@ -385,7 +385,7 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 .rent-alto  { background: #e8f5ee; color: #1d7a4a; border: 1px solid #b0d8bf; }
 .rent-medio { background: #fdf5e0; color: #9a7010; border: 1px solid #e0c870; }
 .rent-baixo { background: #fde8e8; color: #a82020; border: 1px solid #e0b0b0; }
-.rent-none  { background: #f5f1eb; color: #b0a898; border: 1px solid #ddd5c8; font-size: 11px; font-weight: 400; }
+.rent-none  { background: #eef3f7; color: #b0a898; border: 1px solid #b8d0de; font-size: 11px; font-weight: 400; }
 .card-footer {
     display: flex;
     justify-content: space-between;
@@ -409,8 +409,8 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
 }
 .badge-lance   { background: #e8f5ee; color: #1d7a4a; border: 1px solid #b0d8bf; }
 .badge-vendida { background: #e8f0fb; color: #1a5fa0; border: 1px solid #a8c8e8; }
-.badge-semlan  { background: #f5f1eb; color: #c0b8b0; border: 1px solid #ddd5c8; }
-.badge-ass     { background: rgba(160,120,40,0.10); color: #a07828; border: 1px solid rgba(160,120,40,0.3); margin-left: 5px; }
+.badge-semlan  { background: #eef3f7; color: #c0b8b0; border: 1px solid #b8d0de; }
+.badge-ass     { background: rgba(160,120,40,0.10); color: #4a8fa8; border: 1px solid rgba(160,120,40,0.3); margin-left: 5px; }
 .badge-nass    { background: #fde8e8; color: #a82020; border: 1px solid #e0b0b0; margin-left: 5px; }
 .badge-mono    { background: #f0ebfb; color: #6b4bbf; border: 1px solid #c8b8e8; margin-left: 5px; }
 .card-link { margin-top: 10px; }
@@ -423,17 +423,17 @@ section[data-testid="stMain"] > div { padding-top: 0 !important; }
     letter-spacing: 0.08em;
     text-transform: uppercase;
 }
-.card-link a:hover { color: #a07828 !important; }
+.card-link a:hover { color: #4a8fa8 !important; }
 
 /* ── Divider ── */
-hr { border: none; border-top: 1px solid #ddd5c8; margin: 1.5rem 0; }
+hr { border: none; border-top: 1px solid #b8d0de; margin: 1.5rem 0; }
 
 /* ── Inputs e selects ── */
 [data-baseweb="input"] input,
 [data-baseweb="select"] div {
     background: #ffffff !important;
-    border-color: #ddd5c8 !important;
-    color: #1e1a14 !important;
+    border-color: #b8d0de !important;
+    color: #1a2a35 !important;
     font-family: 'Inter', sans-serif !important;
     font-size: 13px !important;
 }
@@ -443,36 +443,36 @@ label[data-testid="stWidgetLabel"] p {
     font-weight: 500 !important;
     letter-spacing: 0.14em !important;
     text-transform: uppercase !important;
-    color: #a09080 !important;
+    color: #7a9aaa !important;
 }
 [data-testid="stCheckbox"] label p {
     font-family: 'Inter', sans-serif !important;
     font-size: 12px !important;
     text-transform: none !important;
     letter-spacing: 0 !important;
-    color: #6b5e50 !important;
+    color: #3a5a6e !important;
 }
 
 /* ── Expanders ── */
 [data-testid="stExpander"] {
     background: #ffffff !important;
-    border: 1px solid #ddd5c8 !important;
+    border: 1px solid #b8d0de !important;
     border-radius: 12px !important;
 }
 [data-testid="stExpander"] summary {
-    color: #6b5e50 !important;
+    color: #3a5a6e !important;
 }
 /* ── Tabs (duplicado para garantir) ── */
 [data-baseweb="tab-list"] {
     background: transparent !important;
-    border-bottom: 1px solid #ddd5c8 !important;
+    border-bottom: 1px solid #b8d0de !important;
 }
 [data-baseweb="tab"] {
-    color: #a09080 !important;
+    color: #7a9aaa !important;
 }
 [aria-selected="true"][data-baseweb="tab"] {
-    color: #a07828 !important;
-    border-bottom: 2px solid #a07828 !important;
+    color: #4a8fa8 !important;
+    border-bottom: 2px solid #4a8fa8 !important;
 }
 /* ── Dataframe ── */
 [data-testid="stDataFrame"] { border-radius: 10px; overflow: hidden; }
@@ -1107,13 +1107,13 @@ def render_cards_leilao(df):
 
             if _aval_lance > 0 and _aval_base > 0:
                 aval_disp = (f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
-                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'<div style="font-size:9px;color:#7a9aaa;margin-top:2px">'
                              f'base méd. {fmt_brl(_aval_base)}</div>')
             elif _aval_lance > 0:
                 aval_disp = f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
             elif _aval_base > 0:
                 aval_disp = (f'<span class="price-val-aval-vazio">sem lances</span>'
-                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'<div style="font-size:9px;color:#7a9aaa;margin-top:2px">'
                              f'base méd. {fmt_brl(_aval_base)}</div>')
             else:
                 aval_disp = '<span class="price-val-aval-vazio">sem histórico</span>'
@@ -1233,13 +1233,13 @@ def render_cards_historico(df):
 
             if _aval_lance > 0 and _aval_base > 0:
                 aval_disp = (f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
-                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'<div style="font-size:9px;color:#7a9aaa;margin-top:2px">'
                              f'base méd. {fmt_brl(_aval_base)}</div>')
             elif _aval_lance > 0:
                 aval_disp = f'<span class="price-val-aval">{fmt_brl(_aval_lance)}</span>'
             elif _aval_base > 0:
                 aval_disp = (f'<span class="price-val-aval-vazio">sem lances</span>'
-                             f'<div style="font-size:9px;color:#a09080;margin-top:2px">'
+                             f'<div style="font-size:9px;color:#7a9aaa;margin-top:2px">'
                              f'base méd. {fmt_brl(_aval_base)}</div>')
             else:
                 aval_disp = '<span class="price-val-aval-vazio">sem histórico</span>'
@@ -1363,10 +1363,10 @@ def render_cards_por_artista(df):
         _al, _ab = _mhe.get("lance", 0), _mhe.get("base", 0)
         aval_str = (f" · lances: {fmt_brl(_al)}" if _al else "") + (f" · base: {fmt_brl(_ab)}" if _ab else "")
         st.markdown(
-            f'<div style="background:#f0ece6;border-left:3px solid #a07828;'
+            f'<div style="background:#f0ece6;border-left:3px solid #4a8fa8;'
             f'padding:8px 14px;margin:18px 0 6px;border-radius:0 6px 6px 0">'
-            f'<span style="font-weight:700;font-size:15px;color:#1e1a14">{nome}</span>'
-            f'<span style="color:#a09080;font-size:12px;margin-left:10px">{n} lote{"s" if n>1 else ""}{aval_str}</span>'
+            f'<span style="font-weight:700;font-size:15px;color:#1a2a35">{nome}</span>'
+            f'<span style="color:#7a9aaa;font-size:12px;margin-left:10px">{n} lote{"s" if n>1 else ""}{aval_str}</span>'
             f'</div>',
             unsafe_allow_html=True,
         )
@@ -1651,12 +1651,12 @@ def render_garimpo(df_leiloes):
                         for s in similares_teste:
                             art_norm = _norm_art(s["artista"])
                             media = _mh_t.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
-                            sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#a09080")
+                            sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#7a9aaa")
                             st.markdown(
                                 f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
                                 f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
                                 f'<b>{s["artista"]}</b><br>'
-                                f'<span style="font-size:12px;color:#6b5e50">{s["titulo"][:60]}</span><br>'
+                                f'<span style="font-size:12px;color:#3a5a6e">{s["titulo"][:60]}</span><br>'
                                 f'Lance: <b>{fmt_brl(s["maior_lance"])}</b> · Média: <b>{fmt_brl(media) if media else "—"}</b>'
                                 f'</div>',
                                 unsafe_allow_html=True,
@@ -1702,8 +1702,8 @@ def render_garimpo(df_leiloes):
                 )
             else:
                 st.markdown(
-                    '<div style="width:100%;height:120px;background:#ece7df;border-radius:6px;'
-                    'display:flex;align-items:center;justify-content:center;color:#a09080;font-size:13px">'
+                    '<div style="width:100%;height:120px;background:#dde8f0;border-radius:6px;'
+                    'display:flex;align-items:center;justify-content:center;color:#7a9aaa;font-size:13px">'
                     'Sem foto</div>',
                     unsafe_allow_html=True,
                 )
@@ -1715,9 +1715,9 @@ def render_garimpo(df_leiloes):
                 f'<div style="padding:4px 0">'
                 f'<span style="font-size:13px">{sim_badge} {tec_badge}</span><br>'
                 f'<span style="font-weight:600;font-size:15px">{titulo[:70]}</span><br>'
-                f'<span style="font-size:12px;color:#6b5e50">{meta}</span><br>'
+                f'<span style="font-size:12px;color:#3a5a6e">{meta}</span><br>'
                 f'<span style="font-size:13px">Base: <b>{fmt_brl(base)}</b> &nbsp;·&nbsp; {casa}</span><br>'
-                f'<span style="font-size:12px;color:#8a7a6a">{data}</span>'
+                f'<span style="font-size:12px;color:#5a7a8e">{data}</span>'
                 f'</div>',
                 unsafe_allow_html=True,
             )
@@ -1743,13 +1743,13 @@ def render_garimpo(df_leiloes):
                         art_norm = _norm_art(s["artista"])
                         media = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
                         sim_bar = "█" * (s["similarity"] // 10) + "░" * (10 - s["similarity"] // 10)
-                        sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#a09080")
+                        sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#7a9aaa")
                         st.markdown(
                             f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
                             f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
                             f'<span style="font-size:11px;color:{sim_color}">{sim_bar}</span><br>'
                             f'<b>{s["artista"]}</b><br>'
-                            f'<span style="font-size:12px;color:#6b5e50">{s["titulo"][:60]}</span><br>'
+                            f'<span style="font-size:12px;color:#3a5a6e">{s["titulo"][:60]}</span><br>'
                             f'<span style="font-size:12px">{s["tecnica"]}</span><br>'
                             f'Lance hist.: <b>{fmt_brl(s["maior_lance"])}</b> · '
                             f'Média: <b>{fmt_brl(media) if media else "—"}</b>'
