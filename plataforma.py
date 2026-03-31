@@ -1431,9 +1431,23 @@ def _load_garimpo_resultados() -> dict:
     return {r["url_detalhe"]: r for r in rows if r.get("url_detalhe")}
 
 
+_RE_LIXO = _re.compile(
+    r'^(none|null|n/a|na|s/n|-{1,3}|\.{1,3}|0)$'          # valores nulos/placeholder
+    r'|tel\.?\s*\(?'                                         # número de telefone
+    r'|\(\d{2}\)\s*\d'                                       # DDD + número
+    r'|\d{4,5}[-.\s]\d{4}',                                  # padrão de telefone
+    _re.I,
+)
+
 def _eh_desconhecido(artista: str) -> bool:
     art = str(artista).strip()
-    return not art or bool(_RE_DESCONHECIDO.search(art))
+    if not art or len(art) <= 2:
+        return True
+    if _RE_DESCONHECIDO.search(art):
+        return True
+    if _RE_LIXO.search(art):
+        return True
+    return False
 
 
 def _buscar_similares(foto_url: str, top_n: int = 5, max_dist: int = 18) -> list[dict]:
@@ -1489,8 +1503,22 @@ def _prioridade_tecnica(tecnica: str) -> int:
 def render_garimpo(df_leiloes):
     """Aba de garimpo: lotes vigentes com artista não identificado."""
 
-    # ── Todos os lotes com artista desconhecido (com ou sem foto) ──────────
-    df_desc = df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)].copy()
+    # Modo: só desconhecidos OU todos os não reconhecidos no histórico
+    _mh_keys = set(load_media_hist().keys())
+    modo_garimpo = st.radio(
+        "Mostrar lotes com:",
+        ["Artista não identificado", "Artista não reconhecido no histórico"],
+        horizontal=True, key="g_modo",
+    )
+
+    if modo_garimpo == "Artista não reconhecido no histórico":
+        df_desc = df_leiloes[
+            df_leiloes["artista"].apply(
+                lambda a: bool(a) and _norm_art(str(a)) not in _mh_keys
+            )
+        ].copy()
+    else:
+        df_desc = df_leiloes[df_leiloes["artista"].apply(_eh_desconhecido)].copy()
 
     # Prioridade por técnica
     df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
