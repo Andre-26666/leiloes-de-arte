@@ -1554,30 +1554,26 @@ def render_garimpo(df_leiloes):
         return True
 
     df_desc = df_leiloes[df_leiloes.apply(_realmente_desconhecido, axis=1)].copy()
-
-    # Prioridade por técnica
     df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
-    df_desc = df_desc.sort_values(["_prio", "lance_base"], ascending=[True, False])
 
-    total_desc  = len(df_desc)
-    com_foto    = (df_desc["foto_url"].str.strip() != "").sum()
-    oleo_count  = (df_desc["_prio"] == 0).sum()
-
-    # Métricas
-    col_s1, col_s2, col_s3, col_s4 = st.columns(4)
-    col_s1.metric("Não identificados", total_desc)
-    col_s2.metric("Óleo / pintura", oleo_count)
-    col_s3.metric("Com foto", com_foto)
-
-    # Carrega similares pré-calculados e índice visual
     resultados_pre = _load_garimpo_resultados()
     idx = _load_visual_index()
+    _mh = load_media_hist()
+
+    # ── Métricas ─────────────────────────────────────────────────────────────
+    total_desc   = len(df_desc)
+    com_foto     = (df_desc["foto_url"].str.strip() != "").sum()
+    oleo_count   = (df_desc["_prio"] == 0).sum()
     com_similares = sum(
         1 for _, r in df_desc.iterrows()
-        if r.get("url_detalhe") in resultados_pre
-        and resultados_pre[r["url_detalhe"]].get("similares")
+        if resultados_pre.get(r.get("url_detalhe"), {}).get("similares")
     )
-    col_s4.metric("Com similar visual", com_similares)
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Não identificados", total_desc)
+    c2.metric("Óleo / pintura", oleo_count)
+    c3.metric("Com foto", com_foto)
+    c4.metric("Com similar visual", com_similares)
 
     if df_desc.empty:
         st.info("Nenhum lote com artista não identificado em andamento.")
@@ -1585,181 +1581,221 @@ def render_garimpo(df_leiloes):
 
     st.markdown("---")
 
-    # ── Filtros ─────────────────────────────────────────────────────────────
-    col_f1, col_f2, col_f3, col_f4 = st.columns([2, 2, 2, 2])
+    # ── Filtros ──────────────────────────────────────────────────────────────
+    col_f1, col_f2, col_f3, col_f4, col_f5 = st.columns([2, 2, 2, 2, 2])
     with col_f1:
-        _tec_opts = ["Todas as técnicas", "Óleo", "Acrílico", "Aquarela", "Mista", "Sem técnica"]
-        filtro_tec = st.selectbox("Técnica", _tec_opts, key="g_tec")
+        filtro_tec = st.selectbox("Técnica",
+            ["Todas", "Óleo", "Acrílico", "Aquarela", "Mista", "Sem técnica"], key="g_tec")
     with col_f2:
         _casas = ["Todas"] + sorted(df_desc["casa"].replace("", pd.NA).dropna().unique().tolist())
         filtro_casa = st.selectbox("Casa", _casas, key="g_casa")
     with col_f3:
-        filtro_foto = st.selectbox("Foto", ["Todas", "Com foto", "Sem foto"], key="g_foto")
+        filtro_similar = st.selectbox("Similar", ["Todos", "Com similar", "Sem similar"], key="g_sim")
     with col_f4:
-        filtro_similar = st.selectbox("Similar visual", ["Todos", "Com similar", "Sem similar"], key="g_sim")
+        ordem = st.selectbox("Ordenar por",
+            ["Técnica + base", "Maior base", "Menor base", "Maior potencial"], key="g_ordem")
+    with col_f5:
+        _bases = df_desc["lance_base"][df_desc["lance_base"] > 0]
+        _bmax  = int(_bases.max()) if len(_bases) else 50000
+        preco_max = st.number_input("Base máx (R$)", value=_bmax, step=500, key="g_preco")
 
     # Aplica filtros
     df_g = df_desc.copy()
-    if filtro_tec == "Óleo":
-        df_g = df_g[df_g["_prio"] == 0]
-    elif filtro_tec == "Acrílico":
-        df_g = df_g[df_g["_prio"] == 1]
-    elif filtro_tec == "Aquarela":
-        df_g = df_g[df_g["_prio"] == 3]
-    elif filtro_tec == "Mista":
-        df_g = df_g[df_g["_prio"] == 5]
-    elif filtro_tec == "Sem técnica":
-        df_g = df_g[df_g["_prio"] == 7]
+    _tec_map = {"Óleo": 0, "Acrílico": 1, "Aquarela": 3, "Mista": 5, "Sem técnica": 7}
+    if filtro_tec in _tec_map:
+        df_g = df_g[df_g["_prio"] == _tec_map[filtro_tec]]
     if filtro_casa != "Todas":
         df_g = df_g[df_g["casa"] == filtro_casa]
-    if filtro_foto == "Com foto":
-        df_g = df_g[df_g["foto_url"].str.strip() != ""]
-    elif filtro_foto == "Sem foto":
-        df_g = df_g[df_g["foto_url"].str.strip() == ""]
     if filtro_similar == "Com similar":
-        df_g = df_g[df_g["url_detalhe"].apply(
-            lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
+        df_g = df_g[df_g["url_detalhe"].apply(lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
     elif filtro_similar == "Sem similar":
-        df_g = df_g[~df_g["url_detalhe"].apply(
-            lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
+        df_g = df_g[~df_g["url_detalhe"].apply(lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
+    if preco_max > 0:
+        df_g = df_g[(df_g["lance_base"] <= preco_max) | (df_g["lance_base"] == 0)]
 
-    st.markdown(f"**{len(df_g)}** lotes — ordenados por técnica (óleo primeiro) e valor base")
+    # Calcula potencial para ordenação
+    def _calc_potencial(row):
+        pre = resultados_pre.get(row.get("url_detalhe"), {})
+        sims = pre.get("similares") or []
+        if not sims: return 0
+        melhor = sims[0]
+        media = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
+        base  = row.get("lance_base", 0)
+        return round((media / base - 1) * 100) if media > base > 0 else 0
+
+    if ordem == "Maior base":
+        df_g = df_g.sort_values("lance_base", ascending=False)
+    elif ordem == "Menor base":
+        df_g = df_g.sort_values("lance_base", ascending=True)
+    elif ordem == "Maior potencial":
+        df_g["_pot"] = df_g.apply(_calc_potencial, axis=1)
+        df_g = df_g.sort_values("_pot", ascending=False)
+    else:
+        df_g = df_g.sort_values(["_prio", "lance_base"], ascending=[True, False])
+
+    total_filtrado = len(df_g)
+    st.markdown(f"**{total_filtrado}** lotes encontrados")
 
     if df_g.empty:
         st.info("Nenhum resultado para os filtros selecionados.")
         return
 
-    # ── Modo teste: busca por URL de foto ──────────────────────────────────
-    with st.expander("🔬 Testar com URL de foto", expanded=False):
-        url_teste = st.text_input("Cole a URL de uma imagem:",
-                                  placeholder="https://www.site.com.br/imagem.jpg",
-                                  key="garimpo_url_teste")
-        if url_teste:
-            if not idx:
-                st.warning("Índice visual vazio.")
-            else:
-                with st.spinner("Buscando similares..."):
-                    similares_teste = _buscar_similares(url_teste, top_n=5, max_dist=25)
-                col_t1, col_t2 = st.columns([1, 2])
-                with col_t1:
-                    st.image(url_teste, use_container_width=True)
-                with col_t2:
-                    if not similares_teste:
-                        st.info("Nenhuma obra similar encontrada no índice.")
-                    else:
-                        _mh_t = load_media_hist()
-                        for s in similares_teste:
-                            art_norm = _norm_art(s["artista"])
-                            media = _mh_t.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
-                            sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#7a9aaa")
-                            st.markdown(
-                                f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
-                                f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
-                                f'<b>{s["artista"]}</b><br>'
-                                f'<span style="font-size:12px;color:#3a5a6e">{s["titulo"][:60]}</span><br>'
-                                f'Lance: <b>{fmt_brl(s["maior_lance"])}</b> · Média: <b>{fmt_brl(media) if media else "—"}</b>'
-                                f'</div>',
-                                unsafe_allow_html=True,
-                            )
+    # ── Paginação ────────────────────────────────────────────────────────────
+    POR_PAG = 20
+    n_pags  = max(1, (total_filtrado + POR_PAG - 1) // POR_PAG)
+    if "g_pag" not in st.session_state or st.session_state.get("g_pag", 1) > n_pags:
+        st.session_state["g_pag"] = 1
+
+    col_pag1, col_pag2, col_pag3 = st.columns([1, 3, 1])
+    with col_pag1:
+        if st.button("← Anterior", disabled=st.session_state["g_pag"] <= 1, key="g_prev"):
+            st.session_state["g_pag"] -= 1
+    with col_pag2:
+        st.markdown(
+            f'<div style="text-align:center;font-size:13px;padding-top:6px">'
+            f'Página {st.session_state["g_pag"]} de {n_pags}</div>',
+            unsafe_allow_html=True)
+    with col_pag3:
+        if st.button("Próxima →", disabled=st.session_state["g_pag"] >= n_pags, key="g_next"):
+            st.session_state["g_pag"] += 1
+
+    ini = (st.session_state["g_pag"] - 1) * POR_PAG
+    df_pag = df_g.iloc[ini: ini + POR_PAG]
 
     st.markdown("---")
 
-    # ── Listagem ─────────────────────────────────────────────────────────────
-    _mh = load_media_hist()
-    _TECS = {0:"🎨 Óleo", 1:"🖌 Acrílico", 2:"🖼 Têmpera/Guache", 3:"💧 Aquarela",
-             4:"✏️ Seco", 5:"🔀 Mista", 6:"🖼 Outra", 7:"— Sem técnica"}
+    # ── Grid 2 colunas ───────────────────────────────────────────────────────
+    _TECS = {0:"🎨 Óleo", 1:"🖌 Acrílico", 2:"🖼 Têmpera", 3:"💧 Aquarela",
+             4:"✏️ Seco", 5:"🔀 Mista", 6:"🖼 Outra", 7:""}
 
-    for mostrados, (_, lote) in enumerate(df_g.iterrows()):
-        if mostrados >= 80:
-            st.caption(f"Exibindo 80 de {len(df_g)} lotes. Use os filtros para refinar.")
-            break
+    lotes_lista = list(df_pag.iterrows())
+    for i in range(0, len(lotes_lista), 2):
+        cols = st.columns(2, gap="medium")
+        for j, col in enumerate(cols):
+            if i + j >= len(lotes_lista):
+                break
+            _, lote = lotes_lista[i + j]
 
-        url     = lote.get("url_detalhe", "")
-        foto    = lote.get("foto_url", "")
-        titulo  = lote.get("titulo", "") or "Sem título"
-        tecnica = lote.get("tecnica", "") or ""
-        dims    = lote.get("dimensoes", "") or ""
-        base    = lote.get("lance_base", 0)
-        casa    = lote.get("casa", "")
-        data    = lote.get("data_leilao", "") or ""
-        prio    = int(lote.get("_prio", 7))
-        tec_badge = _TECS.get(prio, "")
+            url     = lote.get("url_detalhe", "")
+            foto    = lote.get("foto_url", "")
+            titulo  = lote.get("titulo", "") or "Sem título"
+            tecnica = lote.get("tecnica", "") or ""
+            dims    = lote.get("dimensoes", "") or ""
+            base    = lote.get("lance_base", 0)
+            casa    = lote.get("casa", "")
+            data    = lote.get("data_leilao", "") or ""
+            prio    = int(lote.get("_prio", 7))
+            tec_badge = _TECS.get(prio, "")
 
-        pre = resultados_pre.get(url)
-        similares = (pre.get("similares") or []) if pre else None
-        sim_badge = "🟢" if similares else ("⚪" if similares is not None else ("🔍" if foto else ""))
+            pre      = resultados_pre.get(url)
+            similares = (pre.get("similares") or []) if pre else None
 
-        # ── Card: foto sempre visível ─────────────────────────────────────
-        col_img, col_info = st.columns([1, 2])
-
-        with col_img:
-            if foto:
-                st.markdown(
-                    f'<img src="{foto}" referrerpolicy="no-referrer" '
-                    f'style="width:100%;border-radius:6px;object-fit:cover;max-height:220px" '
-                    f'onerror="this.style.opacity=\'0.3\'">',
-                    unsafe_allow_html=True,
-                )
-            else:
-                st.markdown(
-                    '<div style="width:100%;height:120px;background:#dde8f0;border-radius:6px;'
-                    'display:flex;align-items:center;justify-content:center;color:#7a9aaa;font-size:13px">'
-                    'Sem foto</div>',
-                    unsafe_allow_html=True,
-                )
-
-        with col_info:
-            info_parts = [x for x in [tecnica, dims] if x]
-            meta = " · ".join(info_parts) if info_parts else ""
-            st.markdown(
-                f'<div style="padding:4px 0">'
-                f'<span style="font-size:13px">{sim_badge} {tec_badge}</span><br>'
-                f'<span style="font-weight:600;font-size:15px">{titulo[:70]}</span><br>'
-                f'<span style="font-size:12px;color:#3a5a6e">{meta}</span><br>'
-                f'<span style="font-size:13px">Base: <b>{fmt_brl(base)}</b> &nbsp;·&nbsp; {casa}</span><br>'
-                f'<span style="font-size:12px;color:#5a7a8e">{data}</span>'
-                f'</div>',
-                unsafe_allow_html=True,
-            )
-            if url:
-                st.markdown(f"[Ver lote ↗]({url})")
-
-            # Similares em expander
-            if similares is None and foto and idx:
-                with st.spinner(""):
-                    similares = _buscar_similares(foto, top_n=5, max_dist=20)
-
+            # Identificação automática (similaridade ≥ 80%)
+            artista_sugerido = ""
+            confianca = 0
             if similares:
-                n_sim = len(similares)
+                melhor = similares[0]
+                confianca = melhor.get("similarity", 0)
+                if confianca >= 80:
+                    artista_sugerido = melhor["artista"]
+
+            # Potencial
+            potencial = 0
+            media_melhor = 0
+            artista_ref   = ""
+            if similares:
                 melhor = similares[0]
                 media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
+                artista_ref  = melhor["artista"]
                 if media_melhor > base > 0:
                     potencial = round((media_melhor / base - 1) * 100)
-                    st.success(f"💎 +{potencial}% potencial · {melhor['artista']} ({fmt_brl(media_melhor)} médio)")
-                with st.expander(f"🔍 {n_sim} obra(s) similar(es) encontrada(s)", expanded=False):
-                    if pre and pre.get("atualizado"):
-                        st.caption(f"Atualizado: {pre['atualizado'][:10]}")
-                    for s in similares:
-                        art_norm = _norm_art(s["artista"])
-                        media = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
-                        sim_bar = "█" * (s["similarity"] // 10) + "░" * (10 - s["similarity"] // 10)
-                        sim_color = "#1d7a4a" if s["similarity"] >= 75 else ("#9a7010" if s["similarity"] >= 55 else "#7a9aaa")
-                        st.markdown(
-                            f'<div style="border:1px solid #e0d8cc;border-radius:8px;padding:10px;margin-bottom:8px">'
-                            f'<span style="color:{sim_color};font-weight:700">{s["similarity"]}%</span> '
-                            f'<span style="font-size:11px;color:{sim_color}">{sim_bar}</span><br>'
-                            f'<b>{s["artista"]}</b><br>'
-                            f'<span style="font-size:12px;color:#3a5a6e">{s["titulo"][:60]}</span><br>'
-                            f'<span style="font-size:12px">{s["tecnica"]}</span><br>'
-                            f'Lance hist.: <b>{fmt_brl(s["maior_lance"])}</b> · '
-                            f'Média: <b>{fmt_brl(media) if media else "—"}</b>'
-                            f'</div>',
-                            unsafe_allow_html=True,
-                        )
-            elif foto and similares is not None:
-                st.caption("Nenhuma obra similar no índice visual.")
 
-        st.markdown('<hr style="margin:12px 0;border:none;border-top:1px solid #e0d8cc">', unsafe_allow_html=True)
+            with col:
+                # Badge de potencial acima do card
+                if artista_sugerido:
+                    st.markdown(
+                        f'<div style="background:#1d6a8a;color:#fff;border-radius:6px 6px 0 0;'
+                        f'padding:5px 10px;font-size:12px;font-weight:600">'
+                        f'🎯 Possível artista: {artista_sugerido} &nbsp;·&nbsp; {confianca}% similaridade</div>',
+                        unsafe_allow_html=True)
+                elif potencial >= 50:
+                    st.markdown(
+                        f'<div style="background:#1d7a4a;color:#fff;border-radius:6px 6px 0 0;'
+                        f'padding:5px 10px;font-size:12px;font-weight:600">'
+                        f'💎 +{potencial}% potencial · ref: {artista_ref}</div>',
+                        unsafe_allow_html=True)
+
+                radius_top = "0 0" if (artista_sugerido or potencial >= 50) else "6px 6px"
+
+                # Foto do lote
+                if foto:
+                    st.markdown(
+                        f'<img src="{foto}" referrerpolicy="no-referrer" '
+                        f'style="width:100%;height:200px;object-fit:cover;'
+                        f'border-radius:{radius_top} 0 0;display:block" '
+                        f'onerror="this.style.opacity=\'0.2\'">',
+                        unsafe_allow_html=True)
+                else:
+                    st.markdown(
+                        f'<div style="width:100%;height:120px;background:#dde8f0;'
+                        f'border-radius:{radius_top} 0 0;display:flex;align-items:center;'
+                        f'justify-content:center;color:#7a9aaa;font-size:13px">Sem foto</div>',
+                        unsafe_allow_html=True)
+
+                # Info do card
+                info_parts = [x for x in [tecnica, dims] if x]
+                meta = " · ".join(info_parts) if info_parts else "—"
+                url_html = f'<a href="{url}" target="_blank" style="color:#4a8fa8;font-size:12px">Ver lote ↗</a>' if url else ""
+                st.markdown(
+                    f'<div style="background:#fff;border:1px solid #b8d0de;border-top:none;'
+                    f'border-radius:0 0 6px 6px;padding:10px 12px">'
+                    f'<div style="font-size:11px;color:#4a8fa8;margin-bottom:2px">{tec_badge} {casa}</div>'
+                    f'<div style="font-weight:600;font-size:14px;margin-bottom:4px;line-height:1.3">{titulo[:65]}</div>'
+                    f'<div style="font-size:11px;color:#3a5a6e;margin-bottom:6px">{meta}</div>'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center">'
+                    f'<span style="font-size:14px;font-weight:700;color:#1a2a35">{fmt_brl(base)}</span>'
+                    f'<span style="font-size:11px;color:#5a7a8e">{data}</span>'
+                    f'</div>'
+                    f'<div style="margin-top:4px">{url_html}</div>'
+                    f'</div>',
+                    unsafe_allow_html=True)
+
+                # Similares com foto de comparação
+                if similares is None and foto and idx:
+                    with st.spinner(""):
+                        similares = _buscar_similares(foto, top_n=3, max_dist=20)
+
+                if similares:
+                    with st.expander(f"🔍 {len(similares)} similar(es)", expanded=False):
+                        if pre and pre.get("atualizado"):
+                            st.caption(f"Atualizado: {pre['atualizado'][:10]}")
+                        for s in similares:
+                            art_norm   = _norm_art(s["artista"])
+                            media      = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
+                            sim_color  = "#1d6a8a" if s["similarity"] >= 80 else ("#1d7a4a" if s["similarity"] >= 65 else "#7a9aaa")
+                            # Foto do similar ao lado das infos
+                            sc1, sc2 = st.columns([1, 2])
+                            with sc1:
+                                if s.get("foto_url"):
+                                    st.markdown(
+                                        f'<img src="{s["foto_url"]}" referrerpolicy="no-referrer" '
+                                        f'style="width:100%;border-radius:4px;object-fit:cover;max-height:90px" '
+                                        f'onerror="this.style.display=\'none\'">',
+                                        unsafe_allow_html=True)
+                            with sc2:
+                                st.markdown(
+                                    f'<span style="color:{sim_color};font-weight:700;font-size:14px">{s["similarity"]}%</span><br>'
+                                    f'<b style="font-size:13px">{s["artista"]}</b><br>'
+                                    f'<span style="font-size:11px;color:#3a5a6e">{s["titulo"][:45]}</span><br>'
+                                    f'<span style="font-size:11px">{s["tecnica"][:30]}</span><br>'
+                                    f'<span style="font-size:12px">Hist.: <b>{fmt_brl(s["maior_lance"])}</b>'
+                                    f'{f" · Média: <b>{fmt_brl(media)}</b>" if media else ""}</span>',
+                                    unsafe_allow_html=True)
+                            st.markdown('<hr style="margin:6px 0;border-color:#b8d0de">', unsafe_allow_html=True)
+                elif foto and similares is not None:
+                    st.caption("Sem similar no índice.")
+
+                st.markdown("")  # espaçamento entre linhas
 
 
 # ── Favoritos & Watchlist ───────────────────────────────────────────────────
