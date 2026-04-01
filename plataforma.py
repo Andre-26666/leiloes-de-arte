@@ -889,6 +889,51 @@ def fmt_brl(v):
     return "—"
 
 
+def fmt_m2(v):
+    """Formata valor por m² em BRL."""
+    if v and v > 0:
+        return f"R$ {v:,.0f}/m²".replace(",", "X").replace(".", ",").replace("X", ".")
+    return ""
+
+
+# ── Dimensões → área ─────────────────────────────────────────────────────────────
+_RE_DIMS = _re.compile(
+    r'(\d+[,.]?\d*)\s*(?:cm)?\s*[xX×]\s*(\d+[,.]?\d*)\s*(cm|m)?',
+    _re.IGNORECASE,
+)
+
+
+def _parse_area_cm2(dims: str) -> float | None:
+    """Extrai área em cm² de string de dimensões (ex: '100 x 80 cm' → 8000.0).
+    Retorna None se não conseguir parsear."""
+    if not dims:
+        return None
+    m = _RE_DIMS.search(str(dims))
+    if not m:
+        return None
+    try:
+        v1 = float(m.group(1).replace(",", "."))
+        v2 = float(m.group(2).replace(",", "."))
+        unit = (m.group(3) or "cm").lower()
+        if unit == "m":
+            v1 *= 100
+            v2 *= 100
+        area = v1 * v2
+        if area <= 0 or area > 2_000_000:  # sanity check (max ~14x14m)
+            return None
+        return area
+    except Exception:
+        return None
+
+
+def _r_por_m2(preco: float, dims: str) -> float | None:
+    """Calcula preço por m² dado preço e string de dimensões. Retorna None se não parsear."""
+    area = _parse_area_cm2(dims)
+    if not area or area <= 0:
+        return None
+    return preco / area * 10_000  # cm² → m²
+
+
 # ── Helpers de artista ──────────────────────────────────────────────────────────
 def _to_title(s: str) -> str:
     """Converte nome para title case preservando partículas minúsculas."""
@@ -1628,7 +1673,7 @@ def render_garimpo(df_leiloes):
     if preco_max > 0:
         df_g = df_g[(df_g["lance_base"] <= preco_max) | (df_g["lance_base"] == 0)]
 
-    # Calcula potencial para ordenação
+    # Calcula potencial para ordenação (com ajuste por área)
     def _calc_potencial(row):
         pre = resultados_pre.get(row.get("url_detalhe"), {})
         sims = pre.get("similares") or []
@@ -1636,6 +1681,11 @@ def render_garimpo(df_leiloes):
         melhor = sims[0]
         media = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
         base  = row.get("lance_base", 0)
+        # Ajuste por área: escala o preço de referência pela razão de tamanho
+        area_lote = _parse_area_cm2(row.get("dimensoes", ""))
+        area_sim  = _parse_area_cm2(melhor.get("dimensoes", ""))
+        if area_lote and area_sim and area_sim > 0:
+            media = media * (area_lote / area_sim)
         return round((media / base - 1) * 100) if media > base > 0 else 0
 
     if ordem == "Maior base":
@@ -1714,16 +1764,26 @@ def render_garimpo(df_leiloes):
                 if confianca >= 80:
                     artista_sugerido = melhor["artista"]
 
-            # Potencial
+            # Potencial (com ajuste por área se dimensões disponíveis)
             potencial = 0
             media_melhor = 0
-            artista_ref   = ""
+            media_ajustada = 0
+            artista_ref = ""
+            area_ajuste_tag = ""
             if similares:
                 melhor = similares[0]
                 media_melhor = _mh.get(_norm_art(melhor["artista"]), {}).get("lance", 0) or melhor["maior_lance"]
                 artista_ref  = melhor["artista"]
-                if media_melhor > base > 0:
-                    potencial = round((media_melhor / base - 1) * 100)
+                # Ajuste por área
+                area_lote = _parse_area_cm2(dims)
+                area_sim  = _parse_area_cm2(melhor.get("dimensoes", ""))
+                if area_lote and area_sim and area_sim > 0:
+                    media_ajustada = media_melhor * (area_lote / area_sim)
+                    area_ajuste_tag = f" (área ajustada)"
+                else:
+                    media_ajustada = media_melhor
+                if media_ajustada > base > 0:
+                    potencial = round((media_ajustada / base - 1) * 100)
 
             with col:
                 # Assinatura OCR
@@ -1750,10 +1810,11 @@ def render_garimpo(df_leiloes):
                         f'🎯 Possível artista: {artista_sugerido} &nbsp;·&nbsp; {confianca}%{ocr_tag}</div>',
                         unsafe_allow_html=True)
                 elif potencial >= 50:
+                    _pot_area_tag = area_ajuste_tag if area_ajuste_tag else ""
                     st.markdown(
                         f'<div style="background:#1d7a4a;color:#fff;border-radius:6px 6px 0 0;'
                         f'padding:5px 10px;font-size:12px;font-weight:600">'
-                        f'💎 +{potencial}% potencial · ref: {artista_ref}</div>',
+                        f'💎 +{potencial}% potencial{_pot_area_tag} · ref: {artista_ref}</div>',
                         unsafe_allow_html=True)
 
                 radius_top = "0 0" if (artista_sugerido or potencial >= 50) else "6px 6px"
@@ -1777,6 +1838,19 @@ def render_garimpo(df_leiloes):
                 info_parts = [x for x in [tecnica, dims] if x]
                 meta = " · ".join(info_parts) if info_parts else "—"
                 url_html = f'<a href="{url}" target="_blank" style="color:#4a8fa8;font-size:12px">Ver lote ↗</a>' if url else ""
+                # R$/m² do lote atual (baseado no lance_base)
+                rpm2_lote = _r_por_m2(base, dims) if base and dims else None
+                rpm2_html = (
+                    f'<span style="font-size:11px;color:#3a7a5e;font-weight:600">'
+                    f'📐 {fmt_m2(rpm2_lote)}</span>'
+                ) if rpm2_lote else ""
+                # Estimativa ajustada por área
+                est_html = ""
+                if media_ajustada and media_ajustada != media_melhor and base > 0:
+                    est_html = (
+                        f'<div style="font-size:11px;color:#1d7a4a;margin-top:2px">'
+                        f'Estimativa área-ajustada: <b>{fmt_brl(media_ajustada)}</b></div>'
+                    )
                 st.markdown(
                     f'<div style="background:#fff;border:1px solid #b8d0de;border-top:none;'
                     f'border-radius:0 0 6px 6px;padding:10px 12px">'
@@ -1785,8 +1859,10 @@ def render_garimpo(df_leiloes):
                     f'<div style="font-size:11px;color:#3a5a6e;margin-bottom:6px">{meta}</div>'
                     f'<div style="display:flex;justify-content:space-between;align-items:center">'
                     f'<span style="font-size:14px;font-weight:700;color:#1a2a35">{fmt_brl(base)}</span>'
+                    f'{rpm2_html}'
                     f'<span style="font-size:11px;color:#5a7a8e">{data}</span>'
                     f'</div>'
+                    f'{est_html}'
                     f'<div style="margin-top:4px">{url_html}</div>'
                     f'</div>',
                     unsafe_allow_html=True)
@@ -1804,6 +1880,16 @@ def render_garimpo(df_leiloes):
                             art_norm   = _norm_art(s["artista"])
                             media      = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
                             sim_color  = "#1d6a8a" if s["similarity"] >= 80 else ("#1d7a4a" if s["similarity"] >= 65 else "#7a9aaa")
+                            # R$/m² do similar
+                            rpm2_sim = _r_por_m2(s["maior_lance"], s.get("dimensoes", ""))
+                            rpm2_sim_txt = f" · 📐 {fmt_m2(rpm2_sim)}" if rpm2_sim else ""
+                            # Estimativa área-ajustada para este lote
+                            area_sim_s = _parse_area_cm2(s.get("dimensoes", ""))
+                            area_lote_s = _parse_area_cm2(dims)
+                            est_s = ""
+                            if area_sim_s and area_lote_s and area_sim_s > 0 and media:
+                                estimado_s = media * (area_lote_s / area_sim_s)
+                                est_s = f'<br><span style="font-size:11px;color:#1d7a4a">→ Estimado p/ este lote: <b>{fmt_brl(estimado_s)}</b> (ajuste de área)</span>'
                             # Foto do similar ao lado das infos
                             sc1, sc2 = st.columns([1, 2])
                             with sc1:
@@ -1818,9 +1904,11 @@ def render_garimpo(df_leiloes):
                                     f'<span style="color:{sim_color};font-weight:700;font-size:14px">{s["similarity"]}%</span><br>'
                                     f'<b style="font-size:13px">{s["artista"]}</b><br>'
                                     f'<span style="font-size:11px;color:#3a5a6e">{s["titulo"][:45]}</span><br>'
-                                    f'<span style="font-size:11px">{s["tecnica"][:30]}</span><br>'
+                                    f'<span style="font-size:11px">{s["tecnica"][:30]} · {s.get("dimensoes","")[:25]}</span><br>'
                                     f'<span style="font-size:12px">Hist.: <b>{fmt_brl(s["maior_lance"])}</b>'
-                                    f'{f" · Média: <b>{fmt_brl(media)}</b>" if media else ""}</span>',
+                                    f'{f" · Média: <b>{fmt_brl(media)}</b>" if media else ""}'
+                                    f'{rpm2_sim_txt}</span>'
+                                    f'{est_s}',
                                     unsafe_allow_html=True)
                             st.markdown('<hr style="margin:6px 0;border-color:#b8d0de">', unsafe_allow_html=True)
                 elif foto and similares is not None:
