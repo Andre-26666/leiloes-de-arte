@@ -87,7 +87,16 @@ def _sb_upsert(table: str, rows: list) -> None:
         chunk = rows[i:i+200]
         r = requests.post(url, headers=_headers(), json=chunk, timeout=60)
         if r.status_code not in (200, 201):
-            print(f"  AVISO upsert {table}: {r.status_code} {r.text[:200]}")
+            # Se falhou por coluna inexistente (assinatura_ocr), tenta sem ela
+            if "assinatura_ocr" in (r.text or ""):
+                chunk2 = [{k: v for k, v in row.items() if k != "assinatura_ocr"} for row in chunk]
+                r2 = requests.post(url, headers=_headers(), json=chunk2, timeout=60)
+                if r2.status_code not in (200, 201):
+                    print(f"  AVISO upsert {table}: {r2.status_code} {r2.text[:200]}")
+                else:
+                    print(f"  AVISO: coluna assinatura_ocr não existe — adicioná-la no Supabase")
+            else:
+                print(f"  AVISO upsert {table}: {r.status_code} {r.text[:200]}")
 
 
 def _sb_get_processed_urls() -> set:
@@ -104,15 +113,63 @@ _IMG_HEADERS = {
 }
 
 
-def _compute_hash(foto_url: str):
-    """Baixa imagem e retorna imagehash.phash ou None."""
+def _download_img(foto_url: str):
+    """Baixa imagem e retorna objeto PIL Image ou None."""
     try:
         r = requests.get(foto_url, headers=_IMG_HEADERS, timeout=15)
         if r.status_code != 200 or len(r.content) < 500:
             return None
-        return imagehash.phash(Image.open(BytesIO(r.content)).convert("RGB"), hash_size=12)
+        return Image.open(BytesIO(r.content)).convert("RGB")
     except Exception:
         return None
+
+
+def _compute_hash(img):
+    """Recebe PIL Image e retorna phash ou None."""
+    try:
+        return imagehash.phash(img, hash_size=12)
+    except Exception:
+        return None
+
+
+# ── OCR de assinatura ─────────────────────────────────────────────────────────
+
+def _extrair_assinatura(img) -> str:
+    """Tenta extrair texto de assinatura da pintura via OCR.
+    Recorta o terço inferior da imagem onde assinaturas costumam estar."""
+    try:
+        import pytesseract
+        from PIL import ImageOps, ImageFilter, ImageEnhance
+
+        w, h = img.size
+        # Regiões candidatas: canto inferior esquerdo, centro-baixo, canto inferior direito
+        regioes = [
+            img.crop((0,           int(h * 0.72), int(w * 0.45), h)),   # baixo-esquerdo
+            img.crop((int(w * 0.55), int(h * 0.72), w,           h)),   # baixo-direito
+            img.crop((0,           int(h * 0.60), w,             h)),   # faixa inferior
+        ]
+
+        textos = set()
+        for reg in regioes:
+            # Pré-processamento: escala 3×, contraste alto, P&B
+            r = reg.convert("L")
+            r = r.resize((r.width * 3, r.height * 3), Image.LANCZOS)
+            r = ImageEnhance.Contrast(r).enhance(2.5)
+            r = ImageOps.autocontrast(r, cutoff=2)
+            r = r.filter(ImageFilter.SHARPEN)
+
+            txt = pytesseract.image_to_string(
+                r, config="--psm 11 --oem 3 -l por+eng"
+            ).strip()
+            for linha in txt.split("\n"):
+                linha = linha.strip()
+                # Filtra ruído: só linhas com 3-60 chars e ao menos 1 letra
+                if 3 <= len(linha) <= 60 and any(c.isalpha() for c in linha):
+                    textos.add(linha)
+
+        return " | ".join(sorted(textos)[:4]) if textos else ""
+    except Exception:
+        return ""
 
 
 # ── Busca similares no índice ────────────────────────────────────────────────
@@ -150,31 +207,37 @@ def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 4
 # ── Processamento de um lote ─────────────────────────────────────────────────
 
 def _processar_lote(lote: dict, index: list, max_dist: int = 45) -> dict | None:
-    """Processa um lote: baixa foto, calcula phash, busca similares. Retorna linha para upsert ou None."""
+    """Processa um lote: baixa foto, calcula phash, busca similares, extrai assinatura OCR."""
     foto = (lote.get("foto_url") or "").strip()
     if not foto:
         return None
 
-    query_hash = _compute_hash(foto)
+    img = _download_img(foto)
+    if img is None:
+        return None
+
+    query_hash = _compute_hash(img)
     if query_hash is None:
         return None
 
-    similares = _buscar_similares(query_hash, index, top_n=5, max_dist=max_dist)
+    similares       = _buscar_similares(query_hash, index, top_n=5, max_dist=max_dist)
+    assinatura_ocr  = _extrair_assinatura(img)
 
     agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     return {
-        "url_detalhe": lote.get("url_detalhe", ""),
-        "foto_url":    foto,
-        "artista":     (lote.get("artista") or "").strip(),
-        "titulo":      (lote.get("titulo") or "").strip(),
-        "tecnica":     (lote.get("tecnica") or "").strip(),
-        "dimensoes":   (lote.get("dimensoes") or "").strip(),
-        "lance_base":  float(lote.get("lance_base") or 0),
-        "casa":        (lote.get("casa") or "").strip(),
-        "data_leilao": (lote.get("data_leilao") or "").strip(),
-        "similares":   similares,   # jsonb — lista de dicts
-        "atualizado":  agora,
+        "url_detalhe":    lote.get("url_detalhe", ""),
+        "foto_url":       foto,
+        "artista":        (lote.get("artista") or "").strip(),
+        "titulo":         (lote.get("titulo") or "").strip(),
+        "tecnica":        (lote.get("tecnica") or "").strip(),
+        "dimensoes":      (lote.get("dimensoes") or "").strip(),
+        "lance_base":     float(lote.get("lance_base") or 0),
+        "casa":           (lote.get("casa") or "").strip(),
+        "data_leilao":    (lote.get("data_leilao") or "").strip(),
+        "similares":      similares,
+        "assinatura_ocr": assinatura_ocr,
+        "atualizado":     agora,
     }
 
 

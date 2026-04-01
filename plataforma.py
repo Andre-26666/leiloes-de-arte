@@ -1437,7 +1437,7 @@ def _load_garimpo_resultados() -> dict:
     if not _USE_SUPABASE:
         return {}
     rows = _sb_fetch_all("garimpo_resultados",
-                         columns="url_detalhe,foto_url,artista,titulo,tecnica,dimensoes,lance_base,casa,data_leilao,similares,atualizado")
+                         columns="url_detalhe,foto_url,artista,titulo,tecnica,dimensoes,lance_base,casa,data_leilao,similares,assinatura_ocr,atualizado")
     return {r["url_detalhe"]: r for r in rows if r.get("url_detalhe")}
 
 
@@ -1466,6 +1466,21 @@ _RE_TECNICA_PALAVRA = _re.compile(
     r'sem|t[ií]tulo|lote|obra|pintura|desenho|escultura|gravura)\b',
     _re.I | _re.UNICODE,
 )
+
+
+def _match_assinatura(ocr_text: str, artista: str) -> int:
+    """Retorna score 0-100 de quanto o texto OCR bate com o nome do artista."""
+    if not ocr_text or not artista:
+        return 0
+    def _n(s):
+        s = _ud.normalize("NFD", s.lower())
+        return "".join(c for c in s if _ud.category(c) != "Mn")
+    ocr_n   = _n(ocr_text)
+    partes  = [p for p in _n(artista).split() if len(p) > 2]
+    if not partes:
+        return 0
+    matches = sum(1 for p in partes if p in ocr_n)
+    return round(matches / len(partes) * 100)
 
 
 def _artista_do_titulo(titulo: str) -> str:
@@ -1711,12 +1726,28 @@ def render_garimpo(df_leiloes):
                     potencial = round((media_melhor / base - 1) * 100)
 
             with col:
-                # Badge de potencial acima do card
+                # Assinatura OCR
+                assinatura_ocr = (pre.get("assinatura_ocr") or "") if pre else ""
+                ocr_match = _match_assinatura(assinatura_ocr, artista_sugerido) if artista_sugerido else 0
+
+                # Badge de identificação acima do card
                 if artista_sugerido:
+                    if ocr_match >= 60:
+                        ocr_tag = f' &nbsp;·&nbsp; ✅ Assinatura confere ({ocr_match}%)'
+                        badge_bg = "#145a32"
+                    elif ocr_match >= 30:
+                        ocr_tag = f' &nbsp;·&nbsp; ⚠️ Assinatura parcial ({ocr_match}%)'
+                        badge_bg = "#1d6a8a"
+                    elif assinatura_ocr:
+                        ocr_tag = f' &nbsp;·&nbsp; ❓ Assinatura: "{assinatura_ocr[:30]}"'
+                        badge_bg = "#1d6a8a"
+                    else:
+                        ocr_tag = ""
+                        badge_bg = "#1d6a8a"
                     st.markdown(
-                        f'<div style="background:#1d6a8a;color:#fff;border-radius:6px 6px 0 0;'
+                        f'<div style="background:{badge_bg};color:#fff;border-radius:6px 6px 0 0;'
                         f'padding:5px 10px;font-size:12px;font-weight:600">'
-                        f'🎯 Possível artista: {artista_sugerido} &nbsp;·&nbsp; {confianca}% similaridade</div>',
+                        f'🎯 Possível artista: {artista_sugerido} &nbsp;·&nbsp; {confianca}%{ocr_tag}</div>',
                         unsafe_allow_html=True)
                 elif potencial >= 50:
                     st.markdown(
@@ -1794,6 +1825,13 @@ def render_garimpo(df_leiloes):
                             st.markdown('<hr style="margin:6px 0;border-color:#b8d0de">', unsafe_allow_html=True)
                 elif foto and similares is not None:
                     st.caption("Sem similar no índice.")
+
+                # Mostra assinatura OCR mesmo sem similar
+                if assinatura_ocr and not artista_sugerido:
+                    st.markdown(
+                        f'<div style="font-size:11px;color:#3a5a6e;margin-top:4px">'
+                        f'✍️ Texto detectado na tela: <i>{assinatura_ocr[:80]}</i></div>',
+                        unsafe_allow_html=True)
 
                 st.markdown("")  # espaçamento entre linhas
 

@@ -22,8 +22,10 @@ jobs:
 
       - name: Instala dependências
         run: |
-          pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas
+          sudo apt-get install -y tesseract-ocr tesseract-ocr-por tesseract-ocr-eng -q
+          pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas pytesseract
           python -c "from bs4 import BeautifulSoup; BeautifulSoup('<a>', 'lxml'); print('lxml OK')"
+          python -c "import pytesseract; print('pytesseract OK')"
 
       - name: Arquiva lotes com data passada
         env:
