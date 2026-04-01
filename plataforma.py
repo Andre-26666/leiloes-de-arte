@@ -1642,7 +1642,7 @@ def render_garimpo(df_leiloes):
     st.markdown("---")
 
     # ── Filtros ──────────────────────────────────────────────────────────────
-    col_f1, col_f2, col_f3, col_f4, col_f5 = st.columns([2, 2, 2, 2, 2])
+    col_f1, col_f2, col_f3, col_f4, col_f5, col_f6 = st.columns([2, 2, 2, 2, 2, 2])
     with col_f1:
         filtro_tec = st.selectbox("Técnica",
             ["Todas", "Óleo", "Acrílico", "Aquarela", "Mista", "Sem técnica"], key="g_tec")
@@ -1658,6 +1658,15 @@ def render_garimpo(df_leiloes):
         _bases = df_desc["lance_base"][df_desc["lance_base"] > 0]
         _bmax  = int(_bases.max()) if len(_bases) else 50000
         preco_max = st.number_input("Base máx (R$)", value=_bmax, step=500, key="g_preco")
+    with col_f6:
+        # Tamanho: categorias por área em cm²
+        # P  < 2.500 cm²   (~50×50 ou menor)
+        # M  2.500–10.000  (~50×50 a 100×100)
+        # G  10.000–40.000 (~100×100 a 200×200)
+        # GG > 40.000      (> 200×200)
+        filtro_tam = st.selectbox("Tamanho",
+            ["Todos", "P – até 50×50", "M – até 100×100", "G – até 200×200", "GG – acima de 200×200", "Sem dimensão"],
+            key="g_tam")
 
     # Aplica filtros
     df_g = df_desc.copy()
@@ -1672,6 +1681,21 @@ def render_garimpo(df_leiloes):
         df_g = df_g[~df_g["url_detalhe"].apply(lambda u: bool(resultados_pre.get(u, {}).get("similares")))]
     if preco_max > 0:
         df_g = df_g[(df_g["lance_base"] <= preco_max) | (df_g["lance_base"] == 0)]
+    if filtro_tam != "Todos":
+        _TAM_RANGES = {
+            "P – até 50×50":      (0,       2_500),
+            "M – até 100×100":    (2_500,  10_000),
+            "G – até 200×200":    (10_000, 40_000),
+            "GG – acima de 200×200": (40_000, float("inf")),
+        }
+        if filtro_tam == "Sem dimensão":
+            df_g = df_g[df_g["dimensoes"].apply(lambda d: _parse_area_cm2(d) is None)]
+        else:
+            _amin, _amax = _TAM_RANGES[filtro_tam]
+            def _tam_ok(d):
+                a = _parse_area_cm2(d)
+                return a is not None and _amin <= a < _amax
+            df_g = df_g[df_g["dimensoes"].apply(_tam_ok)]
 
     # Calcula potencial para ordenação (com ajuste por área)
     def _calc_potencial(row):
