@@ -1437,7 +1437,7 @@ def _load_garimpo_resultados() -> dict:
     if not _USE_SUPABASE:
         return {}
     rows = _sb_fetch_all("garimpo_resultados",
-                         columns="url_detalhe,foto_url,artista,titulo,tecnica,dimensoes,lance_base,casa,data_leilao,similares,assinatura_ocr,atualizado")
+                         columns="url_detalhe,foto_url,artista,titulo,tecnica,dimensoes,lance_base,casa,data_leilao,similares,atualizado")
     return {r["url_detalhe"]: r for r in rows if r.get("url_detalhe")}
 
 
