@@ -1613,7 +1613,14 @@ def render_garimpo(df_leiloes):
             return False
         return True
 
-    df_desc = df_leiloes[df_leiloes.apply(_realmente_desconhecido, axis=1)].copy()
+    # Garante que só lotes com leilão ainda ativo aparecem (belt-and-suspenders)
+    df_ativos = df_leiloes.copy()
+    if "status" in df_ativos.columns:
+        df_ativos = df_ativos[df_ativos["status"].isin(["ativo"]) | df_ativos["status"].isna()]
+    if "data_leilao" in df_ativos.columns:
+        df_ativos = df_ativos[~df_ativos["data_leilao"].apply(_data_leilao_passou)]
+
+    df_desc = df_ativos[df_ativos.apply(_realmente_desconhecido, axis=1)].copy()
     df_desc["_prio"] = df_desc["tecnica"].apply(_prioridade_tecnica)
 
     resultados_pre = _load_garimpo_resultados()

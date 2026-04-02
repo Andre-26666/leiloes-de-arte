@@ -88,7 +88,7 @@ def _sb_arquivar(chaves: list[str]) -> int:
             url,
             headers={**_headers(), "Prefer": "return=minimal"},
             params={"chave": f"in.{chaves_str}"},
-            json={"em_leilao": False},
+            json={"em_leilao": False, "status": "arquivado"},
             timeout=60,
         )
         if r.status_code in (200, 204):
