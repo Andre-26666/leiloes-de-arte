@@ -25,6 +25,30 @@ def _safe(v):
         return None
     return v
 
+
+import re as _re
+
+def _clean_artista_cda(s: str) -> str:
+    """Remove variantes de nome duplicadas do CDA (site lista múltiplas grafias).
+    Ex: 'Rodolpho Tamanini Netto-Rodolfo Tamanini Neto' → 'Rodolpho Tamanini Netto'
+    Ex: 'João Alves - João Alves Oliveira da Silva- Joao Alves' → 'João Alves'
+    Preserva hifens de sobrenomes legítimos (ex: 'Cruz-Diez', 'Loio-Pérsio').
+    """
+    if not s:
+        return s
+    s = s.strip()
+    # 1. Separa em ' - ' (espaço-hífen-espaço) e fica com a primeira variante
+    partes = _re.split(r'\s+-\s+', s, maxsplit=1)
+    if len(partes) >= 2 and len(partes[0].strip()) > 3:
+        s = partes[0].strip()
+    # 2. Lida com variantes coladas diretamente: 'Nome1 Sobrenome1-Nome2 Sobrenome2'
+    m = _re.match(r'^(.+\s\S+)-(.+\s\S+)$', s)
+    if m:
+        p1, p2 = m.group(1).strip(), m.group(2).strip()
+        if len(p1) > 4 and len(p2) > 4 and p1[0].isupper() and p2[0].isupper():
+            s = p1
+    return s
+
 def enabled():
     return bool(SUPABASE_KEY)
 
@@ -116,7 +140,7 @@ def sync_cda(db: dict):
         rows.append({
             "chave":         f"cda|{k}",
             "fonte":         "cda",
-            "artista":       _safe(v.get("artista")),
+            "artista":       _safe(_clean_artista_cda(v.get("artista") or "")),
             "titulo":        _safe(v.get("titulo")),
             "tecnica":       _safe(v.get("tecnica")),
             "dimensoes":     _safe(v.get("dimensoes")),

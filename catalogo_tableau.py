@@ -246,7 +246,9 @@ def fetch(url, session, retries=3):
         try:
             r = session.get(url, headers=HEADERS, timeout=15)
             if r.status_code == 200:
-                return r.content
+                # Força encoding correto — tableau.com.br serve latin-1/iso-8859-1
+                r.encoding = r.apparent_encoding or "iso-8859-1"
+                return r.text
             elif r.status_code == 404:
                 return None
         except Exception as e:
