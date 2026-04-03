@@ -1616,7 +1616,7 @@ def render_garimpo(df_leiloes):
     # Garante que só lotes com leilão ainda ativo aparecem (belt-and-suspenders)
     df_ativos = df_leiloes.copy()
     if "status" in df_ativos.columns:
-        df_ativos = df_ativos[df_ativos["status"].isin(["ativo"]) | df_ativos["status"].isna()]
+        df_ativos = df_ativos[df_ativos["status"] != "arquivado"]
     if "data_leilao" in df_ativos.columns:
         df_ativos = df_ativos[~df_ativos["data_leilao"].apply(_data_leilao_passou)]
 
