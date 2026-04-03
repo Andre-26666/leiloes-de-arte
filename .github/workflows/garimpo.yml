@@ -9,7 +9,7 @@ on:
 jobs:
   garimpo:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
 
     steps:
       - name: Checkout do repositório
@@ -20,12 +20,29 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('**/requirements*.txt') }}-v2
+          restore-keys: pip-
+
+      - name: Cache modelo CLIP (HuggingFace)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-clip-vit-base-patch32-v1
+
       - name: Instala dependências
         run: |
           sudo apt-get install -y tesseract-ocr tesseract-ocr-por tesseract-ocr-eng -q
-          pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas pytesseract
+          pip install --no-cache-dir requests beautifulsoup4 lxml openpyxl Pillow imagehash pandas pytesseract numpy
+          pip install --no-cache-dir torch --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install --no-cache-dir transformers
           python -c "from bs4 import BeautifulSoup; BeautifulSoup('<a>', 'lxml'); print('lxml OK')"
           python -c "import pytesseract; print('pytesseract OK')"
+          python -c "import torch; print('torch', torch.__version__)"
+          python -c "from transformers import CLIPModel; print('transformers CLIP OK')"
 
       - name: Arquiva lotes com data passada
         env:
@@ -69,14 +86,21 @@ jobs:
         run: python catalogo_ccf.py
         continue-on-error: true
 
-      - name: Atualiza índice visual (rebuild hash_size=12)
+      - name: Atualiza índice visual (phash)
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-        run: python build_visual_index.py --threads 4 --rebuild
+        run: python build_visual_index.py --threads 4
         continue-on-error: true
 
-      - name: Pré-calcula Garimpo Visual
+      - name: Atualiza índice CLIP (até 400 obras novas por execução)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python build_clip_index.py --max 400 --threads 4
+        continue-on-error: true
+
+      - name: Pré-calcula Garimpo Visual (phash + CLIP)
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}

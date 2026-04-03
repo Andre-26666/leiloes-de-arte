@@ -16,15 +16,18 @@ Uso:
 """
 
 import argparse
+import base64
 import os
 import re
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from io import BytesIO
 
 import imagehash
+import numpy as np
 import requests
 from PIL import Image
 
@@ -172,7 +175,87 @@ def _extrair_assinatura(img) -> str:
         return ""
 
 
-# ── Busca similares no índice ────────────────────────────────────────────────
+# ── CLIP helpers ─────────────────────────────────────────────────────────────
+
+def _b64_to_emb(s: str) -> np.ndarray:
+    return np.frombuffer(base64.b64decode(s), dtype=np.float32)
+
+
+def _load_clip_model():
+    """Tenta carregar modelo CLIP. Retorna (model, processor) ou (None, None)."""
+    try:
+        from transformers import CLIPProcessor, CLIPModel
+        import torch
+        print("  Carregando modelo CLIP...", end=" ", flush=True)
+        model     = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
+        processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+        model.eval()
+        print("OK")
+        return model, processor
+    except Exception as e:
+        print(f"  CLIP não disponível ({e}) — usando só phash")
+        return None, None
+
+
+def _build_clip_matrix(index: list) -> tuple:
+    """Constrói matriz numpy com todos os embeddings CLIP do índice.
+    Retorna (matrix NxD, keys list) ou (None, None) se não houver embeddings."""
+    entries = [(r["url_key"], _b64_to_emb(r["clip_embedding"]))
+               for r in index if r.get("clip_embedding")]
+    if not entries:
+        return None, None
+    keys   = [e[0] for e in entries]
+    matrix = np.stack([e[1] for e in entries])  # (N, 512)
+    return matrix, keys
+
+
+def _get_clip_embedding(img, model, processor, lock: threading.Lock) -> np.ndarray | None:
+    """Extrai embedding CLIP normalizado de uma PIL Image."""
+    try:
+        import torch
+        with lock:
+            with torch.no_grad():
+                inputs   = processor(images=img, return_tensors="pt")
+                features = model.get_image_features(**inputs)
+                emb      = features[0].numpy()
+        norm = np.linalg.norm(emb)
+        return emb / norm if norm > 0 else None
+    except Exception:
+        return None
+
+
+def _buscar_clip_similares(query_emb: np.ndarray, matrix: np.ndarray,
+                            keys: list, index_dict: dict,
+                            top_n: int = 5, min_sim: float = 0.72) -> list:
+    """Busca similares por cosine similarity CLIP. min_sim: 0-1."""
+    sims    = matrix @ query_emb          # produto escalar (já normalizado = cosine)
+    indices = np.argsort(sims)[::-1]      # ordem decrescente
+    results = []
+    for idx in indices:
+        sim_val = float(sims[idx])
+        if sim_val < min_sim:
+            break
+        uk    = keys[idx]
+        entry = index_dict.get(uk, {})
+        results.append({
+            "artista":     entry.get("artista", ""),
+            "titulo":      entry.get("titulo", ""),
+            "tecnica":     entry.get("tecnica", ""),
+            "dimensoes":   entry.get("dimensoes", ""),
+            "maior_lance": entry.get("maior_lance", 0),
+            "casa":        entry.get("casa", ""),
+            "data_leilao": entry.get("data_leilao", ""),
+            "foto_url":    entry.get("foto_url", ""),
+            "url_key":     uk,
+            "similarity":  round(sim_val * 100),
+            "method":      "clip",
+        })
+        if len(results) >= top_n:
+            break
+    return results
+
+
+# ── Busca similares por phash ─────────────────────────────────────────────────
 
 def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 45) -> list:
     hash_bits = query_hash.hash.size  # 144 para hash_size=12
@@ -181,7 +264,7 @@ def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 4
         try:
             ref_hash = imagehash.hex_to_hash(entry["phash"])
             if ref_hash.hash.size != hash_bits:
-                continue  # ignora entradas com hash de tamanho diferente (índice antigo)
+                continue
             dist = query_hash - ref_hash
             if dist <= max_dist:
                 sim = round(max(0, 100 - dist * 100 / hash_bits))
@@ -197,6 +280,7 @@ def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 4
                     "url_key":     entry.get("url_key", ""),
                     "similarity":  sim,
                     "dist":        dist,
+                    "method":      "phash",
                 })
         except Exception:
             continue
@@ -204,10 +288,33 @@ def _buscar_similares(query_hash, index: list, top_n: int = 5, max_dist: int = 4
     return results[:top_n]
 
 
+def _merge_similares(clip_sims: list, phash_sims: list, top_n: int = 5) -> list:
+    """Combina CLIP e phash: CLIP tem prioridade. Evita duplicatas por url_key."""
+    seen  = set()
+    final = []
+    for s in clip_sims + phash_sims:
+        uk = s.get("url_key", "")
+        if uk and uk not in seen:
+            seen.add(uk)
+            final.append(s)
+        if len(final) >= top_n:
+            break
+    return final
+
+
 # ── Processamento de um lote ─────────────────────────────────────────────────
 
+# Estado CLIP compartilhado (inicializado em main se modelo disponível)
+_CLIP_MODEL     = None
+_CLIP_PROCESSOR = None
+_CLIP_MATRIX    = None   # np.ndarray (N, 512)
+_CLIP_KEYS      = None   # list[str] de url_keys
+_CLIP_IDX_DICT  = None   # dict url_key → entry (para montar resultado)
+_CLIP_LOCK      = threading.Lock()
+
+
 def _processar_lote(lote: dict, index: list, max_dist: int = 45) -> dict | None:
-    """Processa um lote: baixa foto, calcula phash, busca similares, extrai assinatura OCR."""
+    """Processa um lote: baixa foto, calcula phash + CLIP, busca similares, extrai OCR."""
     foto = (lote.get("foto_url") or "").strip()
     if not foto:
         return None
@@ -220,10 +327,22 @@ def _processar_lote(lote: dict, index: list, max_dist: int = 45) -> dict | None:
     if query_hash is None:
         return None
 
-    similares       = _buscar_similares(query_hash, index, top_n=5, max_dist=max_dist)
-    assinatura_ocr  = _extrair_assinatura(img)
+    # Similares por phash
+    phash_sims = _buscar_similares(query_hash, index, top_n=5, max_dist=max_dist)
 
-    agora = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Similares por CLIP (se índice disponível)
+    clip_sims = []
+    if _CLIP_MODEL is not None and _CLIP_MATRIX is not None:
+        emb = _get_clip_embedding(img, _CLIP_MODEL, _CLIP_PROCESSOR, _CLIP_LOCK)
+        if emb is not None:
+            clip_sims = _buscar_clip_similares(
+                emb, _CLIP_MATRIX, _CLIP_KEYS, _CLIP_IDX_DICT, top_n=5
+            )
+
+    # CLIP tem prioridade; phash preenche o que falta
+    similares      = _merge_similares(clip_sims, phash_sims, top_n=5)
+    assinatura_ocr = _extrair_assinatura(img)
+    agora          = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     return {
         "url_detalhe":    lote.get("url_detalhe", ""),
@@ -255,11 +374,26 @@ def main():
     print("  Garimpo Visual — Pré-computação")
     print("=" * 60)
 
-    # 1. Carrega índice visual
+    # 1. Tenta carregar modelo CLIP
+    global _CLIP_MODEL, _CLIP_PROCESSOR, _CLIP_MATRIX, _CLIP_KEYS, _CLIP_IDX_DICT
+    _CLIP_MODEL, _CLIP_PROCESSOR = _load_clip_model()
+
+    # 2. Carrega índice visual (com clip_embedding se disponível)
     print("Carregando visual_index do Supabase...", end=" ", flush=True)
-    index = _sb_fetch_all("visual_index", select="url_key,phash,artista,titulo,tecnica,dimensoes,maior_lance,casa,data_leilao,foto_url")
+    index = _sb_fetch_all(
+        "visual_index",
+        select="url_key,phash,artista,titulo,tecnica,dimensoes,maior_lance,"
+               "casa,data_leilao,foto_url,clip_embedding"
+    )
     index = [r for r in index if r.get("phash")]
     print(f"{len(index)} obras indexadas")
+
+    # Constrói matriz CLIP para busca vetorial rápida
+    if _CLIP_MODEL is not None:
+        _CLIP_MATRIX, _CLIP_KEYS = _build_clip_matrix(index)
+        _CLIP_IDX_DICT = {r["url_key"]: r for r in index}
+        n_clip = len(_CLIP_KEYS) if _CLIP_KEYS else 0
+        print(f"  Matriz CLIP: {n_clip}/{len(index)} obras com embedding")
 
     if not index:
         print("ERRO: índice visual vazio — execute build_visual_index.py primeiro.")

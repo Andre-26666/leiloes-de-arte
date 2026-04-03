@@ -1911,6 +1911,7 @@ def render_garimpo(df_leiloes):
                             art_norm   = _norm_art(s["artista"])
                             media      = _mh.get(art_norm, {}).get("lance", 0) or s["maior_lance"]
                             sim_color  = "#1d6a8a" if s["similarity"] >= 80 else ("#1d7a4a" if s["similarity"] >= 65 else "#7a9aaa")
+                            method_tag = ' <span style="font-size:10px;background:#1d6a8a;color:#fff;border-radius:3px;padding:1px 4px">🤖 CLIP</span>' if s.get("method") == "clip" else ' <span style="font-size:10px;background:#5a7a8e;color:#fff;border-radius:3px;padding:1px 4px">phash</span>'
                             # R$/m² do similar
                             rpm2_sim = _r_por_m2(s["maior_lance"], s.get("dimensoes", ""))
                             rpm2_sim_txt = f" · 📐 {fmt_m2(rpm2_sim)}" if rpm2_sim else ""
@@ -1932,7 +1933,7 @@ def render_garimpo(df_leiloes):
                                         unsafe_allow_html=True)
                             with sc2:
                                 st.markdown(
-                                    f'<span style="color:{sim_color};font-weight:700;font-size:14px">{s["similarity"]}%</span><br>'
+                                    f'<span style="color:{sim_color};font-weight:700;font-size:14px">{s["similarity"]}%</span>{method_tag}<br>'
                                     f'<b style="font-size:13px">{s["artista"]}</b><br>'
                                     f'<span style="font-size:11px;color:#3a5a6e">{s["titulo"][:45]}</span><br>'
                                     f'<span style="font-size:11px">{s["tecnica"][:30]} · {s.get("dimensoes","")[:25]}</span><br>'
