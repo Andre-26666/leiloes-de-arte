@@ -657,7 +657,8 @@ def _sb_fetch_all(table, filters=None, columns="*", page_size=1000):
 def load_leiloes():
     """Lotes ativos — todas as fontes. Exclui lotes com data já passada."""
     if _USE_SUPABASE:
-        rows = _sb_fetch_all("lotes", filters={"em_leilao": True, "ignorado": False})
+        rows = _sb_fetch_all("lotes", filters={"em_leilao": True})
+        rows = [r for r in rows if not r.get("ignorado")]  # NULL e False são ambos válidos
         if not rows:
             return pd.DataFrame()
         df = pd.DataFrame(rows)

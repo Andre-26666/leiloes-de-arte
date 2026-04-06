@@ -2395,10 +2395,18 @@ def main():
             lance_str = f"R${lance:>8,.0f} ({nlances}L)" if lance > 0 else "sem lance"
             print(f"{artista:<28}  base R${base:>8,.0f}  {lance_str}  [{tecn}]")
 
-            # Salva a cada 15 novos
+            # Salva a cada 15 novos e sincroniza com Supabase a cada 50
             if novos % 15 == 0:
                 save_db(db)
                 print(f"\n  >> DB salvo — {novos} novos nesta execução\n")
+            if novos % 50 == 0:
+                try:
+                    import supabase_sync
+                    if supabase_sync.enabled():
+                        print(f"  [supabase] sync intermediário ({novos} novos)...")
+                        supabase_sync.sync_leiloesbr(db)
+                except Exception as _se:
+                    print(f"  [supabase] aviso sync intermediário: {_se}")
 
             time.sleep(DELAY)
 
