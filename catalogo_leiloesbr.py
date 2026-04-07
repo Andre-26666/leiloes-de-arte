@@ -2267,6 +2267,15 @@ def main():
     pinturas_db = {k: v for k, v in db.items() if not v.get("_ignorado")}
     print(f"  Base atual: {len(pinturas_db)} pinturas  |  {len(db)} lotes processados total")
 
+    # ── Sync inicial: garante que o DB local está no Supabase antes de scraping ─
+    try:
+        import supabase_sync
+        if supabase_sync.enabled():
+            print("\n  [supabase] sync inicial do DB local...")
+            supabase_sync.sync_leiloesbr(db)
+    except Exception as _se:
+        print(f"  [supabase] aviso sync inicial: {_se}")
+
     session = requests.Session()
     session.headers.update(HEADERS)
 
