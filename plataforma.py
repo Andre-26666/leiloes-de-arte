@@ -1090,7 +1090,7 @@ def render_grafico_artista(df_hist, artista: str):
             color_discrete_sequence=["#e0a84b"],
         )
         fig.add_traces(
-            px.line(df_a, x="_data", y="maior_lance", color_discrete_sequence=["#e0a84b33"]).data
+            px.line(df_a, x="_data", y="maior_lance", color_discrete_sequence=["rgba(224,168,75,0.2)"]).data
         )
         fig.update_layout(
             plot_bgcolor="#0e0e1a", paper_bgcolor="#0e0e1a",
