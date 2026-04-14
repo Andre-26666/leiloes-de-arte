@@ -545,7 +545,21 @@ def _normalize_df(df: pd.DataFrame) -> pd.DataFrame:
         if col not in df.columns:
             df[col] = ""
         df[col] = df[col].fillna("")
+    # Normaliza data_leilao para DD/MM/YYYY (extrai de "14/4/2026 - 15h - RJ" etc.)
+    df["data_leilao"] = df["data_leilao"].apply(_normalizar_data_display)
     return df
+
+
+def _normalizar_data_display(s: str) -> str:
+    """Extrai e normaliza data no formato DD/MM/YYYY de qualquer string de data."""
+    s = str(s or "").strip()
+    if not s:
+        return s
+    m = _re.search(r'(\d{1,2})/(\d{1,2})/(\d{4})', s)
+    if m:
+        d, mo, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        return f"{d:02d}/{mo:02d}/{y}"
+    return s
 
 
 def _tab_parse_data(data_str):
