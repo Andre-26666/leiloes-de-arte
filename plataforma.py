@@ -1200,7 +1200,8 @@ def render_cards_leilao(df):
     for row_df in rows:
         cols = st.columns(NCOLS)
         for col, (_, item) in zip(cols, row_df.iterrows()):
-            artista  = _html.escape(str(item["artista"]   or "Desconhecido"))
+            _artista_raw = str(item["artista"] or "Desconhecido")
+            artista  = _html.escape(_artista_raw)
             titulo   = _html.escape(str(item["titulo"]    or "Sem título"))
             tecnica  = _html.escape(str(item["tecnica"]   or ""))
             dims     = _html.escape(str(item["dimensoes"] or ""))
@@ -1210,10 +1211,10 @@ def render_cards_leilao(df):
             lance    = fmt_brl(item["maior_lance"])
             nlances  = item["num_lances"]
             casa     = _html.escape(str(item["casa"]      or ""))
-            data     = item["data_leilao"] or item["data_coleta"] or ""
+            data     = _html.escape(str(item["data_leilao"] or item["data_coleta"] or ""))
             url      = item["url_detalhe"] or ""
-            assinatura = item["assinatura"] or ""
-            _art_norm   = _norm_art(artista)
+            assinatura = _html.escape(str(item["assinatura"] or ""))
+            _art_norm   = _norm_art(_artista_raw)
             _mh_entry   = media_hist.get(_art_norm, {})
             _aval_lance = _mh_entry.get("lance", 0)
             _aval_base  = _mh_entry.get("base", 0)
@@ -1298,7 +1299,8 @@ def render_cards_historico(df):
     for row_df in rows:
         cols = st.columns(NCOLS)
         for col, (_, item) in zip(cols, row_df.iterrows()):
-            artista    = _html.escape(str(item["artista"]   or "Desconhecido"))
+            _artista_raw = str(item["artista"] or "Desconhecido")
+            artista    = _html.escape(_artista_raw)
             titulo     = _html.escape(str(item["titulo"]    or "Sem título"))
             tecnica    = _html.escape(str(item["tecnica"]   or ""))
             dims       = _html.escape(str(item["dimensoes"] or ""))
@@ -1308,11 +1310,11 @@ def render_cards_historico(df):
             est_max    = item["estimativa_max"]
             lance      = item["maior_lance"]
             casa       = _html.escape(str(item["casa"]      or ""))
-            data       = item["data_leilao"] or item["data_coleta"] or ""
+            data       = _html.escape(str(item["data_leilao"] or item["data_coleta"] or ""))
             url        = item["url_detalhe"] or ""
-            assinatura = item["assinatura"] or ""
-            status     = item.get("status", "") or ""
-            _art_norm   = _norm_art(artista)
+            assinatura = _html.escape(str(item["assinatura"] or ""))
+            status     = _html.escape(str(item.get("status", "") or ""))
+            _art_norm   = _norm_art(_artista_raw)
             _mh_entry   = media_hist.get(_art_norm, {})
             _aval_lance = _mh_entry.get("lance", 0)
             _aval_base  = _mh_entry.get("base", 0)
@@ -1380,23 +1382,10 @@ def render_cards_historico(df):
             link_html = f'<a href="{_html.escape(url)}" target="_blank">Ver obra ↗</a>' if url else ""
 
             with col:
-                st.markdown(f"""
-<div class="card">
-  {img_html}
-  <div class="card-body">
-    <div class="card-casa">{casa}</div>
-    <div class="card-artista">{artista}</div>
-    <div class="card-titulo" title="{titulo}">{titulo}</div>
-    <div class="card-meta">{meta_str}</div>
-    <div class="prices"><div class="price-box"><div class="price-label">Estimativa</div><div class="price-val-est">{est_str}</div></div><div class="price-box"><div class="price-label">Último Lance</div><div class="price-val-lance">{lance_str}</div>{_pct_str}</div><div class="price-box"><div class="price-label">Histórico</div>{aval_disp}</div></div>
-    <div class="card-footer">
-      <div>{badge_status}{badge_ass}</div>
-      <span style="font-size:10px;color:#555">{data}</span>
-    </div>
-    <div class="card-link">{link_html}</div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+                st.markdown(
+                    f'<div class="card">{img_html}<div class="card-body"><div class="card-casa">{casa}</div><div class="card-artista">{artista}</div><div class="card-titulo" title="{titulo}">{titulo}</div><div class="card-meta">{meta_str}</div><div class="prices"><div class="price-box"><div class="price-label">Estimativa</div><div class="price-val-est">{est_str}</div></div><div class="price-box"><div class="price-label">Último Lance</div><div class="price-val-lance">{lance_str}</div>{_pct_str}</div><div class="price-box"><div class="price-label">Histórico</div>{aval_disp}</div></div><div class="card-footer"><div>{badge_status}{badge_ass}</div><span style="font-size:10px;color:#555">{data}</span></div><div class="card-link">{link_html}</div></div></div>',
+                    unsafe_allow_html=True,
+                )
 
 
 def render_resumo_artista(df):
