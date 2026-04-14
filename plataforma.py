@@ -492,7 +492,11 @@ _RE_ARTISTA_INVALIDO = _re.compile(
     # Descrições longas que claramente não são nomes de artistas
     r'|escultura\s+em|fundição|cerâmica|porcelana|vidro|cristal'
     r'|miniatura|gravura\s+japonesa|duas\s+gravura|par\s+de|lote\s+com'
-    r'|escola\s+espanhola|escola\s+italiana|escola\s+flamenga|escola\s+francesa',
+    r'|escola\s+espanhola|escola\s+italiana|escola\s+flamenga|escola\s+francesa'
+    # Objetos / itens de coleção que não são artistas
+    r'|^artista\s+desconhecido$'
+    r'|revistas?\s+em\s+quadrinhos|figurinhas?|chapinhas?|álbum\s+cole'
+    r'|réis\b|moeda|cédula|numismát',
     _re.I | _re.UNICODE,
 )
 
@@ -502,6 +506,13 @@ def _sanitizar_artista(s: str) -> str:
     s = s.strip()
     if not s:
         return s
+    # Remove prefixo de número de lote (ex: "5042 Mdagostinho" → "Mdagostinho")
+    m_lote = _re.match(r'^\d{3,5}\s+(.+)', s)
+    if m_lote:
+        s = m_lote.group(1).strip()
+    # Rejeita qualquer string que ainda começa com dígito (contagem de itens, moedas, etc.)
+    if s and s[0].isdigit():
+        return ""
     # Artista longo demais (>80 chars) quase sempre é uma descrição capturada errada
     if len(s) > 80:
         # Tenta extrair só o nome (antes de primeiro parêntese de datas ou " - ")
