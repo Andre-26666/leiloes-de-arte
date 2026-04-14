@@ -1265,12 +1265,12 @@ def render_cards_leilao(df):
 
             meta_str = " · ".join(x for x in [tecnica, dims, ano] if x) or "&nbsp;"
             img_html = (
-                f'<img class="card-img" src="{foto_url}" loading="lazy" referrerpolicy="no-referrer" '
+                f'<img class="card-img" src="{_html.escape(foto_url)}" loading="lazy" referrerpolicy="no-referrer" '
                 f'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
                 f'<div class="card-img-placeholder" style="display:none">🖼️</div>'
                 if foto_url else '<div class="card-img-placeholder">🖼️</div>'
             )
-            link_html = f'<a href="{url}" target="_blank">Ver lote ↗</a>' if url else ""
+            link_html = f'<a href="{_html.escape(url)}" target="_blank">Ver lote ↗</a>' if url else ""
 
             data_html = (
                 f'<div class="card-data-leilao">📅 {data}</div>'
@@ -1372,12 +1372,12 @@ def render_cards_historico(df):
 
             meta_str = " · ".join(x for x in [tecnica, dims, ano] if x) or "&nbsp;"
             img_html = (
-                f'<img class="card-img" src="{foto_url}" loading="lazy" referrerpolicy="no-referrer" '
+                f'<img class="card-img" src="{_html.escape(foto_url)}" loading="lazy" referrerpolicy="no-referrer" '
                 f'onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
                 f'<div class="card-img-placeholder" style="display:none">🖼️</div>'
                 if foto_url else '<div class="card-img-placeholder">🖼️</div>'
             )
-            link_html = f'<a href="{url}" target="_blank">Ver obra ↗</a>' if url else ""
+            link_html = f'<a href="{_html.escape(url)}" target="_blank">Ver obra ↗</a>' if url else ""
 
             with col:
                 st.markdown(f"""
