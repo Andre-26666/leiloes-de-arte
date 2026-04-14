@@ -7,6 +7,7 @@ Execute com:  streamlit run plataforma.py --server.address localhost
 
 import base64
 import hashlib
+import html as _html
 
 import json
 import os
@@ -481,11 +482,47 @@ label[data-testid="stWidgetLabel"] p {
 
 
 # ── Carrega dados ───────────────────────────────────────────────────────────────
+_RE_ARTISTA_INVALIDO = _re.compile(
+    # Descrições de objetos / lotes
+    r'^(quadro|pintura|obra|lote\b|lote\s+de|lote\s+n|antigo\s+quadro|bel[íi]ssimo)'
+    r'|informaç'                          # "INFORMAÇÕES: tel..."
+    r'|tel\.?\s*\(?'                      # tel. (XX) ...
+    r'|\(\d{2}\)\s*\d{4}'               # (DDD) número
+    r'|\d{5}[-.\s]\d{4}'                # padrão celular
+    # Descrições longas que claramente não são nomes de artistas
+    r'|escultura\s+em|fundição|cerâmica|porcelana|vidro|cristal'
+    r'|miniatura|gravura\s+japonesa|duas\s+gravura|par\s+de|lote\s+com'
+    r'|escola\s+espanhola|escola\s+italiana|escola\s+flamenga|escola\s+francesa',
+    _re.I | _re.UNICODE,
+)
+
+
+def _sanitizar_artista(s: str) -> str:
+    """Limpa campo artista: remove strings que claramente não são nomes de pessoa."""
+    s = s.strip()
+    if not s:
+        return s
+    # Artista longo demais (>80 chars) quase sempre é uma descrição capturada errada
+    if len(s) > 80:
+        # Tenta extrair só o nome (antes de primeiro parêntese de datas ou " - ")
+        m = _re.match(r'^([A-ZÁÀÂÃÉÊÍÓÔÕÚÇ][^(\-]{2,50})\s*[\(\-]', s)
+        if m:
+            candidato = m.group(1).strip().rstrip(",.")
+            if 3 < len(candidato) < 60 and not _RE_ARTISTA_INVALIDO.search(candidato):
+                return candidato
+        return ""  # não conseguiu extrair → deixa vazio
+    if _RE_ARTISTA_INVALIDO.search(s):
+        return ""
+    return s
+
+
 def _normalize_df(df: pd.DataFrame) -> pd.DataFrame:
     for col in ["artista", "titulo", "tecnica", "dimensoes", "ano", "casa", "assinatura", "foto_url"]:
         if col not in df.columns:
             df[col] = ""
         df[col] = df[col].fillna("").astype(str)
+    # Limpa artistas que são claramente descrições ou lixo de parse
+    df["artista"] = df["artista"].apply(_sanitizar_artista)
     for col in ["lance_base", "maior_lance", "estimativa_min", "estimativa_max"]:
         if col not in df.columns:
             df[col] = 0.0
@@ -724,10 +761,16 @@ def load_leiloes():
 def load_historico():
     """Histórico de preços — todas as fontes finalizadas."""
     if _USE_SUPABASE:
-        rows = _sb_fetch_all("lotes", filters={"em_leilao": False})
+        rows_hist = _sb_fetch_all("lotes", filters={"em_leilao": False})
+        # Inclui lotes ainda marcados como ativos no Supabase mas com data já passada
+        # (ficam no limbo porque a sync não atualizou em_leilao antes da data virar)
+        rows_ativos = _sb_fetch_all("lotes", filters={"em_leilao": True})
+        rows_limbo = [r for r in rows_ativos if _data_leilao_passou(r.get("data_leilao", ""))]
+        rows = rows_hist + rows_limbo
         if not rows:
             return pd.DataFrame()
         df = pd.DataFrame(rows)
+        df = df.drop_duplicates(subset=["chave"]) if "chave" in df.columns else df
         df = df[df["artista"].notna() & (df["artista"] != "")]
         return _normalize_df(df)
 
@@ -1132,16 +1175,16 @@ def render_cards_leilao(df):
     for row_df in rows:
         cols = st.columns(NCOLS)
         for col, (_, item) in zip(cols, row_df.iterrows()):
-            artista  = item["artista"]   or "Desconhecido"
-            titulo   = item["titulo"]    or "Sem título"
-            tecnica  = item["tecnica"]   or ""
-            dims     = item["dimensoes"] or ""
-            ano      = item["ano"]       or ""
+            artista  = _html.escape(str(item["artista"]   or "Desconhecido"))
+            titulo   = _html.escape(str(item["titulo"]    or "Sem título"))
+            tecnica  = _html.escape(str(item["tecnica"]   or ""))
+            dims     = _html.escape(str(item["dimensoes"] or ""))
+            ano      = _html.escape(str(item["ano"]       or ""))
             foto_url = item["foto_url"]  or ""
             base     = fmt_brl(item["lance_base"])
             lance    = fmt_brl(item["maior_lance"])
             nlances  = item["num_lances"]
-            casa     = item["casa"]      or ""
+            casa     = _html.escape(str(item["casa"]      or ""))
             data     = item["data_leilao"] or item["data_coleta"] or ""
             url      = item["url_detalhe"] or ""
             assinatura = item["assinatura"] or ""
@@ -1211,35 +1254,7 @@ def render_cards_leilao(df):
 
             with col:
                 st.markdown(f"""
-<div class="card">
-  {img_html}
-  <div class="card-body">
-    <div class="card-casa">{casa}</div>
-    {data_html}
-    {rent_html}
-    <div class="card-artista">{artista}</div>
-    <div class="card-titulo" title="{titulo}">{titulo}</div>
-    <div class="card-meta">{meta_str}</div>
-    <div class="prices">
-      <div class="price-box">
-        <div class="price-label">Valor Base</div>
-        <div class="price-val-base">{base}</div>
-      </div>
-      <div class="price-box">
-        <div class="price-label">Maior Lance</div>
-        <div class="price-val-lance">{lance}</div>
-      </div>
-      <div class="price-box">
-        <div class="price-label">Histórico</div>
-        {aval_disp}
-      </div>
-    </div>
-    <div class="card-footer">
-      <div>{badge_lance}{badge_ass}</div>
-    </div>
-    <div class="card-link">{link_html}</div>
-  </div>
-</div>
+<div class="card">{img_html}<div class="card-body"><div class="card-casa">{casa}</div>{data_html}{rent_html}<div class="card-artista">{artista}</div><div class="card-titulo" title="{titulo}">{titulo}</div><div class="card-meta">{meta_str}</div><div class="prices"><div class="price-box"><div class="price-label">Valor Base</div><div class="price-val-base">{base}</div></div><div class="price-box"><div class="price-label">Maior Lance</div><div class="price-val-lance">{lance}</div></div><div class="price-box"><div class="price-label">Histórico</div>{aval_disp}</div></div><div class="card-footer"><div>{badge_lance}{badge_ass}</div></div><div class="card-link">{link_html}</div></div></div>
 """, unsafe_allow_html=True)
                 _fav_url = item["url_detalhe"] or item.get("foto_url", "")
                 _is_fav  = _fav_url in get_favoritos()
@@ -1258,16 +1273,16 @@ def render_cards_historico(df):
     for row_df in rows:
         cols = st.columns(NCOLS)
         for col, (_, item) in zip(cols, row_df.iterrows()):
-            artista    = item["artista"]   or "Desconhecido"
-            titulo     = item["titulo"]    or "Sem título"
-            tecnica    = item["tecnica"]   or ""
-            dims       = item["dimensoes"] or ""
-            ano        = item["ano"]       or ""
+            artista    = _html.escape(str(item["artista"]   or "Desconhecido"))
+            titulo     = _html.escape(str(item["titulo"]    or "Sem título"))
+            tecnica    = _html.escape(str(item["tecnica"]   or ""))
+            dims       = _html.escape(str(item["dimensoes"] or ""))
+            ano        = _html.escape(str(item["ano"]       or ""))
             foto_url   = item["foto_url"]  or ""
             est_min    = item["estimativa_min"]
             est_max    = item["estimativa_max"]
             lance      = item["maior_lance"]
-            casa       = item["casa"]      or ""
+            casa       = _html.escape(str(item["casa"]      or ""))
             data       = item["data_leilao"] or item["data_coleta"] or ""
             url        = item["url_detalhe"] or ""
             assinatura = item["assinatura"] or ""
@@ -1348,21 +1363,7 @@ def render_cards_historico(df):
     <div class="card-artista">{artista}</div>
     <div class="card-titulo" title="{titulo}">{titulo}</div>
     <div class="card-meta">{meta_str}</div>
-    <div class="prices">
-      <div class="price-box">
-        <div class="price-label">Estimativa</div>
-        <div class="price-val-est">{est_str}</div>
-      </div>
-      <div class="price-box">
-        <div class="price-label">Último Lance</div>
-        <div class="price-val-lance">{lance_str}</div>
-        {_pct_str}
-      </div>
-      <div class="price-box">
-        <div class="price-label">Histórico</div>
-        {aval_disp}
-      </div>
-    </div>
+    <div class="prices"><div class="price-box"><div class="price-label">Estimativa</div><div class="price-val-est">{est_str}</div></div><div class="price-box"><div class="price-label">Último Lance</div><div class="price-val-lance">{lance_str}</div>{_pct_str}</div><div class="price-box"><div class="price-label">Histórico</div>{aval_disp}</div></div>
     <div class="card-footer">
       <div>{badge_status}{badge_ass}</div>
       <span style="font-size:10px;color:#555">{data}</span>
